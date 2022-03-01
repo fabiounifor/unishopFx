@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="teste5Cliente" language="groovy" pageWidth="260" pageHeight="802" columnWidth="260" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Thu Jul 21 09:55:49 GMT-03:00 2011"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="title1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     vendas.`codigo` AS vendas_codigo,
+     vendas.`data_venda` AS vendas_data_venda,
+     vendas.`valor_total` AS vendas_valor_total,
+     vendas.`desconto` AS vendas_desconto,
+     vendas.`observacao` AS vendas_observacao,
+     garcon.`codigo` AS garcon_codigo,
+     garcon.`nome` AS garcon_nome,
+     forma_pagamento.`descricao` AS forma_pagamento_descricao,
+
+FROM
+     `clientes` clientes INNER JOIN `vendas` vendas ON clientes.`codigo` = vendas.`clientes_codigo`
+     INNER JOIN `forma_pagamento` forma_pagamento ON vendas.`tipo_pagamento` = forma_pagamento.`codigo`]]>
+	</queryString>
+	<field name="vendas_codigo" class="java.lang.Integer"/>
+	<field name="vendas_data_venda" class="java.sql.Date"/>
+	<field name="vendas_valor_total" class="java.lang.Float"/>
+	<field name="vendas_desconto" class="java.lang.Float"/>
+	<field name="vendas_observacao" class="java.lang.String"/>
+	<field name="garcon_codigo" class="java.lang.Integer"/>
+	<field name="garcon_nome" class="java.lang.String"/>
+	<field name="forma_pagamento_descricao" class="java.lang.String"/>
+	<variable name="soma" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{vendas_valor_total}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="comissao" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{vendas_valor_total}*0.1]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="83" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="11" y="0" width="76" height="16"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="15" width="235" height="24" forecolor="#999999"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMISSÃO POR GARCON]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="27" y="39" width="204" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{title1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="10" y="2" width="236" height="15" forecolor="#FFFFFF" backcolor="#F2EBDF"/>
+				<staticText>
+					<reportElement x="3" y="0" width="233" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Black" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCRIÇÃO DO RELATÓRIO]]></text>
+				</staticText>
+			</frame>
+			<line>
+				<reportElement x="10" y="0" width="236" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="10" y="15" width="236" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="187" y="0" width="57" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[V. Venda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="0" width="14" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="0" width="118" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Garcon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="0" width="40" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="11" y="0" width="235" height="14"/>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="182" y="0" width="50" height="13"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$F{vendas_valor_total}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1" y="0" width="14" height="13"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{vendas_codigo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="59" y="0" width="117" height="14"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{garcon_nome}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="16" y="1" width="40" height="13"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{vendas_data_venda}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="17">
+			<rectangle>
+				<reportElement x="11" y="0" width="235" height="17" forecolor="#FFFFFF" backcolor="#F2EBDF"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="11" y="0" width="106" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column header" x="122" y="0" width="81" height="17" forecolor="#736343"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="203" y="0" width="40" height="17" forecolor="#736343"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="45">
+			<rectangle>
+				<reportElement x="87" y="2" width="156" height="15" forecolor="#FFFFFF" backcolor="#F2EBE9"/>
+			</rectangle>
+			<line>
+				<reportElement x="10" y="42" width="236" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="87" y="2" width="76" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Venda]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="10" y="0" width="234" height="2"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="166" y="2" width="77" height="15"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{soma}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="66" y="19" width="176" height="15" forecolor="#FFFFFF" backcolor="#F2EBE9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="67" y="19" width="95" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Comissão]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="165" y="19" width="77" height="15"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{comissao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

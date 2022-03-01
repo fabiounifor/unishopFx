@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane styleClass="background" stylesheets="@Darkness.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.novoPrincipal">
+   <left>
+      <AnchorPane prefHeight="502.0" prefWidth="214.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar layoutY="184.0" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" prefHeight="253.0" prefWidth="152.0" style="-fx-background-color: green;">
+              <items>
+                  <Button id="btCadastro" mnemonicParsing="false" onAction="#cadastros" prefHeight="45.0" prefWidth="142.0" style="-fx-background-color: #4B0082;" text="CADASTRO" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btEntrada" fx:id="btEntrada" mnemonicParsing="false" onAction="#entrada" prefHeight="45.0" prefWidth="142.0" style="-fx-background-color: #8B0000;" text="ENTRADA" textFill="#fffdfd">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btSaida" mnemonicParsing="false" onAction="#saidas" prefHeight="45.0" prefWidth="142.0" style="-fx-background-color: #8B008B;" text="SAIDA" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btFinanceiro" mnemonicParsing="false" onAction="#financeiro" prefHeight="45.0" prefWidth="142.0" style="-fx-background-color: #00008B;" text="FINANCEIRO" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btAuxiliares" fx:id="btAuxiliares" layoutX="10.0" layoutY="157.0" mnemonicParsing="false" onAction="#auxiliares" prefHeight="45.0" prefWidth="142.0" style="-fx-background-color: #FF4500;" text="AUXILIARES" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+              </items>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </ToolBar>
+         </children>
+      </AnchorPane>
+   </left>
+   <top>
+      <FlowPane alignment="TOP_RIGHT" columnHalignment="RIGHT" prefHeight="55.0" prefWidth="400.0" stylesheets="@Darkness.css" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="lbCnpj" fx:id="empresa1" focusTraversable="false" layoutX="484.0" layoutY="16.0" style="-fx-text-size: 16; -fx-opacity: 1;" text="Certificado Digital válido até:   " />
+            <Label id="lbEmpresa" fx:id="lbCertificado" layoutX="557.0" layoutY="16.0" style="-fx-text-size: 16; -fx-opacity: 1;" text="Label" />
+            <Label id="lbCnpj" fx:id="empresa" focusTraversable="false" style="-fx-text-size: 16; -fx-opacity: 1;" text="Empresa:   " />
+            <Label id="lbEmpresa" fx:id="lbEmpresa" style="-fx-text-size: 16; -fx-opacity: 1;" text="Label" />
+            <Pane prefHeight="24.0" prefWidth="41.0" />
+            <Label id="lbCnpj" fx:id="cnpj" focusTraversable="false" style="-fx-text-size: 16; -fx-opacity: 1;" text="CNPJ:   " />
+            <Label id="lbCnpj" fx:id="lbCnpj" style="-fx-text-size: 16; -fx-opacity: 1;" text="Label" />
+            <Pane layoutX="173.0" layoutY="10.0" prefHeight="24.0" prefWidth="41.0" />
+            <Label id="lbCnpj" fx:id="usuario" focusTraversable="false" prefHeight="21.0" prefWidth="73.0" style="-fx-text-size: 16; -fx-opacity: 1;" text="Usuário:   " />
+            <Label id="lbUsuario" fx:id="lbUsuario" style="-fx-text-size: 16; -fx-opacity: 1;" text="Label" />
+            <Pane prefHeight="24.0" prefWidth="41.0" />
+            <FlowPane alignment="TOP_RIGHT" columnHalignment="RIGHT" prefHeight="33.0" prefWidth="113.0" rowValignment="TOP" stylesheets="@Darkness.css">
+               <children>
+                  <Button id="btMinimizar" fx:id="btMinimizar" mnemonicParsing="false" onAction="#minimizar" text="-" />
+                  <Button id="btFechar" fx:id="btFechar" mnemonicParsing="false" onAction="#fechar" text="x" />
+               </children>
+            </FlowPane>
+         </children>
+      </FlowPane>
+   </top>
+   <bottom>
+      <FlowPane prefHeight="50.0" prefWidth="400.0" BorderPane.alignment="CENTER_LEFT">
+         <children>
+            <ProgressIndicator fx:id="piProcesso" nodeOrientation="LEFT_TO_RIGHT" prefHeight="88.0" prefWidth="115.0" style="-fx-foreground-color: #00FF00;" visible="false" />
+         </children>
+      </FlowPane>
+   </bottom>
+   <center>
+      <Pane id="painelBotoes" fx:id="painelBotoes" prefHeight="502.0" prefWidth="801.0" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <FlowPane fx:id="cadastrosPainel" alignment="CENTER_LEFT" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="725.0" style="-fx-background-color: transparent;" styleClass="background" stylesheets="@cadastros.css">
+               <children>
+                  <Button id="btPessoas" fx:id="btpessoasCadastro" mnemonicParsing="false" onAction="#pessoasCadastro" prefHeight="130.0" prefWidth="190.0" text="PESSOAS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btProdutos" fx:id="btProdutosCadastro" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#produtosCadastro" prefHeight="130.0" prefWidth="190.0" text="PRODUTOS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btServicos" fx:id="btServicosCadastro" layoutX="130.0" layoutY="10.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="190.0" text="SERVIÇOS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="fechar" fx:id="btFecharCadastro" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#fecharCadastro" prefHeight="91.0" prefWidth="93.0" text="fechar">
+                     <effect>
+                        <ImageInput x="10.0" y="10.0">
+                           <source>
+                              <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                  </Button>
+                  <Button id="btTriEstadual" fx:id="btTributacaoEstadualCadastro" layoutX="250.0" layoutY="10.0" mnemonicParsing="false" onAction="#tributacaoEstadualCadastro" prefHeight="60.0" prefWidth="190.0" text="TRIB ESTADUAL" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btUnidades" fx:id="btUnidades" layoutX="370.0" layoutY="160.0" mnemonicParsing="false" onAction="#unidadesCadastro" prefHeight="60.0" prefWidth="190.0" text="UNIDADES" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btTriFederal" fx:id="btTriFederalCadastros" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" onAction="#tributacaoFederalCadastro" prefHeight="60.0" prefWidth="190.0" text="TRIB FEDERAL" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btTriMunicipal" fx:id="btTribMunicipalCadastros" layoutX="10.0" layoutY="90.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="TRIB MUNICIPAL" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btUnidades" fx:id="btGarconCadastros" layoutX="250.0" layoutY="90.0" mnemonicParsing="false" onAction="#garconCadastro" prefHeight="60.0" prefWidth="190.0" text="GARÇON" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btConversao" fx:id="btConversaoCadastros" layoutX="130.0" layoutY="90.0" mnemonicParsing="false" onAction="#fatoresCadastro" prefHeight="60.0" prefWidth="190.0" text="CONVERSÃO" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btOpcionais" fx:id="btOpcionaisCadastros" layoutX="390.0" layoutY="375.0" mnemonicParsing="false" onAction="#opcionaisCadastro" prefHeight="60.0" prefWidth="190.0" text="OPCIONAIS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="entradasPainel" alignment="CENTER_LEFT" columnHalignment="CENTER" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="627.0" style="-fx-background-color: transparent;" styleClass="background" stylesheets="@entradas.css">
+               <children>
+                  <Button id="btEntradas" fx:id="btEntradas" mnemonicParsing="false" onAction="#listaEntradas" prefHeight="130.0" prefWidth="190.0" text="ENTRADAS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btConsultaSefaz" fx:id="btConsultaSefaz" layoutX="130.0" layoutY="10.0" mnemonicParsing="false" onAction="#consultaSefaz" prefHeight="130.0" prefWidth="190.0" text="CONSULTA SEFAZ" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="fechar" fx:id="fechar" mnemonicParsing="false" onAction="#fecharEntrada" prefHeight="126.0" prefWidth="65.0" text="Button">
+                     <effect>
+                        <ImageInput x="10.0" y="10.0">
+                           <source>
+                              <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                  </Button>
+                  <Button id="btNfeEntrada" fx:id="btNfeEntrada" layoutX="250.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="NFE DE ENTRADA" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btImportar" fx:id="btImportar" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" onAction="#importarXml" prefHeight="60.0" prefWidth="190.0" text="IMPORTAR XML" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </FlowPane>
+            <FlowPane fx:id="saidasPainel" alignment="CENTER_LEFT" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: transparent;" styleClass="FlowPane" stylesheets="@saidas.css">
+               <children>
+                  <Button id="c" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#listaSaidas" prefHeight="130.0" prefWidth="190.0" text="SAIDAS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btPdv" mnemonicParsing="false" onAction="#abrirPdv" prefHeight="130.0" prefWidth="190.0" text="PDV" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="c" fx:id="nfe" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#abrirNfe" prefHeight="130.0" prefWidth="190.0" text="NF-E" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="fechar" fx:id="fechar1" mnemonicParsing="false" onAction="#fecharSaida" prefHeight="80.0" prefWidth="52.0" text="Button">
+                     <effect>
+                        <ImageInput x="10.0" y="10.0">
+                           <source>
+                              <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                  </Button>
+                  <Button id="btDelivery" layoutX="130.0" layoutY="10.0" mnemonicParsing="false" onAction="#delivery" prefHeight="60.0" prefWidth="190.0" style="-fx-fill-size: 100;" text="DELIVERY" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btQrcomprar" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" onAction="#qrComprarConectar" prefHeight="60.0" prefWidth="190.0" text="QRCOMPRAR" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btMesas" layoutX="250.0" layoutY="10.0" mnemonicParsing="false" onAction="#mesas" prefHeight="60.0" prefWidth="190.0" text="MESAS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btEntregas" fx:id="btEntregas" layoutX="390.0" layoutY="345.0" mnemonicParsing="false" onAction="#entregas" prefHeight="60.0" prefWidth="190.0" text="ENTREGAS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="financeiroPainel" alignment="CENTER_LEFT" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: transparent;" styleClass="background" stylesheets="@financeiro.css">
+               <children>
+                  <Button id="btProdutos" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#contaPagar" prefHeight="130.0" prefWidth="190.0" text="CONTAS PAGAR" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btServicos" layoutX="130.0" layoutY="10.0" mnemonicParsing="false" onAction="#contaReceber" prefHeight="130.0" prefWidth="190.0" text="CONTAS RECEBER" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="fechar" fx:id="fechar2" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#fecharFinanceiro" prefHeight="75.0" prefWidth="250.0" text="fechar">
+                     <effect>
+                        <ImageInput x="10.0" y="10.0">
+                           <source>
+                              <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                  </Button>
+                  <Button id="btTriEstadual" layoutX="250.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="BANCOS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btPessoas" mnemonicParsing="false" onAction="#caixa" prefHeight="60.0" prefWidth="190.0" text="CAIXA" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="auxiliaresPainel" alignment="CENTER_LEFT" columnHalignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: transparent;" styleClass="background" stylesheets="@auxiliares.css">
+               <children>
+                  <Button id="btProdutos" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#configuracoes" prefHeight="130.0" prefWidth="190.0" text="CONFIGURAÇOES" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btServicos" layoutX="130.0" layoutY="10.0" mnemonicParsing="false" onAction="#relatorios" prefHeight="130.0" prefWidth="190.0" text="RELATÓRIOS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="fechar" fx:id="fechar21" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#fecharAuxiliares" prefHeight="75.0" prefWidth="250.0" text="fechar">
+                     <effect>
+                        <ImageInput x="10.0" y="10.0">
+                           <source>
+                              <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                  </Button>
+                  <Button id="btTriEstadual" layoutX="250.0" layoutY="10.0" mnemonicParsing="false" onAction="#backup" prefHeight="60.0" prefWidth="190.0" text="BACKUP" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button id="btPessoas" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="FISCAIS" textFill="#f8f8f8">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </FlowPane>
+            <StackPane id="stkPainel" fx:id="stkPainel" prefHeight="150.0" prefWidth="200.0" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

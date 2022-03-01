@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="background" stylesheets="@saidasPdv.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.pdv">
+   <left>
+      <BorderPane prefHeight="550.0" prefWidth="665.0" style="-fx-background-color: #836FFF;" styleClass="background" stylesheets="@saidasPdv.css" BorderPane.alignment="CENTER">
+         <left>
+            <Pane minHeight="400.0" minWidth="400.0" prefHeight="406.0" prefWidth="621.0" style="-fx-background-color: #836FFF;" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField id="tfUltimoVendido" fx:id="tfUltimoVendido" alignment="CENTER" editable="false" focusTraversable="false" layoutX="14.0" layoutY="-1.0" prefHeight="81.0" prefWidth="607.0" style="-fx-background-color: #483D8B; -fx-font-size: 38; -fx-text-fill: WHITE;">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                     
+                  </TextField>
+                  <Text fill="WHITE" layoutX="8.0" layoutY="253.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Produto">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="9.0" layoutY="162.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor Un.">
+                     <font>
+                        <Font name="Arial" size="34.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="9.0" layoutY="355.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Geral" wrappingWidth="212.5625">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Text>
+                  <TextField id="tfValorTotalPdv" fx:id="tfValorTotalPdv" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" layoutX="278.0" layoutY="204.0" prefHeight="81.0" prefWidth="341.0" style="-fx-background-color: #483D8B; -fx-font-size: 38; -fx-text-fill: WHITE;">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                   
+                  </TextField>
+                  <TextField id="tfValorUnitarioPdv" fx:id="tfValorUnitarioPdv" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" layoutX="278.0" layoutY="103.0" prefHeight="81.0" prefWidth="342.0" style="-fx-background-color: #483D8B; -fx-font-size: 38; -fx-text-fill: WHITE;">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                     
+                  </TextField>
+                  <TextField id="tfSubTotalPdv" fx:id="tfSubTotalPdv" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" layoutX="278.0" layoutY="303.0" prefHeight="81.0" prefWidth="342.0" style="-fx-background-color: #483D8B; -fx-font-size: 38; -fx-text-fill: WHITE;">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </opaqueInsets>
+                    
+                  </TextField>
+               </children>
+            </Pane>
+         </left>
+         <bottom>
+            <Pane fx:id="pnCnpjCpfAvulso" prefHeight="141.0" prefWidth="665.0" style="-fx-background-color: #836FFF;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lbCnpjCpfAvulsoCliente" layoutX="15.0" layoutY="59.0" prefHeight="30.0" prefWidth="71.0" text="Cliente:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbCnpjCpfAvulso" layoutX="14.0" layoutY="101.0" prefHeight="30.0" prefWidth="71.0" text="CNPJ:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfCpfCnpjAvulso" layoutX="86.0" layoutY="99.0" onKeyReleased="#cpfCnpjAvulso" prefHeight="37.0" prefWidth="249.0" />
+                  <TextField fx:id="tfClienteAvulso" layoutX="86.0" layoutY="55.0" prefHeight="37.0" prefWidth="248.0" />
+                  <ChoiceBox fx:id="cbFisicaJuridica" layoutX="87.0" layoutY="4.0" prefHeight="43.0" prefWidth="143.0" />
+                  <Button fx:id="btCpfCnpjOk" layoutX="335.0" layoutY="57.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="84.0" style="-fx-font-size: 24;" text="OK" />
+                  <Button fx:id="btCpfCnpjSair" layoutX="419.0" layoutY="57.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="105.0" style="-fx-font-size: 24;" text="SAIR" />
+                  <Label fx:id="lbCnpjCpfAvulsoTipo" layoutX="17.0" layoutY="17.0" prefHeight="30.0" prefWidth="71.0" text="Tipo:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Pane id="pnStatus" fx:id="pnStatus" layoutX="53.0" layoutY="66.0" prefHeight="74.0" prefWidth="102.0">
+                     <children>
+                        <ProgressIndicator id="piProcesso" fx:id="piProcesso" prefHeight="74.0" prefWidth="92.0" style="-fx-background-color: #483D8B;" visible="false" />
+                        <Label id="lbStatus" fx:id="lbStatus" layoutX="122.0" prefHeight="73.0" prefWidth="447.0" style="-fx-background-color: #836FFF;" text="TRANSMITINDO..." textAlignment="CENTER" textFill="#fffbfb">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </bottom>
+         <top>
+            <Pane fx:id="pnSangria" prefHeight="47.0" prefWidth="665.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btConfirmaSangria" layoutX="299.0" layoutY="7.0" mnemonicParsing="false" onAction="#sangriaCaixa" text="OK" />
+                  <TextField fx:id="tfValorSangria" layoutX="94.0" layoutY="5.0" />
+                  <Label layoutY="7.0" text="Sangria" textFill="#f5f0f0">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btCancelaSangria" layoutX="366.0" layoutY="7.0" mnemonicParsing="false" onAction="#fecharSangria" prefHeight="33.0" prefWidth="80.0" text="SAIR" />
+               </children>
+            </Pane>
+         </top>
+      </BorderPane>
+   </left>
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <FlowPane alignment="CENTER_RIGHT" prefHeight="45.0" styleClass="background" stylesheets="@saidasPdv.css" BorderPane.alignment="TOP_LEFT">
+               <children>
+                  <TextField id="tfNota" fx:id="tfNota" editable="false" focusTraversable="false" prefHeight="37.0" prefWidth="37.0" visible="false" />
+                  <Button id="btImportarNfce" fx:id="btImportarNfce" focusTraversable="false" mnemonicParsing="false" onAction="#importarNfceSaida" prefHeight="45.0" prefWidth="194.0" text="IMPORTAR NFCE | F10" visible="false" />
+                  <Button id="btFechar" fx:id="btSangria" focusTraversable="false" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" onAction="#habilitarSangria" prefHeight="45.0" prefWidth="93.0" style="-fx-font-size: 10;" text="SANGRIA" />
+                  <Button id="btFechar" fx:id="btBuscarCliente11" focusTraversable="false" layoutX="298.0" layoutY="10.0" mnemonicParsing="false" onAction="#cpfCnpjAvulso" prefHeight="45.0" prefWidth="126.0" style="-fx-font-size: 10;" text="INDICAR CLIENTE" />
+                  <Button id="btFechar" fx:id="btBuscarCliente" focusTraversable="false" layoutX="363.0" layoutY="10.0" mnemonicParsing="false" onAction="#listaConsumidor" prefHeight="45.0" prefWidth="144.0" style="-fx-font-size: 10;" text="BUSCAR CLIENTE | F9" />
+                  <Button id="btFechar" fx:id="btFechar" focusTraversable="false" mnemonicParsing="false" prefHeight="45.0" prefWidth="101.0" style="-fx-font-size: 10;" text="CONTA | F5" />
+                  <Button id="btFechar" fx:id="btFechar1" focusTraversable="false" mnemonicParsing="false" onAction="#cancelaVendaAtual" prefHeight="45.0" prefWidth="118.0" style="-fx-font-size: 10;" text="CANCELAR | F6" />
+                  <Button id="btFechar" fx:id="btFechar11" focusTraversable="false" mnemonicParsing="false" onAction="#abreConsultaEmitidas" prefHeight="45.0" prefWidth="123.0" style="-fx-font-size: 10;" text="CONSULTAR | F7" />
+                  <Button id="btImportarMesa" fx:id="btImportarMesa" focusTraversable="false" mnemonicParsing="false" onAction="#importarMesas" prefHeight="45.0" prefWidth="125.0" style="-fx-font-size: 10;" text="IMP. MESA | F10" />
+                  <Button id="btImportarPre" fx:id="btImportarPre" focusTraversable="false" mnemonicParsing="false" onAction="#importarPreVenda" prefHeight="45.0" prefWidth="143.0" style="-fx-font-size: 10;" text="IMP. PRE VENDA | F8" />
+               </children>
+            </FlowPane>
+         </center>
+         <right>
+            <Button id="btFecharJanela" fx:id="btFecharJanela" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" onAction="#fechar" prefHeight="45.0" prefWidth="55.0" text="x" BorderPane.alignment="TOP_LEFT" />
+         </right>
+      </BorderPane>
+   </top>
+   <right>
+      <BorderPane prefHeight="717.0" prefWidth="589.0" styleClass="background" stylesheets="@saidasPdv.css" BorderPane.alignment="CENTER">
+         <bottom>
+            <FlowPane prefHeight="81.0" prefWidth="616.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField id="tfDescricaoPdv" fx:id="tfDescricaoPdv" alignment="CENTER" onKeyReleased="#mostraProdutos" prefHeight="81.0" prefWidth="484.0" promptText="PRODUTO" style="-fx-background-color: white; -fx-text-fill: #483D8B; -fx-font-size: 38;">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                  </TextField>
+                  <TextField id="tfQuantidadePdv" fx:id="tfQuantidadePdv" focusTraversable="false" minWidth="120.0" prefHeight="81.0" prefWidth="130.0" promptText="QUANT." style="-fx-background-color: white; -fx-text-fill: #483D8B; -fx-font-size: 38;">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </FlowPane>
+         </bottom>
+         <left>
+            <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="525.0" prefWidth="616.0" styleClass="background" stylesheets="@saidasPdv.css" BorderPane.alignment="CENTER">
+               <children>
+                  <TableView id="tbConsultaProduto" fx:id="tbConsultaProduto" layoutY="72.0" maxHeight="800.0" maxWidth="1200.0" prefHeight="309.0" prefWidth="626.0" styleClass="background" stylesheets="@saidasPdv.css" visible="false">
+                    <columns>
+                      <TableColumn id="tcProduto" fx:id="tcProduto" prefWidth="420.0" text="PRODUTO" />
+                      <TableColumn id="tcPreco" fx:id="tcPreco" prefWidth="69.0" text="PREÇO" />
+                        <TableColumn id="tcEstoque" fx:id="tcEstoque" prefWidth="104.0" text="ESTOQUE" />
+                    </columns>
+                  </TableView>
+                  <TableView id="tabelaCupom" fx:id="tabelaCupom" focusTraversable="false" layoutY="49.0" maxHeight="800.0" maxWidth="1200.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="432.0" prefWidth="610.0" stylesheets="@saidasPdv.css">
+                    <columns>
+                        <TableColumn id="item" fx:id="item" editable="false" prefWidth="39.0" sortType="DESCENDING" text="ITEM" />
+                      <TableColumn id="descProduto" fx:id="descProduto" editable="false" prefWidth="314.0" sortType="DESCENDING" text="PRODUTO" />
+                        <TableColumn id="quant" fx:id="quant" editable="false" minWidth="0.0" prefWidth="78.0" sortType="DESCENDING" text="QUANT." />
+                        <TableColumn id="valUnitario" fx:id="valUnitario" editable="false" minWidth="0.0" prefWidth="51.0" sortType="DESCENDING" text="VAL. UNI" />
+                        <TableColumn id="valTotal" fx:id="valTotal" editable="false" minWidth="5.0" prefWidth="131.0" sortType="DESCENDING" text="VAL. TOTAL" />
+                    </columns>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TableView>
+                  <Label fx:id="lbConsumidor" layoutX="14.0" layoutY="14.0" text="Consumidor:" textFill="#fffefe">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="Consumidor" layoutX="105.0" layoutY="14.0" prefHeight="17.0" prefWidth="253.0" textFill="#fffefe">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="cpfCnpj" layoutX="105.0" layoutY="35.0" prefHeight="17.0" prefWidth="253.0" textFill="#fffefe">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbCpfCnpj" layoutX="13.0" layoutY="35.0" text="CPF / CNPJ" textFill="#fffefe">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </left>
+      </BorderPane>
+   </right>
+   <bottom>
+      <Pane prefHeight="87.0" style="-fx-background-color: #836FFF;" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea id="tfStatus" fx:id="tfStatus" layoutX="728.0" prefHeight="84.0" prefWidth="666.0" visible="false" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextArea>
+            <Button id="btFecharRetorno" fx:id="btFecharRetorno" layoutX="572.0" mnemonicParsing="false" onAction="#fecharRetorno" prefHeight="45.0" prefWidth="150.0" text="FECHAR | F2" visible="false" />
+         </children>
+      </Pane>
+   </bottom>
+</BorderPane>

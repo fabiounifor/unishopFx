@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="teste5Cliente" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c7037ccd-0ff6-450b-8bab-588b1459834b">
+	<property name="ireport.zoom" value="1.6500000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="permissao" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     compras.`codigo` AS compras_codigo,
+     compras.`valor_total` AS compras_valor_total,
+     compras.`data` AS compras_data,
+     compras_produtos.`valor_custo` AS compras_produtos_valor_custo,
+     compras_produtos.`valor_venda` AS compras_produtos_valor_venda,
+     compras_produtos.`quantidade` AS compras_produtos_quantidade,
+     produtos.`codigo` AS produtos_codigo,
+     produtos.`nome` AS produtos_nome,
+     produtos.`codigo_barras_ean` AS produtos_codigo_barras_ean,
+     fornecedores.`nome` AS fornecedores_nome,
+     unidade_medida.`abreviacao` AS unidade_medida_abreviacao,
+     produtos.`marca` AS produtos_marca
+FROM
+     `compras` compras INNER JOIN `compras_produtos` compras_produtos ON compras.`codigo` = compras_produtos.`cod_compras`
+     INNER JOIN `produtos` produtos ON compras_produtos.`cod_produto` = produtos.`codigo`
+     INNER JOIN `fornecedores` fornecedores ON produtos.`fornecedores_codigo` = fornecedores.`codigo`
+     INNER JOIN `unidade_medida` unidade_medida ON produtos.`unidade_medida` = unidade_medida.`codigo`]]>
+	</queryString>
+	<field name="compras_codigo" class="java.lang.Integer"/>
+	<field name="compras_valor_total" class="java.lang.Double"/>
+	<field name="compras_data" class="java.sql.Date"/>
+	<field name="compras_produtos_valor_custo" class="java.lang.Double"/>
+	<field name="compras_produtos_valor_venda" class="java.lang.Double"/>
+	<field name="compras_produtos_quantidade" class="java.lang.Integer"/>
+	<field name="produtos_codigo" class="java.lang.Integer"/>
+	<field name="produtos_nome" class="java.lang.String"/>
+	<field name="produtos_codigo_barras_ean" class="java.lang.String"/>
+	<field name="fornecedores_nome" class="java.lang.String"/>
+	<field name="unidade_medida_abreviacao" class="java.lang.String"/>
+	<field name="produtos_marca" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="356" y="0" width="199" height="29" forecolor="#999999" uuid="ca751114-582d-49d2-8923-86db0543f144"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="24" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Relatório]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="356" y="28" width="199" height="22" forecolor="#FF0033" uuid="ce3ac187-f304-49f5-b8fd-60885c3df0fc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Compras]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="1" width="325" height="80" uuid="628a18e1-a60c-4e02-adae-91508ccd7cec"/>
+				<imageExpression><![CDATA["C:\\BLVendas\\src\\imagens\\processimg.png"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="382" y="50" width="100" height="14" uuid="40a94a7b-f972-412c-9aab-3199cba0d0e3"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compras_data}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="356" y="50" width="26" height="14" uuid="2e9898c9-bb07-4b2c-914b-d9c4227f0094"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="64" width="26" height="14" uuid="4ae88196-dcb9-43cc-93bf-02d7cef1da25"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="382" y="64" width="100" height="14" uuid="47da696b-4522-4f8f-8a4d-ad6cd385ae7e"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compras_codigo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="8e9a3dae-83ad-4ed1-a978-5cfa506613e4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="1" width="40" height="15" uuid="608d2a2b-e3d3-4629-9ec5-3073943ebba6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="0" width="187" height="15" uuid="4d1e7ddd-983f-4f0b-baf9-43b76264c452"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="0" width="29" height="15" uuid="9c827dcc-8b0e-4651-ac2e-45fc403d638e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="1" width="50" height="15" uuid="7e4f00c9-3370-4911-8ccb-851f7705197d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Val. custo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="140" height="15" uuid="0c5cab45-e8ce-400c-b3f5-db747b43568b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fornecedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="1" width="57" height="15" uuid="6a863a4f-783e-499d-8b21-e2b8fb14d454"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cod. barras]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="391" y="0" width="34" height="15" uuid="e430b4ac-e682-499d-a7db-bbbf4f12ebd9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="1" width="50" height="15" uuid="8547fa9a-0fd1-49bb-92a5-6a493fc19858"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Val. Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="1" y="0" width="554" height="14" uuid="326eef45-9b47-4500-a30e-478248ff691c"/>
+				<textField>
+					<reportElement x="424" y="0" width="29" height="14" uuid="87a5caa6-5e3b-43e8-a191-92fdc09bb79c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{compras_produtos_quantidade}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="454" y="0" width="50" height="14" uuid="c4a21450-8a7d-4630-a2d7-a1f061c5c83f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{compras_produtos_valor_custo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="98" y="0" width="150" height="14" uuid="63432ca1-c9a1-42d5-9c21-339ab3152e0c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{produtos_nome}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="249" y="0" width="140" height="14" uuid="6868f51a-ff6b-4d7e-b027-2653bdc9425b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fornecedores_nome}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="390" y="0" width="34" height="14" uuid="8252b33f-adbe-485f-ae17-c42fd428f63e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{unidade_medida_abreviacao}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="504" y="0" width="50" height="14" uuid="b58b98af-980a-4113-8e01-9d66cd55e675"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{compras_produtos_quantidade} * $F{compras_produtos_valor_custo}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement x="0" y="0" width="40" height="14" uuid="20208549-627e-4149-8bc8-dffdc70a26e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="0" width="57" height="14" uuid="e32bee8c-6f32-4964-aedc-ee5d4cc78c76"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtos_codigo_barras_ean}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="19" splitType="Stretch">
+			<rectangle>
+				<reportElement x="482" y="4" width="73" height="14" forecolor="#F2EBDF" backcolor="#F2EBDF" uuid="3b98b8c4-3984-40fe-bc3d-66e1aa82150b"/>
+			</rectangle>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="482" y="4" width="73" height="14" backcolor="#CCFFCC" uuid="82abefb4-8f69-451d-8c96-8d21a0d9befc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compras_valor_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="382" y="4" width="100" height="14" uuid="b85f028e-5796-4ce0-8767-d3596457ea22"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Valor Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="0457caeb-d1a6-476f-bfc3-1ffe62842a1d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#99FFCC" backcolor="#F2EBDF" uuid="712d1d63-9ba3-430a-83c9-082cffee67dc"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="3aaf1063-953b-494a-8056-fdf1a9e2cab2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="c07e8e34-5d62-4016-946d-e362765ea670"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="9a05a163-7ef2-4055-8f06-17afe084506c"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

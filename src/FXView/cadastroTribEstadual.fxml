@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@cadastros.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.tributacaoEstadual">
+   <children>
+      <TextField id="tfDescricao" fx:id="tfDescricao" layoutX="47.0" layoutY="95.0" prefHeight="37.0" prefWidth="726.0" />
+      <TextField id="tfEstado" fx:id="tfEstado" layoutX="47.0" layoutY="190.0" prefHeight="37.0" prefWidth="350.0" />
+      <Label layoutX="48.0" layoutY="67.0" text="Descricao" />
+      <Label layoutX="50.0" layoutY="157.0" text="Estado" />
+      <Label layoutX="498.0" layoutY="157.0" text="Base de Cálculo" />
+      <TilePane layoutY="565.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@cadastros.css" />
+      <Button id="btGravar" fx:id="btGravar" layoutX="653.0" layoutY="565.0" mnemonicParsing="false" onAction="#salvarTributacao" prefHeight="35.0" prefWidth="147.0" text="GRAVA" />
+      <TextField id="tfBasedeCalculo" fx:id="tfBasedeCalculo" layoutX="478.0" layoutY="189.0" prefHeight="37.0" prefWidth="293.0" />
+      <TextField id="tfCSOSN" fx:id="tfCSOSN" layoutX="49.0" layoutY="341.0" prefHeight="37.0" prefWidth="350.0" />
+      <TextField id="tfCFOP" fx:id="tfCFOP" layoutX="50.0" layoutY="420.0" prefHeight="37.0" prefWidth="350.0" />
+      <TextField id="tfPercentual" fx:id="tfPercentual" layoutX="50.0" layoutY="498.0" prefHeight="37.0" prefWidth="350.0" />
+      <TextField id="tfBasedeCalculoICMSRetido" fx:id="tfBasedeCalculoICMSRetido" layoutX="477.0" layoutY="498.0" prefHeight="37.0" prefWidth="293.0" />
+      <TextField id="tfBasedeCalculoSubEfetivo" fx:id="tfBasedeCalculoSubEfetivo" layoutX="476.0" layoutY="341.0" prefHeight="37.0" prefWidth="293.0" />
+      <TextField id="tfBasedeCalculoICMS" fx:id="tfBasedeCalculoICMS" layoutX="477.0" layoutY="420.0" prefHeight="37.0" prefWidth="293.0" />
+      <TextField id="ccbOrigem" fx:id="tfBasedeCalculoSub" layoutX="478.0" layoutY="266.0" prefHeight="37.0" prefWidth="293.0" />
+      <Label layoutX="54.0" layoutY="239.0" text="Origem" />
+      <Label layoutX="500.0" layoutY="239.0" text="Base de Cálculo Substituiçao" />
+      <Label layoutX="50.0" layoutY="315.0" text="CSOSN" />
+      <Label layoutX="494.0" layoutY="314.0" text="Base de Cálculo Substituiçao Efetivo" />
+      <Label layoutX="50.0" layoutY="395.0" text="CFOP" />
+      <Label layoutX="494.0" layoutY="395.0" text="Base de Cálculo ICMS" />
+      <Label layoutX="53.0" layoutY="473.0" text="Percentual" />
+      <Label layoutX="497.0" layoutY="474.0" text="Base de Cálculo ICMS Retido" />
+      <ChoiceBox id="cbOrigem" fx:id="cbOrigem" layoutX="47.0" layoutY="267.0" prefHeight="31.0" prefWidth="350.0" />
+      <Pane prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@cadastros.css">
+         <children>
+            <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
+               <effect>
+                  <ImageInput x="10.0" y="10.0">
+                     <source>
+                        <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
+            </Button>
+            <Label layoutX="14.0" layoutY="6.0" style="-fx-text-fill: WHITE;" text="Cadastro Tributação Estadual" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

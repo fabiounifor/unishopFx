@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language JavaScript?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.contasPagar">
+   <children>
+      <AnchorPane>
+         <children>
+            <Group>
+               <children>
+                  <Pane>
+                     <children>
+                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@financeiro.css">
+                           <children>
+                              <TilePane layoutY="570.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@financeiro.css" />
+                              <Button id="btPesquisarContPagar" fx:id="btPesquisarContPagar" layoutX="570.0" layoutY="41.0" mnemonicParsing="false" onAction="#listaContasGeralPagar" prefHeight="53.0" prefWidth="102.0" text="PESQUISA" textAlignment="CENTER">
+                                 <effect>
+                                    <ImageInput x="5.0" y="5.0">
+                                       <source>
+                                          <Image url="file:/C:/Unishop/src/imagens/icones%2040/lupa.png" />
+                                       </source>
+                                    </ImageInput>
+                                 </effect></Button>
+                              <TextField id="pesquisaContasPagar" fx:id="pesquisaContasPagar" layoutX="184.0" layoutY="41.0" prefHeight="53.0" prefWidth="384.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></TextField>
+                              <TableView id="tabelaListaContasPagar" fx:id="tabelaListaContasPagar" layoutX="8.0" layoutY="152.0" prefHeight="412.0" prefWidth="778.0">
+                                <columns>
+                                  <TableColumn id="contaPagar" fx:id="contaPagar" prefWidth="637.0" style="-fx-textfill: green;" />
+                                </columns>
+                              </TableView>
+                              <Group layoutX="-1.0" layoutY="-3.0">
+                                 <children>
+                                    <Group />
+                                    <Pane layoutX="653.0" layoutY="574.0">
+                                       <children>
+                                          <Button id="btAdcionarContaReceber" fx:id="btAdcionarContaReceber" layoutX="7.0" mnemonicParsing="false" onAction="#novaContaPagar" prefHeight="35.0" prefWidth="141.0" text="ADCIONAR | F4" />
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="550.0" layoutY="574.0" />
+                                    <Pane layoutX="704.0" layoutY="574.0" />
+                                    <Button id="btQuitarContasPagar" fx:id="btQuitarContasPagar" layoutX="553.0" layoutY="574.0" mnemonicParsing="false" onAction="#pagarConta" prefHeight="35.0" prefWidth="109.0" text="PAGAR | F4" />
+                                    <Button id="btImprimir" fx:id="btImprimir" layoutX="267.0" layoutY="574.0" mnemonicParsing="false" onAction="#gerarRelatorioContasPagar" prefHeight="34.0" prefWidth="141.0" text="IMPRIMIR RELATORIO" />
+                                    <Button id="btDuplicarContasPagar" fx:id="btDuplicarContasPagar1" layoutX="406.0" layoutY="574.0" mnemonicParsing="false" onAction="#novoFornecedor" prefHeight="35.0" prefWidth="149.0" text="CADASTRAR FORN" />
+                                    <Button id="btEditarContasPagar" fx:id="btEditarContasPagar" layoutX="174.0" layoutY="574.0" mnemonicParsing="false" onAction="#abrirContaPagar" prefHeight="35.0" prefWidth="111.0" text="EDITAR | F6" />
+                                    <Button id="btImprimir" fx:id="btImprimir1" layoutX="59.0" layoutY="574.0" mnemonicParsing="false" onAction="#imprimirEstaConta" prefHeight="35.0" prefWidth="117.0" text="IMPRIMIR" />
+                                 </children>
+                              </Group>
+                              <DatePicker id="dtInicio" fx:id="dtInicio" layoutX="48.0" layoutY="105.0" />
+                              <DatePicker id="dtFim" fx:id="dtFim" layoutX="323.0" layoutY="105.0" />
+                              <ChoiceBox id="chEscolha" fx:id="chEscolha" layoutX="570.0" layoutY="108.0" prefHeight="25.0" prefWidth="201.0" />
+                              <Label layoutX="3.0" layoutY="110.0" text="Inicio" />
+                              <Label layoutX="289.0" layoutY="111.0" text="Fim" />
+                              <Pane prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@cadastros.css">
+                                 <children>
+                                    <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
+                                       <effect>
+                                          <ImageInput x="10.0" y="10.0">
+                                             <source>
+                                                <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                                             </source>
+                                          </ImageInput>
+                                       </effect>
+                                    </Button>
+                                    <Label layoutX="14.0" layoutY="6.0" style="-fx-text-fill: WHITE;" text="Pesquisa Contas a Pagar" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </children>
+            </Group>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

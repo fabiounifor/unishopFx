@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="teste5Cliente" language="groovy" pageWidth="213" pageHeight="832" columnWidth="213" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="210"/>
+	<property name="ireport.callouts" value="##Thu Jul 21 09:55:49 GMT-03:00 2011"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     itens_pedido_mesa.`codigo` AS itens_pedido_mesa_codigo,
+     itens_pedido_mesa.`status_pedido` AS itens_pedido_mesa_status_pedido,
+     itens_pedido_mesa.`observacao` AS itens_pedido_mesa_observacao,
+     itens_pedido_mesa.`quantidade` AS itens_pedido_mesa_quantidade,
+     itens_pedido_mesa.`horario` AS itens_pedido_mesa_horario,
+     itens_pedido_mesa.`codigo_mesa` AS itens_pedido_mesa_codigo_mesa,
+     produtos.`nome` AS produtos_nome,
+     produtos.`descricao_produto` AS produtos_descricao_produto,
+     produtos.`valor` AS produtos_valor,
+     produtos.`valor_custo` AS produtos_valor_custo,
+     unidade_medida.`abreviacao` AS unidade_medida_abreviacao,
+     empresa.`razao_social` AS empresa_razao_social,
+     empresa.`nome_fantasia` AS empresa_nome_fantasia,
+     empresa.`endereco` AS empresa_endereco,
+     empresa.`endereco_numero` AS empresa_endereco_numero,
+     empresa.`complemento` AS empresa_complemento,
+     empresa.`bairro` AS empresa_bairro,
+     empresa.`cep` AS empresa_cep,
+     empresa.`telefone` AS empresa_telefone,
+     empresa.`insc_estad` AS empresa_insc_estad,
+     empresa.`cnpj` AS empresa_cnpj,
+     cidade.`nome` AS cidade_nome,
+     garcon.nome AS garcon_nome,
+     estado.`uf` AS estado_uf
+FROM
+     `produtos` produtos INNER JOIN `itens_pedido_mesa` itens_pedido_mesa ON produtos.`codigo` = itens_pedido_mesa.`codigo_produto`
+     INNER JOIN `unidade_medida` unidade_medida ON produtos.`unidade_medida` = unidade_medida.`codigo`,
+     INNER JOIN `garcon` garcon  ON garcon.`codigo` = itens_pedido_mesa.`codigo_garcom`,
+     `cidade` cidade INNER JOIN `empresa` empresa ON cidade.`codigo` = empresa.`cod_cidade`
+     INNER JOIN `estado` estado ON cidade.`fk_cod_estado` = estado.`codigo`]]>
+	</queryString>
+	<field name="itens_pedido_mesa_codigo" class="java.lang.Integer"/>
+	<field name="itens_pedido_mesa_status_pedido" class="java.lang.String"/>
+	<field name="itens_pedido_mesa_observacao" class="java.lang.String"/>
+	<field name="itens_pedido_mesa_quantidade" class="java.lang.Float"/>
+	<field name="itens_pedido_mesa_horario" class="java.sql.Time"/>
+	<field name="itens_pedido_mesa_codigo_mesa" class="java.lang.Integer"/>
+	<field name="produtos_nome" class="java.lang.String"/>
+	<field name="produtos_descricao_produto" class="java.lang.String"/>
+	<field name="produtos_valor" class="java.lang.Double"/>
+	<field name="produtos_valor_custo" class="java.lang.Double"/>
+	<field name="unidade_medida_abreviacao" class="java.lang.String"/>
+	<field name="empresa_razao_social" class="java.lang.String"/>
+	<field name="empresa_nome_fantasia" class="java.lang.String"/>
+	<field name="empresa_endereco" class="java.lang.String"/>
+	<field name="empresa_endereco_numero" class="java.lang.String"/>
+	<field name="empresa_complemento" class="java.lang.String"/>
+	<field name="empresa_bairro" class="java.lang.String"/>
+	<field name="empresa_cep" class="java.lang.String"/>
+	<field name="empresa_telefone" class="java.lang.String"/>
+	<field name="empresa_insc_estad" class="java.lang.String"/>
+	<field name="empresa_cnpj" class="java.lang.String"/>
+	<field name="cidade_nome" class="java.lang.String"/>
+	<field name="garcon_nome" class="java.lang.String"/>
+	<field name="estado_uf" class="java.lang.String"/>
+	<variable name="TOTALIZADOR" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{itens_pedido_mesa_quantidade} * $F{produtos_valor})*1.1]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="TAXA" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{itens_pedido_mesa_quantidade} * $F{produtos_valor})*0.1]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="192" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{empresa_nome_fantasia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="103" y="14" width="92" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Time"><![CDATA[$F{itens_pedido_mesa_horario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="14" width="78" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="-1" width="209" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="14" y="1" width="52" height="15"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[MESA Nº:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="73" y="0" width="30" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{itens_pedido_mesa_codigo_mesa}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="18" width="209" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="0" width="111" height="15"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="0" width="19" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="0" width="32" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[V Fin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="0" width="32" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[V Un]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="115" y="1" width="19" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lucida Sans Unicode" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{itens_pedido_mesa_quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="1" width="111" height="13"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{produtos_nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="170" y="1" width="32" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lucida Sans Unicode" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{itens_pedido_mesa_quantidade} * $F{produtos_valor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="135" y="1" width="32" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Lucida Sans Unicode" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{produtos_valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="98">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="116" y="54" width="87" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{TOTALIZADOR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="58" width="90" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="78" width="192" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBRIGADO, VOLTE SEMPRE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="103" y="1" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{garcon_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="3" width="98" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Garçon:...................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="35" width="90" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAXA 10%]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="102" y="32" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{TAXA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

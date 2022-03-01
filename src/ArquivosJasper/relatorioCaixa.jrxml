@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="teste5Cliente" language="groovy" pageWidth="212" pageHeight="832" columnWidth="212" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="47e33f6b-5634-488d-afad-f7802d59ace6">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Thu Jul 21 09:55:49 GMT-03:00 2011"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+caixa.`caixa_numero` AS caixa_numero,
+caixa.`data_abertura` AS caixa_data_abertura,
+caixa.`data_fechamento` AS caixa_data_fechamento,
+usuarios.`nome` AS usuario_nome,
+caixa.`dinheiro` AS caixa_dinheiro,
+caixa.`cartao` AS caixa_cartao,
+caixa.`vale` AS caixa_vale,
+caixa.`cheque` AS caixa_cheque,
+caixa.`dinheiroUsuario` AS caixa_dinheiro_usuario,
+caixa.`cartaoUsuario` AS caixa_cartao_usuario,   caixa.`valeUsuario` AS caixa_vale_usuario,
+caixa.`chequeUsuario` AS caixa_cheque_usuario,
+caixa.`fundoUsuario` AS caixa_fundo_usuario,
+caixa.`sangria` AS caixa_sangria,
+caixa.`diferencaUsuario` AS caixa_diferenca_usuario FROM  `caixa` caixa INNER JOIN `usuarios` usuarios ON caixa.`usuario` = usuarios.`pk_codigo`]]>
+	</queryString>
+	<field name="caixa_numero" class="java.lang.Integer"/>
+	<field name="usuario_nome" class="java.lang.String"/>
+	<field name="caixa_data_abertura" class="java.lang.String"/>
+	<field name="caixa_data_fechamento" class="java.lang.String"/>
+	<field name="caixa_dinheiro" class="java.lang.Double"/>
+	<field name="caixa_cartao" class="java.lang.Double"/>
+	<field name="caixa_vale" class="java.lang.Double"/>
+	<field name="caixa_cheque" class="java.lang.Double"/>
+	<field name="caixa_dinheiro_usuario" class="java.lang.Double"/>
+	<field name="caixa_cartao_usuario" class="java.lang.Double"/>
+	<field name="caixa_vale_usuario" class="java.lang.Double"/>
+	<field name="caixa_cheque_usuario" class="java.lang.Double"/>
+	<field name="caixa_fundo_usuario" class="java.lang.Double"/>
+	<field name="caixa_sangria" class="java.lang.Double"/>
+	<field name="caixa_diferenca_usuario" class="java.lang.Double"/>
+	<variable name="TOTALIZADOR" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{caixa_fundo_usuario}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="soma" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{caixa_dinheiro}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="118" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="5" width="199" height="13" uuid="c2a09a4f-aee1-422b-b5b0-b43b7ae726b3"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[R C B TEIXEIRA ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="34" width="105" height="13" uuid="5410f924-7675-45b9-9d7d-1e88945cf68f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FECHAMENTO DE CAIXA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="67" y="74" width="137" height="20" uuid="221252fe-010b-4770-b858-b08c50f60e3c"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="50" width="137" height="20" uuid="3b19701a-4b70-4fb7-b169-b028acdf372a"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_data_abertura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="111" y="34" width="96" height="13" uuid="d49907f1-e3ee-4f58-8f6f-40ecad39f583"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_data_fechamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="94" width="137" height="20" uuid="835b56b1-3f55-48b9-937f-77e1adc5be33"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="77" width="59" height="13" uuid="7cc59422-7af6-4a20-a941-a6563ede0ecd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[APURAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="97" width="59" height="13" uuid="9a162f28-8de7-4ad3-bafe-439bffefd321"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[OPERADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="53" width="59" height="13" uuid="b30744ea-d1dd-43e4-9efc-f5864cfe4d97"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ABERTURA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="13" width="207" height="1" uuid="c76a926a-d0ec-4903-b1c1-38b151fc15ef"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="4" y="1" width="73" height="12" uuid="4f48e05f-b773-422e-812f-ea128db2d7ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APURADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="132" y="0" width="74" height="12" uuid="5e1fdb67-3e23-4eaf-bf38-5a0ce5a65601"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORMADO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="103" splitType="Stretch">
+			<rectangle>
+				<reportElement x="107" y="3" width="100" height="84" uuid="0b3776de-bf42-427c-bb09-11b88fdaed4e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="4" y="3" width="100" height="84" uuid="4cecc995-296a-44ad-a666-f27305bfe3ad"/>
+			</rectangle>
+			<textField>
+				<reportElement x="50" y="41" width="54" height="20" uuid="74cbdfb9-2124-4c8c-bac0-ce7f19b39fd9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{caixa_vale}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="61" width="54" height="20" uuid="2131400f-5099-4857-9cf2-13d8b71ccf5f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{caixa_cheque}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="21" width="52" height="20" uuid="79b34367-366f-4d5b-9c4a-601fde18d1de"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{caixa_cartao_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="42" width="52" height="20" uuid="9d55fb4b-3de9-4428-b066-d586ea97da90"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{caixa_vale_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="62" width="52" height="20" uuid="329d9456-9d6b-44ce-b439-13f79c4f4ddb"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{caixa_cheque_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="3" width="54" height="18" uuid="fbd228ea-813b-4d48-bf48-e4e9d434f6af"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_dinheiro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="3" width="52" height="18" uuid="2fd71736-d46b-4854-941e-1fc73cf5645e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{caixa_dinheiro_usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="5" width="43" height="13" uuid="574d778c-9449-45d1-b6ed-0b54789a9354"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DINHEIRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="24" width="43" height="13" uuid="310b3c08-d0f5-475b-a18e-78c26b413dba"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CARTÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="44" width="43" height="13" uuid="2d2447da-89f2-4695-98f9-8948db6559cf"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CHEQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="63" width="43" height="13" uuid="75785e7d-f572-4670-8c56-22cb0c666405"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CONVENIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="5" width="46" height="13" uuid="83743077-4fa7-4924-9ea7-d14bf7d1c52e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DINHEIRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="23" width="46" height="13" uuid="efef95c7-e6cb-4017-a6f2-0e37ee003697"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CARTÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="44" width="46" height="13" uuid="1c1b688e-9cd9-499d-b693-3688ae9a7614"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CHEQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="63" width="46" height="13" uuid="8f66d09e-8488-41df-949d-1c3ed23f94cb"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CONVENIO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="21" width="54" height="20" uuid="7c98a69c-36d3-41e1-9a48-9a16c6925127"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{caixa_cartao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="90" width="94" height="13" uuid="e8ff44ea-6941-47b1-bdc0-120f34f3a19d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SOMA DAS SANGRIAS]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band height="65">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="4" width="207" height="1" uuid="5c0d1ca3-c2f1-469a-bb35-24d3b93585c2"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="2" y="41" width="202" height="1" uuid="387d7b26-28fd-4054-85a5-48177d5e4542"/>
+			</line>
+			<staticText>
+				<reportElement x="5" y="45" width="200" height="14" uuid="55dda91a-3362-43eb-9ab3-66d2a74fa330"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FIM DA APURAÇÃO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="61" width="202" height="1" uuid="d69f3807-be38-4d53-b258-6f4fb97107a6"/>
+			</line>
+			<textField>
+				<reportElement x="104" y="6" width="100" height="20" uuid="ec6e07b2-30b1-44b2-b22e-4a79e4b57b9b"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caixa_diferenca_usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="10" width="97" height="13" uuid="15aa3d54-ab53-4ef8-90c7-163f4bd6024b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DIFERENÇA DE CAIXA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="107" y="-15" width="100" height="13" uuid="974e48ca-cedb-4112-bc45-5e8f0a36abef"/>
+				<textFieldExpression><![CDATA[$F{caixa_sangria}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

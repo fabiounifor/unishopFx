@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@saidas.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.consultaNfcesEmitidas">
+   <children>
+      <TilePane layoutX="1.0" layoutY="565.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@saidas.css" />
+      <Button id="btTransferir" fx:id="btTransferir" layoutX="653.0" layoutY="565.0" mnemonicParsing="false" onAction="#consultaNfce" prefHeight="35.0" prefWidth="147.0" stylesheets="@saidas.css" text="Consultar" />
+      <DatePicker fx:id="dtInicial" layoutX="123.0" layoutY="157.0" />
+      <DatePicker fx:id="dtFinal" layoutX="446.0" layoutY="157.0" />
+      <Label fx:id="lbDataInicial" layoutX="174.0" layoutY="118.0" style="-FX-font-fill: black;" stylesheets="@saidas.css" text="Data Inicial" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <Label fx:id="lbDataFinal" layoutX="497.0" layoutY="120.0" style="-FX-font-fill: black;" stylesheets="@saidas.css" text="Data Final" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <Label fx:id="lbTitulo" layoutX="322.0" layoutY="69.0" style="-FX-font-fill: black;" text="VENDAS POR PERÍODO" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <TextField fx:id="tfDinheiro" layoutX="340.0" layoutY="233.0" prefHeight="54.0" prefWidth="337.0" />
+      <TextField fx:id="tfCartaoCredito" layoutX="340.0" layoutY="300.0" prefHeight="54.0" prefWidth="337.0" />
+      <TextField fx:id="tfCartaoDebito" layoutX="340.0" layoutY="367.0" prefHeight="54.0" prefWidth="337.0" />
+      <TextField fx:id="tfTotal" layoutX="340.0" layoutY="449.0" prefHeight="54.0" prefWidth="337.0" />
+      <Label fx:id="lbDataInicial1" layoutX="137.0" layoutY="242.0" prefHeight="37.0" prefWidth="170.0" style="-FX-font-fill: black;" stylesheets="@saidas.css" text="DINHEIRO" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <Label fx:id="lbDataInicial11" layoutX="137.0" layoutY="306.0" prefHeight="37.0" prefWidth="170.0" style="-FX-font-fill: black;" stylesheets="@saidas.css" text="CARTÃO CREDITO" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <Label fx:id="lbDataInicial111" layoutX="137.0" layoutY="377.0" prefHeight="37.0" prefWidth="170.0" style="-FX-font-fill: black;" stylesheets="@saidas.css" text="CARTÃO DÉBITO" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <Label fx:id="lbDataInicial1111" layoutX="137.0" layoutY="456.0" prefHeight="37.0" prefWidth="170.0" style="-FX-font-fill: black;" stylesheets="@saidas.css" text="TOTAL" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font></Label>
+      <Pane layoutX="1.0" prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@saidas.css">
+         <children>
+            <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
+               <effect>
+                  <ImageInput x="10.0" y="10.0">
+                     <source>
+                        <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
+            </Button>
+            <Label layoutX="14.0" layoutY="6.0" style="-fx-text-fill: WHITE;" text="Consultas NFCEs Emitidas" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

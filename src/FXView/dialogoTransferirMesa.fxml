@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@saidas.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.transferirMesa">
+   <children>
+      <TextField id="tfOrigem" fx:id="tfOrigem" alignment="CENTER" layoutX="53.0" layoutY="107.0" prefHeight="71.0" prefWidth="85.0">
+         <font>
+            <Font size="22.0" />
+         </font></TextField>
+      <TextField id="tfDestino" fx:id="tfDestino" alignment="CENTER" layoutX="245.0" layoutY="107.0" prefHeight="71.0" prefWidth="85.0">
+         <font>
+            <Font size="22.0" />
+         </font></TextField>
+      <Text layoutX="53.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MESA ORIGEM" />
+      <Text layoutX="242.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MESA DESTINHO" />
+      <TilePane layoutX="-1.0" layoutY="566.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@saidas.css" />
+      <Button id="btTransferir" fx:id="btTransferir" layoutX="653.0" layoutY="566.0" mnemonicParsing="false" onAction="#voltarPraVenda" prefHeight="35.0" prefWidth="147.0" text="TRANSFERIR &gt;&gt;" />
+      <Pane layoutX="2.0" prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@saidas.css">
+         <children>
+            <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
+               <effect>
+                  <ImageInput x="10.0" y="10.0">
+                     <source>
+                        <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
+            </Button>
+            <Label layoutX="14.0" layoutY="4.0" style="-fx-text-fill: WHITE;" text="Tranferir Mesa" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

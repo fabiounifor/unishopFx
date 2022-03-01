@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language JavaScript?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.listaEntregas">
+   <children>
+      <AnchorPane>
+         <children>
+            <Group layoutX="-33.0">
+               <children>
+                  <Pane layoutX="36.0" prefHeight="587.0" prefWidth="806.0">
+                     <children>
+                        <Pane layoutX="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="806.0" styleClass="background" stylesheets="@saidas.css">
+                           <children>
+                              <TilePane layoutY="553.0" prefHeight="35.0" prefWidth="806.0" styleClass="TilePane" stylesheets="@saidas.css" />
+                              <Button id="btPesquisarVendas" fx:id="btPesquisarVendas" alignment="CENTER" contentDisplay="CENTER" layoutX="619.0" layoutY="42.0" mnemonicParsing="false" onAction="#lista" prefHeight="53.0" prefWidth="48.0" text="PESQUISA" textAlignment="CENTER">
+                                 <effect>
+                                    <ImageInput x="6.0" y="6.0">
+                                       <source>
+                                          <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+                                       </source>
+                                    </ImageInput>
+                                 </effect></Button>
+                              <TextField id="pesquisaVendas" fx:id="pesquisaVendas" layoutX="182.0" layoutY="42.0" prefHeight="53.0" prefWidth="436.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></TextField>
+                              <TableView id="tabelaListaVendas" fx:id="tabelaListaVendas" layoutX="16.0" layoutY="144.0" prefHeight="407.0" prefWidth="768.0">
+                                <columns>
+                                  <TableColumn id="linhaVendas" fx:id="linhaVendas" prefWidth="618.0" style="-fx-textfill: green;" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <Group>
+                                 <children>
+                                    <Button fx:id="saiuEntrega" cache="true" cacheHint="SPEED" layoutX="15.0" layoutY="552.0" mnemonicParsing="false" onAction="#setarStatusEntregaEfetuada" prefHeight="35.0" prefWidth="36.0" text="entrega efetuada">
+                                       <effect>
+                                          <ImageInput x="10.0" y="5.0">
+                                             <source>
+                                                <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-caro-2-filled-50.png" />
+                                             </source>
+                                          </ImageInput>
+                                       </effect>
+                                       <tooltip>
+                                          <Tooltip text="entrega Efetuada" />
+                                       </tooltip>
+                                    </Button>
+                                    <Group layoutX="-6.0">
+                                       <children>
+                                          <Button id="btImprimirVenda" fx:id="btImprimirVenda" layoutX="666.0" layoutY="552.0" mnemonicParsing="false" onAction="#reimprimirVenda" prefHeight="35.0" prefWidth="147.0" text="IMPRIMIR | F5" />
+                                          <Button id="btExcluirVenda" fx:id="btExcluirVenda" layoutX="521.0" layoutY="552.0" mnemonicParsing="false" onAction="#excluirVenda" prefHeight="35.0" prefWidth="147.0" text="EXCLUIR | F3" />
+                                          <Button id="btEditarVenda" fx:id="btEditarVenda" layoutX="375.0" layoutY="552.0" mnemonicParsing="false" onAction="#selecionarVenda" prefHeight="35.0" prefWidth="147.0" text="DETALHAR | F6" />
+                                          <Button fx:id="entregaFeita" cache="true" cacheHint="SPEED" layoutX="66.0" layoutY="552.0" mnemonicParsing="false" onAction="#setarStatusSaiuParaEntrega" prefHeight="35.0" prefWidth="33.0">
+                                             <effect>
+                                                <ImageInput x="10.0" y="5.0">
+                                                   <source>
+                                                      <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-carrinho-de-compras-filled-50.png" />
+                                                   </source>
+                                                </ImageInput>
+                                             </effect>
+                                             <tooltip>
+                                                <Tooltip text="Enviar para Entrega" />
+                                             </tooltip>
+                                          </Button>
+                                       </children>
+                                    </Group>
+                                    <Pane layoutX="550.0" layoutY="574.0" />
+                                    <Pane layoutX="704.0" layoutY="574.0" />
+                                 </children>
+                              </Group>
+                              <Button id="btRelatorioVendas" fx:id="btRelatorioVendas" layoutX="229.0" layoutY="552.0" mnemonicParsing="false" onAction="#datas" prefHeight="35.0" prefWidth="147.0" text="RELATÓRIO | F7" />
+                              <Pane prefHeight="30.0" prefWidth="809.0" styleClass="HBox" stylesheets="@saidas.css">
+                                 <children>
+                                    <Button id="btSair" fx:id="btSair" layoutX="764.0" layoutY="-12.0" mnemonicParsing="false" onAction="#sair">
+                                       <effect>
+                                          <ImageInput x="10.0" y="10.0">
+                                             <source>
+                                                <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                                             </source>
+                                          </ImageInput>
+                                       </effect>
+                                    </Button>
+                                    <Label layoutX="14.0" layoutY="4.0" style="-fx-text-fill: WHITE;" text="Pesquisa Entregas" />
+                                 </children>
+                              </Pane>
+                              <ChoiceBox fx:id="cbFiltro" layoutX="254.0" layoutY="111.0" prefHeight="31.0" prefWidth="273.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </children>
+            </Group>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language JavaScript?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.listaProduto">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="796.0" styleClass="background" stylesheets="@cadastros.css">
+         <children>
+            <Button id="btPesquisar" fx:id="btPesquisar" focusTraversable="false" layoutX="562.0" layoutY="39.0" mnemonicParsing="false" onAction="#pesquisaProduto" prefHeight="53.0" prefWidth="18.0" text="PESQUISA" textAlignment="CENTER">
+               <effect>
+                  <ImageInput x="5.0" y="5.0">
+                     <source>
+                        <Image url="file:/C:/unishop/src/imagens/icones%2040/lupa.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
+            </Button>
+            <TextField id="pesquisaProduto" fx:id="pesquisaProduto" layoutX="176.0" layoutY="39.0" onKeyReleased="#pesquisaProduto" prefHeight="53.0" prefWidth="380.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </TextField>
+            <TableView id="tabelaListaProdutos" fx:id="tabelaListaProdutos" layoutX="11.0" layoutY="105.0" onInputMethodTextChanged="#insereLinks" onKeyPressed="#insereLinks" onKeyReleased="#insereLinks" onKeyTyped="#insereLinks" onMouseClicked="#insereLinks" prefHeight="452.0" prefWidth="780.0" stylesheets="@cadastros.css">
+              <columns>
+                <TableColumn id="listaProdutos" fx:id="listaProdutos" prefWidth="416.0" style="-fx-textfill: green;" />
+                  <TableColumn id="linkTabelaEditar" fx:id="linkTabelaEditar" maxWidth="500.0" minWidth="50.0" prefWidth="500.0" style="-fx-textfill: green;" />
+                  <TableColumn id="linkTabelaDuplicar" fx:id="linkTabelaDuplicar" editable="false" maxWidth="500.0" minWidth="50.0" prefWidth="50.0" sortable="false" style="-fx-textfill: green;" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Group />
+            <Button id="btSelecionar" fx:id="btSelecionar" layoutX="82.0" layoutY="564.0" mnemonicParsing="false" onAction="#selecionarProduto" prefHeight="25.0" prefWidth="144.0" text="SELECIONAR | ENTER" visible="false" />
+            <HBox alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="-3.0" prefHeight="35.0" prefWidth="800.0" styleClass="HBox" stylesheets="@cadastros.css">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="745.0" style="-fx-text-fill: WHITE;" text="Pesquisa Produto" />
+                  <Button id="btSair" fx:id="btSair" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#sair" prefHeight="35.0" prefWidth="38.0">
+                     <effect>
+                        <ImageInput x="10.0" y="3.0">
+                           <source>
+                              <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+            <TilePane alignment="BOTTOM_RIGHT" layoutY="566.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@cadastros.css">
+               <children>
+                  <Button id="btAdcionar" fx:id="btAdcionar" focusTraversable="false" mnemonicParsing="false" onAction="#novoProduto" prefHeight="35.0" prefWidth="164.0" text="ADCIONAR | F4" />
+               </children>
+            </TilePane>
+         </children>
+      </Pane>
+   </children>
+</HBox>

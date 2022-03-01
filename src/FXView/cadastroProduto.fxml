@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane id="painelFundo" fx:id="painelFundo" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@cadastros.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.novoProduto">
+   <children>
+      <TextField id="NomeProduto" fx:id="NomeProduto" layoutX="14.0" layoutY="56.0" prefHeight="37.0" prefWidth="336.0" />
+      <TextField id="barras" fx:id="barras" layoutX="14.0" layoutY="247.0" prefHeight="25.0" prefWidth="329.0" />
+      <TextField id="unidade" fx:id="unidade" layoutX="14.0" layoutY="311.0" prefHeight="25.0" prefWidth="120.0" />
+      <TextField id="estoque" fx:id="estoque" layoutX="14.0" layoutY="444.0" prefHeight="37.0" prefWidth="129.0" />
+      <TextField id="reserva" fx:id="reserva" layoutX="570.0" layoutY="490.0" prefHeight="25.0" prefWidth="156.0" visible="false" />
+      <TextField id="conversao" fx:id="conversao" layoutX="154.0" layoutY="444.0" prefWidth="120.0" />
+      <TextField id="precoVenda" fx:id="precoVenda" layoutX="14.0" layoutY="514.0" prefHeight="25.0" prefWidth="103.0" />
+      <TextField id="precoCusto" fx:id="precoCusto" layoutX="127.0" layoutY="514.0" prefHeight="25.0" prefWidth="103.0" />
+      <TextField id="lucro" fx:id="lucro" layoutX="247.0" layoutY="514.0" prefHeight="25.0" prefWidth="111.0" />
+      <Text layoutX="582.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estoque Reserva" visible="false" />
+      <ImageView id="foto" fx:id="foto" fitHeight="179.0" fitWidth="200.0" layoutX="502.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/lupa.png" />
+         </image></ImageView>
+      <Text layoutX="459.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Foto" />
+      <Text layoutX="445.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ativo" />
+      <ToggleButton id="tgbativo" fx:id="tgbativo" layoutX="443.0" layoutY="53.0" mnemonicParsing="false" onAction="#ativarBotao" prefHeight="25.0" prefWidth="68.0" styleClass="togle-button" stylesheets="@cadastros.css" />
+      <ToggleButton id="tgbcomposicao" fx:id="tgbcomposicao" layoutX="518.0" layoutY="53.0" mnemonicParsing="false" onAction="#ativarBotao" prefHeight="25.0" prefWidth="68.0" styleClass="togle-button" stylesheets="@cadastros.css" />
+      <Text layoutX="519.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Composição" />
+      <ToggleButton id="tgbfracionado" fx:id="tgbfracionado" layoutX="595.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" styleClass="togle-button" stylesheets="@cadastros.css" />
+      <Text layoutX="596.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fracionado" />
+      <ToggleButton id="tgbbalanca" fx:id="tgbbalanca" layoutX="667.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" styleClass="togle-button" stylesheets="@cadastros.css" />
+      <Text layoutX="668.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balança" />
+      <TilePane layoutY="563.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@cadastros.css" />
+      <Button id="btSalvarProduto" fx:id="btSalvarProduto" layoutX="508.0" layoutY="563.0" mnemonicParsing="false" onAction="#salvarProduto" prefHeight="35.0" prefWidth="147.0" text="SALVAR | F5" />
+      <Button id="btImprimirProduto" fx:id="btImprimirProduto" layoutX="653.0" layoutY="563.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="147.0" text="IMPRIMIR |  F7" />
+      <Button id="btUnidades" fx:id="btUnidades" layoutX="138.0" layoutY="311.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoUnidades" prefHeight="37.0" prefWidth="59.0" text="Button" />
+      <Button id="btMarcas" fx:id="btMarcas" layoutX="288.0" layoutY="185.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="59.0" text="Button" />
+      <Button id="btGrupos" fx:id="btGrupos" layoutX="288.0" layoutY="120.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="59.0" style="-fx-text-fill: white;" text="..." />
+      <Button id="btFatores" fx:id="btFatores" layoutX="278.0" layoutY="443.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoFator" prefHeight="37.0" prefWidth="59.0" text="Button" />
+      <Button id="btTribEstaduais" fx:id="btTribEstaduais" layoutX="741.0" layoutY="376.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoTribEstadual" prefHeight="37.0" prefWidth="59.0" text="Button" />
+      <Button id="btTribFederais" fx:id="btTribFederais" layoutX="740.0" layoutY="445.0" minWidth="53.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="59.0" text="Button" />
+      <Button id="btNcms" fx:id="btNcms" layoutX="555.0" layoutY="514.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoNcm" prefHeight="35.0" prefWidth="59.0" text="Button" />
+      <Button id="btCests" fx:id="btCests" layoutX="741.0" layoutY="514.0" minWidth="53.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="59.0" text="Button" />
+      <TextField id="cest" fx:id="cest" layoutX="615.0" layoutY="513.0" prefHeight="25.0" prefWidth="129.0" />
+      <TextField id="ncm" fx:id="ncm" layoutX="437.0" layoutY="513.0" prefHeight="25.0" prefWidth="120.0" />
+      <Label layoutX="31.0" layoutY="32.0" text="Nome" />
+      <Label layoutX="31.0" layoutY="98.0" text="Grupo" />
+      <Label layoutX="31.0" layoutY="159.0" text="Marca" />
+      <Label layoutX="31.0" layoutY="224.0" text="Codigo de Barras" />
+      <Label layoutX="31.0" layoutY="289.0" text="Unidade" />
+      <Label layoutX="212.0" layoutY="289.0" text="Tipo" />
+      <Label layoutX="12.0" layoutY="418.0" text="Estoque" />
+      <Label layoutX="153.0" layoutY="418.0" text="Fator de Conversão" />
+      <Label layoutX="12.0" layoutY="490.0" text="Preço de Venda" />
+      <Label layoutX="128.0" layoutY="491.0" text="Preço de Custo" />
+      <Label layoutX="248.0" layoutY="491.0" text="Lucro" />
+      <Label fx:id="txTribEstadual" layoutX="546.0" layoutY="351.0" text="Trib Estadual">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label fx:id="txTribFederal" layoutX="549.0" layoutY="417.0" text="Trib Federal">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label fx:id="txNcm" layoutX="462.0" layoutY="491.0" text="NCM/NBS">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label fx:id="txCest" layoutX="647.0" layoutY="491.0" text="CEST">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Text fill="WHITE" layoutX="491.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INFORMAÇÕES FISCAIS">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="62.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INFORMAÇÕES ESTOQUE">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Text>
+      <HBox alignment="CENTER_RIGHT" layoutY="-3.0" prefHeight="35.0" prefWidth="800.0" styleClass="HBox" stylesheets="@cadastros.css">
+         <children>
+            <Label prefHeight="21.0" prefWidth="745.0" style="-fx-text-fill: WHITE;" text="Cadastro Produto" />
+            <Button id="btSair" fx:id="btSair" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#sair" prefHeight="35.0" prefWidth="38.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+      <ChoiceBox id="cbMarca" fx:id="cbMarca" layoutX="13.0" layoutY="185.0" prefHeight="31.0" prefWidth="271.0" />
+      <ChoiceBox id="cbGrupo" fx:id="cbGrupo" layoutX="12.0" layoutY="122.0" prefHeight="31.0" prefWidth="271.0" />
+      <ChoiceBox id="cbTribEstadual" fx:id="cbTribEstadual" layoutX="436.0" layoutY="377.0" prefHeight="31.0" prefWidth="305.0" />
+      <ChoiceBox id="cbTribFederal" fx:id="cbTribFederal" layoutX="432.0" layoutY="447.0" prefHeight="31.0" prefWidth="305.0" />
+      <ChoiceBox id="cbTipo" fx:id="cbTipo" layoutX="208.0" layoutY="313.0" prefHeight="31.0" prefWidth="136.0" />
+      <AnchorPane id="pnGlp" fx:id="pnGlp" layoutX="446.0" layoutY="79.0" prefHeight="272.0" prefWidth="320.0">
+         <children>
+            <ScrollPane layoutY="8.0" prefHeight="259.0" prefWidth="314.0" />
+            <Label layoutX="20.0" layoutY="34.0" text="Percentual Gas Natural" />
+            <Label layoutX="19.0" layoutY="113.0" text="Percentual Gas Natural nacional" />
+            <Label layoutX="18.0" layoutY="188.0" text="Percentual Gas Natural Importado" />
+            <TextField id="tfPercGas" fx:id="tfPercGas" layoutX="18.0" layoutY="55.0" prefHeight="37.0" prefWidth="278.0" text="0" />
+            <TextField id="tfPercGasNacional" fx:id="tfPercGasNacional" layoutX="18.0" layoutY="133.0" prefHeight="37.0" prefWidth="278.0" text="0" />
+            <TextField id="tfPercGasImportado" fx:id="tfPercGasImportado" layoutX="18.0" layoutY="208.0" prefHeight="37.0" prefWidth="278.0" stylesheets="@cadastros.css" text="0" />
+            <Label layoutX="87.0" prefHeight="31.0" prefWidth="120.0" text="informações GLP" textAlignment="CENTER" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="365.0" layoutY="63.0" style="-fx-text-fill: WHITE;" text="Label" />
+       </children>
+</Pane>

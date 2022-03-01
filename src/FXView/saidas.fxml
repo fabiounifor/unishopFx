@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+<FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: transparent;" styleClass="FlowPane" stylesheets="@saidas.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.saida">
+   <children>
+      <Button id="c" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#listaSaidas" prefHeight="130.0" prefWidth="190.0" text="SAIDAS" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button id="btPdv" mnemonicParsing="false" onAction="#abrirPdv" prefHeight="130.0" prefWidth="190.0" text="PDV" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button id="c" fx:id="nfe" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#abrirNfe" prefHeight="130.0" prefWidth="190.0" text="NF-E" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button id="fechar" fx:id="fechar" mnemonicParsing="false" onAction="#fecharSaida" prefHeight="80.0" prefWidth="52.0" text="Button">
+         <effect>
+            <ImageInput x="10.0" y="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+               </source>
+            </ImageInput>
+         </effect>
+      </Button>
+      <Button id="btDelivery" layoutX="130.0" layoutY="10.0" mnemonicParsing="false" onAction="#delivery" prefHeight="60.0" prefWidth="190.0" style="-fx-fill-size: 100;" text="DELIVERY" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button id="btQrcomprar" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" onAction="#qrComprarConectar" prefHeight="60.0" prefWidth="190.0" text="QRCOMPRAR" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button id="btMesas" layoutX="250.0" layoutY="10.0" mnemonicParsing="false" onAction="#mesas" prefHeight="60.0" prefWidth="190.0" text="MESAS" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button id="btEntregas" fx:id="btEntregas" layoutX="390.0" layoutY="345.0" mnemonicParsing="false" onAction="#entregas" prefHeight="60.0" prefWidth="190.0" text="ENTREGAS" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</FlowPane>

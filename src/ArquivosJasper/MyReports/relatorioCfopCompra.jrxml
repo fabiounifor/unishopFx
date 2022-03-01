@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioNfeCompra" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="9ef4db86-7fc2-4eab-b54e-3904c47ce659">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[Y2xpZW50ZXMgLDEzMSwxNSwwYWM0ODM3Yy1hNDVlLTQ0ODUtOTAxMS0wZWE4ZTEyYWI0MjU7Y2Zv
+cCAsMTUsMzAyLGVjMjY5ZjI2LWFlYmUtNDUxOS1hMjZmLTc5MjU1OTFlMjFkYTt2ZW5kYXNfcHJv
+ZHV0byAsMTMxLDEwNCwzYTIyNGQ3Ni0zMjhiLTRlYTEtYWFjZi1kMWQ2MzkwNjQ1OGU7ZW1wcmVz
+YSAsNDkzLDI4OSxhNjU1ZGY4NS1kNTc5LTQ4MTctYTQxZi01MmRiNDgyMzRjNjU7bmYgLDM0Miwx
+MTcsODNhNThjOGMtNDE3MS00NzYxLTlkYzMtZGZhMjJjNDgwMDFiOw==]]>
+	</property>
+	<parameter name="title1" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Fabio\\Documents\\NetBeansProjects\\Unishop\\src\\ArquivosJasper\\MyReports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT empresa.cnpj AS cnpj,
+	empresa.razao_social AS razao_social,
+	nf_compra.data_emissao AS data_emissao,
+	nf_compra.valor_total AS valor_total,
+	nf_compra.valor_descontos AS valor_descontos,
+	nf_compra.icms_vlr_ AS valor_icms, 
+    nf_compra.vsubst AS valor_subst, 
+    nf_compra.ipi_vlr AS valor_ipi, 
+    nf_compra.pis_vlr AS valor_pis,
+    nf_compra.cofins_vlr AS valor_cofins,
+	cfop.cfop AS cfop,
+	cfop.descricao AS descricao,
+	compras_produtos.cfopestoque AS cfop,
+	compras_produtos.quantidade AS quantidade,
+	compras_produtos.valor_custo AS valor_custo,
+	compras_produtos.percIcms AS percIcms,
+	compras_produtos.valor_total AS total,
+	nf_compra.numero_nfe,
+	compras_produtos.cod_compras,
+	nf_compra.empresa,
+	empresa.codigo
+FROM 
+    nf_compra nf_compra INNER JOIN compras_produtos compras_produtos ON 
+	 compras_produtos.codigo_compras = nf_compra.numero_nfe 
+	INNER JOIN cfop cfop ON 
+	 cfop.cfop = compras_produtos.cfop 
+	INNER JOIN empresa empresa ON 
+	 nf_compra.empresa = empresa.codigo]]>
+	</queryString>
+	<field name="cnpj" class="java.lang.String"/>
+	<field name="razao_social" class="java.lang.String"/>
+	<field name="data_emissao" class="java.sql.Date"/>
+	<field name="valor_total" class="java.lang.Float"/>
+	<field name="cfop" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="quantidade" class="java.lang.Float"/>
+	<field name="valor_custo" class="java.lang.Float"/>
+	<field name="percIcms" class="java.lang.Float"/>
+	<field name="total" class="java.lang.Float"/>
+	<field name="valor_icms" class="java.lang.Float"/>
+	<field name="valor_subst" class="java.lang.Float"/>
+	<field name="valor_ipi" class="java.lang.Float"/>
+	<field name="valor_pis" class="java.lang.Float"/>
+	<field name="valor_cofins" class="java.lang.Float"/>
+	<variable name="totalCofins" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_cofins}]]></variableExpression>
+	</variable>
+	<variable name="totalGeral" class="java.lang.Double" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantidade}*$F{valor_custo}]]></variableExpression>
+	</variable>
+	<variable name="TotalQuantidade" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantidade}]]></variableExpression>
+	</variable>
+	<variable name="totalPis" class="java.lang.Float" resetType="Group" resetGroup="Group1">
+		<variableExpression><![CDATA[$F{valor_pis}]]></variableExpression>
+	</variable>
+	<variable name="totalIpi" class="java.lang.Float" resetType="Group" resetGroup="Group1">
+		<variableExpression><![CDATA[$F{valor_ipi}]]></variableExpression>
+	</variable>
+	<variable name="totalIcmsSt" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_subst}]]></variableExpression>
+	</variable>
+	<variable name="SomaTotalProdutos" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_custo}]]></variableExpression>
+	</variable>
+	<variable name="totalIcms" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_icms}]]></variableExpression>
+	</variable>
+	<variable name="TotalCfop" class="java.lang.Float" incrementType="Group" incrementGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$V{totalGeral}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{cfop}]]></groupExpression>
+		<groupHeader>
+			<band height="53">
+				<textField evaluationTime="Group" evaluationGroup="Group1">
+					<reportElement x="0" y="4" width="54" height="18" uuid="ee1dfd11-e110-4754-bd86-02c6c85114e9"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{cfop}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="54" y="4" width="748" height="18" uuid="415c9ef2-8c85-48c6-bc90-df9a19d7b441"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="792" height="1" uuid="1b7b77b0-2212-4589-958c-ebb14ac710b1"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="150" y="28" width="652" height="1" uuid="a174099d-6fbf-47db-8db3-3a39784c5c68"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="153" y="36" width="67" height="17" uuid="8edf008a-3c65-4aa5-815a-8ac434639507"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Quantidade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="320" y="35" width="50" height="17" uuid="85543ebf-05df-4ce3-853e-a5145867c979"/>
+					<text><![CDATA[ICMS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="375" y="34" width="60" height="17" uuid="5f933923-5100-41bf-bf4c-195550ca7e78"/>
+					<text><![CDATA[ICMS-ST]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="440" y="35" width="40" height="17" uuid="6c22b0ff-ef88-4db2-88df-c22caca3a427"/>
+					<text><![CDATA[IPI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="491" y="35" width="60" height="17" uuid="ade47f04-b5db-4468-b1fe-cac312ac95fa"/>
+					<text><![CDATA[PIS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="554" y="35" width="60" height="17" uuid="9ed8b6ba-f2fd-4b9c-9a73-763703b7b036"/>
+					<text><![CDATA[COFINS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="618" y="36" width="80" height="17" uuid="11776a8a-9089-4b44-b235-397c6d46cc4a"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Total Produtos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="700" y="36" width="102" height="17" uuid="9e4f9617-67e2-4e19-bf00-52e93e3d1314"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Total Geral]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField>
+					<reportElement x="149" y="3" width="68" height="20" uuid="4f2fb995-7b98-4651-a102-bbdf13d48e51">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e5e3a5d2-8aa5-48f0-868b-5160ed4a007a"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{TotalQuantidade}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#;#,##0.00#-">
+					<reportElement x="703" y="3" width="97" height="20" uuid="4b21f0a0-fdc8-402d-b006-632d2e507ac3">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="81d37c1f-167e-4ca1-adad-456a4971e261"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{totalGeral}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="149" y="2" width="652" height="1" uuid="783aadac-c9e9-43d3-b14d-259dd4a66cc5"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineStyle="Solid" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+				<textField pattern="#,##0.00#;#,##0.00#-">
+					<reportElement x="323" y="3" width="47" height="20" uuid="5c99cd4c-195a-472f-aa0b-05789d71abaf"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{totalIcms}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#;#,##0.00#-">
+					<reportElement x="370" y="3" width="65" height="20" uuid="6850f314-f277-419c-81b1-8f25221d41f7"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{totalIcmsSt}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#;#,##0.00#-">
+					<reportElement x="435" y="3" width="45" height="20" uuid="d5a9d7ff-bec8-4fb4-8290-5a438b45dced"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{totalIpi}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#;#,##0.00#-">
+					<reportElement x="480" y="3" width="71" height="20" uuid="8542fabd-f7ca-458d-8cdf-0fa2c69f4893"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{totalPis}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#;#,##0.00#-">
+					<reportElement x="551" y="3" width="63" height="20" uuid="d542e0ec-9a4f-4d14-b40b-fc7db2cf287c"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{totalCofins}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00#;#,##0.00#-">
+					<reportElement x="618" y="3" width="82" height="20" uuid="4f02bdbc-7f6f-46b2-bc85-378ca7db0a7e"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SomaTotalProdutos}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="39" width="822" height="24" forecolor="#080808" uuid="0c42beb7-6ec2-4146-a6b5-84a701f50749"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totalização por CFOP]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="320" height="20" uuid="dd8f4797-ff6d-4988-962a-096b105b046e"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razao_social}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="21" width="320" height="18" uuid="dca2fc50-e23d-4cde-9921-28f8bad7d0f8"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="800" height="16" uuid="08c422fe-157d-42c4-9246-23e98ab73f03"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Totalização de CFOP no "+$P{title1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="3" width="450" height="30" uuid="4c96d28b-5c97-4335-8a4e-a35d6f17f573"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Empresa:    " +$F{cnpj} +"   " + $F{razao_social}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="49" splitType="Stretch">
+			<textField pattern="MMM d, yyyy h:mm:ss a">
+				<reportElement x="410" y="13" width="315" height="16" uuid="936a3d55-7310-4005-9e60-e081e0c64573"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NOW( )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="30" width="320" height="19" uuid="2274973e-715d-4ac4-aab1-33c9b3564e99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Desenvolvido por Unifor Automação Comercial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="13" width="320" height="16" uuid="70bdcf76-295c-4e65-8242-e6149889e6ed"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Relatório gerado em:  ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="#,##0.00#;#,##0.00#-">
+				<reportElement x="628" y="2" width="172" height="27" uuid="e1327b8b-68d7-4783-9906-b942870505d7">
+					<property name="com.jaspersoft.studio.element.name" value="Valor Total"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalCfop}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="526" y="4" width="100" height="25" uuid="1e21c27e-e4ea-46da-b650-c8fcc49d6256"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Total Geral: ]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

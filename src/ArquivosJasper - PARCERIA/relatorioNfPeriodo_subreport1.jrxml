@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioNfPeriodo_subreport1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="dataset1"/>
+	<queryString>
+		<![CDATA[SELECT
+     nf.`numero_nfe` AS numero_nfe,
+     nf.`data_emissao` AS data_emissao,
+     nf.`valor_total` AS valor_total,
+     nf.`valor_descontos` AS valor_descontos,
+     nf.`chave_nfe` AS chave_nfe,
+     nf.`status_nfe` AS status_nfe,
+     clientes.`codigo` AS clientes_codigo,
+     clientes.`nome` AS clientes_nome,
+     clientes.`nome_fantasia` AS nome_fantasia,
+vendas_produto.`codigo_produto` AS codigo_produto,
+     vendas_produto.`nomeProduto` AS produto_nome,
+vendas_produto.`cfop` AS cfop,
+     vendas_produto.`unidade` AS unidade,
+     vendas_produto.`quantidade` AS quantidade,
+     vendas_produto.`valor_unitario` AS valor_unitario,
+     vendas_produto.`percIcms` AS percIcms,
+     vendas_produto.`desconto` AS desconto,
+     vendas_produto.`total` AS total,
+     estado.`uf` AS estado_uf
+FROM
+     `clientes` clientes INNER JOIN `nf` nf ON clientes.`codigo` = nf.`cod_cliente`
+     INNER JOIN `vendas_produto` vendas_produto ON vendas_produto.`codigo_venda` = nf.`pedido`]]>
+	</queryString>
+	<field name="nome_fantasia" class="java.lang.String"/>
+	<field name="codigo_produto" class="java.lang.String"/>
+	<field name="produto_nome" class="java.lang.String"/>
+	<field name="cfop" class="java.lang.String"/>
+	<field name="unidade" class="java.lang.String"/>
+	<field name="quantidade" class="java.lang.Float"/>
+	<field name="valor_unitario" class="java.lang.Float"/>
+	<field name="percIcms" class="java.lang.Float"/>
+	<field name="total" class="java.lang.Float"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="38" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[codigo_produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[produto_nome]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="43" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18"/>
+			</frame>
+			<textField>
+				<reportElement x="38" y="18" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo_produto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="21" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{produto_nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language JavaScript?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.listaCompras">
+   <children>
+      <AnchorPane>
+         <children>
+            <Group>
+               <children>
+                  <Pane>
+                     <children>
+                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@entradas.css">
+                           <children>
+                              <Button id="btPesquisarCompras" fx:id="btPesquisarCompras" alignment="CENTER" contentDisplay="CENTER" layoutX="619.0" layoutY="36.0" mnemonicParsing="false" onAction="#listaFiltro" prefHeight="53.0" prefWidth="48.0" text="PESQUISA" textAlignment="CENTER">
+                                 <effect>
+                                    <ImageInput x="6.0" y="6.0">
+                                       <source>
+                                          <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+                                       </source>
+                                    </ImageInput>
+                                 </effect></Button>
+                              <TextField id="pesquisaCompras" fx:id="pesquisaCompras" layoutX="182.0" layoutY="36.0" prefHeight="53.0" prefWidth="436.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></TextField>
+                              <TableView id="tabelaListaCompras" fx:id="tabelaListaCompras" layoutX="14.0" layoutY="95.0" prefHeight="449.0" prefWidth="756.0">
+                                <columns>
+                                  <TableColumn id="linhaCompras" fx:id="linhaCompras" prefWidth="742.0" style="-fx-textfill: green;" />
+                                </columns>
+                              </TableView>
+                              <TilePane layoutX="1.0" layoutY="565.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@entradas.css" />
+                              <Group>
+                                 <children>
+                                    <Group>
+                                       <children>
+                                          <Button id="btImprimirCompra" fx:id="btImprimirCompra" layoutX="652.0" layoutY="565.0" mnemonicParsing="false" onAction="#reimprimirCompra" prefHeight="35.0" prefWidth="147.0" text="IMPRIMIR | F5" />
+                                          <Button id="btExcluirCompra" fx:id="btExcluirCompra" layoutX="507.0" layoutY="565.0" mnemonicParsing="false" onAction="#excluirCompra" prefHeight="35.0" prefWidth="147.0" text="EXCLUIR | F3" />
+                                       </children>
+                                    </Group>
+                                    <Pane layoutX="550.0" layoutY="574.0" />
+                                    <Pane layoutX="704.0" layoutY="574.0" />
+                                 </children>
+                              </Group>
+                              <Button id="btDevolucaoCompras" fx:id="btDevolucaoCompras" layoutX="362.0" layoutY="565.0" mnemonicParsing="false" onAction="#devolucaoNfe" prefHeight="35.0" prefWidth="147.0" text="DEVOLUÇÃO | F7" />
+                              <Button id="btEditarCompra" fx:id="btEditarCompra" layoutX="217.0" layoutY="565.0" mnemonicParsing="false" onAction="#selecionarCompra" prefHeight="35.0" prefWidth="147.0" text="ABRIR | F7" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@entradas.css">
+                           <children>
+                              <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair" prefHeight="39.0" prefWidth="42.0">
+                                 <effect>
+                                    <ImageInput x="10.0" y="10.0">
+                                       <source>
+                                          <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                                       </source>
+                                    </ImageInput>
+                                 </effect>
+                              </Button>
+                              <Label layoutX="14.0" layoutY="6.0" style="-fx-text-fill: WHITE;" text="Pesquisa Compras" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </children>
+            </Group>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

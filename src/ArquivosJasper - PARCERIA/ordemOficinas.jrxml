@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="teste5Cliente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.6500000000000017"/>
+	<property name="ireport.x" value="238"/>
+	<property name="ireport.y" value="192"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="permissao" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     oficinas.`idos` AS oficinas_idos,
+     oficinas.`dataos` AS oficinas_dataos,
+     oficinas.`nome` AS oficinas_nome,
+     oficinas.`cpf_cnpj` AS oficinas_cpf_cnpj,
+     oficinas.`fone` AS oficinas_fone,
+     oficinas.`endereco` AS oficinas_endereco,
+     oficinas.`numero` AS oficinas_numero,
+     oficinas.`bairro` AS oficinas_bairro,
+     oficinas.`tipo` AS oficinas_tipo,
+     oficinas.`situacao` AS oficinas_situacao,
+     oficinas.`marca` AS oficinas_marca,
+     oficinas.`modelo` AS oficinas_modelo,
+     oficinas.`ano` AS oficinas_ano,
+     oficinas.`tipo_placa` AS oficinas_tipo_placa,
+     oficinas.`placa` AS oficinas_placa,
+     oficinas.`km` AS oficinas_km,
+     oficinas.`descricao` AS oficinas_descricao,
+     oficinas.`valor` AS oficinas_valor,
+     oficinas.`cor` AS oficinas_cor,
+     oficinas.`codigo` AS oficinas_codigo
+FROM
+     `oficinas` oficinas]]>
+	</queryString>
+	<field name="oficinas_idos" class="java.lang.Integer"/>
+	<field name="oficinas_dataos" class="java.sql.Timestamp"/>
+	<field name="oficinas_nome" class="java.lang.String"/>
+	<field name="oficinas_cpf_cnpj" class="java.lang.String"/>
+	<field name="oficinas_fone" class="java.lang.String"/>
+	<field name="oficinas_endereco" class="java.lang.String"/>
+	<field name="oficinas_numero" class="java.lang.String"/>
+	<field name="oficinas_bairro" class="java.lang.String"/>
+	<field name="oficinas_tipo" class="java.lang.String"/>
+	<field name="oficinas_situacao" class="java.lang.String"/>
+	<field name="oficinas_marca" class="java.lang.String"/>
+	<field name="oficinas_modelo" class="java.lang.String"/>
+	<field name="oficinas_ano" class="java.lang.String"/>
+	<field name="oficinas_tipo_placa" class="java.lang.String"/>
+	<field name="oficinas_placa" class="java.lang.String"/>
+	<field name="oficinas_km" class="java.lang.String"/>
+	<field name="oficinas_descricao" class="java.lang.String"/>
+	<field name="oficinas_valor" class="java.lang.Double"/>
+	<field name="oficinas_cor" class="java.lang.String"/>
+	<field name="oficinas_codigo" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="150" y="0" width="403" height="62" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="36" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Auto Mecânica Joelson ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="150" y="62" width="403" height="22" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[ Estrada do Quafá n° 55 Vila Kennedy Bangu CNPJ: 00.000.000\0001-00]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="1" width="148" height="61"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\UniShop\\src\\imagens\\processimg.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="84" width="555" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="58">
+			<staticText>
+				<reportElement x="0" y="0" width="34" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Cód:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="0" width="41" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="36" y="0" width="70" height="17" forecolor="#660000"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_idos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="0" width="279" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="432" y="0" width="34" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="468" y="0" width="86" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_dataos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="19" width="60" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="62" y="19" width="153" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="19" width="47" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="266" y="19" width="41" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Bairro:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="309" y="19" width="121" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_bairro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="432" y="19" width="34" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Fone:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="469" y="19" width="86" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_fone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="38" width="28" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Cor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="38" width="47" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_cor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="38" width="79" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_cpf_cnpj}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="79" y="38" width="28" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[CPF:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="38" width="57" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Situação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="249" y="38" width="79" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_situacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="330" y="38" width="32" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Tipo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="364" y="38" width="79" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_tipo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="56" width="555" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="93" y="3" width="45" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Modelo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="140" y="3" width="79" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_modelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="3" width="79" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_placa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="251" y="3" width="79" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_ano}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="221" y="3" width="28" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Ano:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="44" y="3" width="47" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_marca}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="332" y="3" width="40" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Placa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="3" width="42" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Marca:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="3" width="28" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[KM:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="483" y="3" width="72" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_km}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="22" width="124" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[Descrição do serviço:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="49" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="2" width="415" height="46"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="420" y="2" width="51" height="46"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[Valor Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="473" y="2" width="82" height="46" forecolor="#660000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="21"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{oficinas_valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="124" height="20" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="151" y="1" width="240" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Obrigado pela preferência, volte sempre !]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="554" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

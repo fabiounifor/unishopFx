@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="teste5Cliente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.6500000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="permissao" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cidade.`nome` AS cidade_nome,
+     fornecedores.`nome` AS fornecedores_nome,
+     estado.`uf` AS estado_uf,
+     contas_pagar.`pk_codigo` AS contas_pagar_pk_codigo,
+     contas_pagar.`descricao` AS contas_pagar_descricao,
+     contas_pagar.`data` AS contas_pagar_data,
+     contas_pagar.`vencimento` AS contas_pagar_vencimento,
+     contas_pagar.`observacao` AS contas_pagar_observacao,
+     contas_pagar.`situacao` AS contas_pagar_situacao,
+     contas_pagar.`valor` AS contas_pagar_valor,
+     contas_pagar.`pagamento` AS contas_pagar_pagamento
+FROM
+     `cidade` cidade INNER JOIN `fornecedores` fornecedores ON cidade.`codigo` = fornecedores.`cod_cidade`
+     INNER JOIN `estado` estado ON cidade.`fk_cod_estado` = estado.`codigo`
+     INNER JOIN `contas_pagar` contas_pagar ON fornecedores.`codigo` = contas_pagar.`fk_codigo_pessoa`]]>
+	</queryString>
+	<field name="cidade_nome" class="java.lang.String"/>
+	<field name="fornecedores_nome" class="java.lang.String"/>
+	<field name="estado_uf" class="java.lang.String"/>
+	<field name="contas_pagar_pk_codigo" class="java.lang.Integer"/>
+	<field name="contas_pagar_descricao" class="java.lang.String"/>
+	<field name="contas_pagar_data" class="java.sql.Date"/>
+	<field name="contas_pagar_vencimento" class="java.sql.Date"/>
+	<field name="contas_pagar_observacao" class="java.lang.String"/>
+	<field name="contas_pagar_situacao" class="java.lang.Integer"/>
+	<field name="contas_pagar_valor" class="java.lang.Float"/>
+	<field name="contas_pagar_pagamento" class="java.sql.Date"/>
+	<variable name="TOTALIZADOR" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{contas_pagar_valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="2" y="40" width="108" height="40" forecolor="#999999"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="24" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Contas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="356" y="59" width="196" height="22" forecolor="#FF0033"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Fornecedor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="123" y="40" width="103" height="38" forecolor="#999999"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{contas_pagar_situacao}==0 ? " a pagar" : "pagas"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="226" y="40" width="125" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[BIG BOI CARNES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="60" width="125" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[38.270.397/0001-04]]></text>
+			</staticText>
+			<image>
+				<reportElement x="260" y="0" width="55" height="40"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\Unishop\\src\\imagens\\logoCupom.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="1" width="43" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="0" width="58" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="0" width="87" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fornecedor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="0" width="60" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pagamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="489" y="0" width="49" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="1" y="0" width="554" height="14"/>
+				<textField>
+					<reportElement x="45" y="0" width="214" height="14"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{contas_pagar_descricao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="263" y="0" width="159" height="14"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{fornecedores_nome}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="424" y="0" width="60" height="14"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{contas_pagar_pagamento}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="488" y="0" width="62" height="14"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.Float"><![CDATA[$F{contas_pagar_valor}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement x="0" y="0" width="43" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{contas_pagar_pk_codigo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="19" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="-1" width="554" height="20" forecolor="#99FFCC" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#736343"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="1" y="1" width="197" height="19" forecolor="#736343"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="554" height="2"/>
+			</line>
+			<staticText>
+				<reportElement x="383" y="5" width="70" height="15"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="455" y="5" width="100" height="15"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{TOTALIZADOR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

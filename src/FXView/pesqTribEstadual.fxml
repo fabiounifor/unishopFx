@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language JavaScript?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="431.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.listaProduto">
+   <children>
+      <AnchorPane prefHeight="433.0" prefWidth="428.0">
+         <children>
+            <Pane>
+               <children>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="443.0">
+                     <children>
+                        <Button id="btPesquisarTribEstadual" fx:id="btPesquisarTribEstadual" layoutX="336.0" layoutY="15.0" mnemonicParsing="false" onAction="#pesquisaProduto" prefHeight="53.0" prefWidth="84.0" text="PESQUISA" textAlignment="CENTER" />
+                        <TextField id="pesquisaTribEstadual" fx:id="pesquisaTribEstadual" layoutX="24.0" layoutY="15.0" prefHeight="53.0" prefWidth="308.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </TextField>
+                        <TableView id="tabelaListaTribEstadual" fx:id="tabelaListaTribEstadual" layoutX="24.0" layoutY="72.0" prefHeight="287.0" prefWidth="394.0">
+                          <columns>
+                            <TableColumn id="listaProdutos" fx:id="listaProdutos" prefWidth="637.0" style="-fx-textfill: green;" />
+                          </columns>
+                        </TableView>
+                        <Group>
+                           <children>
+                              <Group />
+                              <Pane layoutX="550.0" layoutY="574.0" />
+                              <Pane layoutX="704.0" layoutY="574.0" />
+                           </children>
+                        </Group>
+                        <Button id="btDuplicarTribEstadual" fx:id="btDuplicarTribEstadual" layoutX="159.0" layoutY="369.0" mnemonicParsing="false" text="DUPLICAR | F4" />
+                        <Button id="btEditarTribEstadual" fx:id="btEditarTribEstadual" layoutX="259.0" layoutY="369.0" mnemonicParsing="false" text="EDITAR | F6" />
+                        <Button id="btNovoTribEstadual" fx:id="btNovoTribEstadual" layoutX="347.0" layoutY="369.0" mnemonicParsing="false" text="NOVO | F5" />
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

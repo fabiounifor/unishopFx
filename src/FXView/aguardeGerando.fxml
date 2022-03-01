@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="474.0" styleClass="background" stylesheets="@Darkness.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.aguardandoFX">
+   <children>
+      <ProgressBar layoutX="51.0" layoutY="124.0" prefHeight="18.0" prefWidth="381.0" stylesheets="@Darkness.css" />
+      <Label layoutX="201.0" layoutY="87.0" prefHeight="21.0" prefWidth="69.0" text="AGUARDE" />
+   </children>
+   <effect>
+      <DropShadow height="157.4" radius="61.89" width="92.16" />
+   </effect>
+</Pane>

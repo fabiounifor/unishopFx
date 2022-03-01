@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@financeiro.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.contaPagar">
+   <children>
+      <Label layoutX="31.0" layoutY="110.0" prefHeight="21.0" prefWidth="94.0" text="Fornecedor" />
+      <Label layoutX="580.0" layoutY="109.0" prefHeight="21.0" prefWidth="94.0" text="Documento" />
+      <Label layoutX="31.0" layoutY="170.0" prefHeight="21.0" prefWidth="86.0" text="Descrição" />
+      <Label layoutX="580.0" layoutY="169.0" prefHeight="17.0" prefWidth="77.0" text="Valor" />
+      <Label layoutX="31.0" layoutY="234.0" prefHeight="17.0" prefWidth="94.0" text="Vencimento" />
+      <Label layoutX="581.0" layoutY="234.0" prefHeight="17.0" prefWidth="77.0" text="Quantidade" />
+      <TableView id="tbParcelamento" fx:id="tbParcelamento" layoutX="31.0" layoutY="301.0" prefHeight="244.0" prefWidth="742.0" visible="false">
+        <columns>
+          <TableColumn id="tcDescricao" fx:id="tcDescricao" maxWidth="286.0" prefWidth="286.0" text="Descrição" />
+            <TableColumn id="tcValor" fx:id="tcValor" maxWidth="250.0" prefWidth="132.0" text="Valor" />
+            <TableColumn id="tcVencimento" fx:id="tcVencimento" maxWidth="256.0" prefWidth="115.0" text="Vencimento" />
+        </columns>
+      </TableView>
+      <TextField id="tfFornecedor" fx:id="tfFornecedor" layoutX="31.0" layoutY="134.0" prefHeight="37.0" prefWidth="534.0" />
+      <TextField id="tfDocumento" fx:id="tfDocumento" layoutX="577.0" layoutY="134.0" prefHeight="25.0" prefWidth="189.0" />
+      <TextField id="tfDescricao" fx:id="tfDescricao" layoutX="31.0" layoutY="193.0" prefHeight="37.0" prefWidth="534.0" />
+      <TextField id="tfValor" fx:id="tfValor" layoutX="577.0" layoutY="192.0" prefHeight="25.0" prefWidth="189.0" />
+      <TextField id="tfVencimento" fx:id="tfVencimento" layoutX="31.0" layoutY="257.0" prefHeight="25.0" prefWidth="132.0" />
+      <TextField id="tfFormaPagamento" fx:id="tfFormaPagamento" layoutX="198.0" layoutY="256.0" prefHeight="25.0" prefWidth="158.0" />
+      <TextField id="tfIntervalo" fx:id="tfIntervalo" layoutX="376.0" layoutY="256.0" prefHeight="37.0" prefWidth="189.0" />
+      <ChoiceBox id="cbQuantidade" fx:id="cbQuantidade" layoutX="578.0" layoutY="256.0" prefHeight="37.0" prefWidth="132.0" />
+      <Button id="btInserir" fx:id="btInserir" layoutX="713.0" layoutY="255.0" mnemonicParsing="false" onAction="#replicarParcelas" prefHeight="39.0" prefWidth="57.0" text="V" />
+      <TilePane layoutX="-2.0" layoutY="568.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@financeiro.css" />
+      <Button layoutX="653.0" layoutY="568.0" mnemonicParsing="false" onAction="#salvarAlterar" prefHeight="35.0" prefWidth="147.0" text="SALVAR" />
+      <Label layoutX="198.0" layoutY="233.0" prefHeight="17.0" prefWidth="132.0" text="Forma de Pagamento" />
+      <Label layoutX="383.0" layoutY="233.0" prefHeight="21.0" prefWidth="77.0" text="Intervalo" />
+      <Pane prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@financeiro.css">
+         <children>
+            <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
+               <effect>
+                  <ImageInput x="10.0" y="10.0">
+                     <source>
+                        <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
+            </Button>
+            <Label layoutX="14.0" layoutY="6.0" style="-fx-text-fill: WHITE;" text="Contas a Pagar" />
+         </children>
+      </Pane>
+   </children>
+</Pane>
