@@ -2087,7 +2087,8 @@ public class FrmMain extends javax.swing.JFrame {
             if (chooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
             String destinatario = JOptionPane.showInputDialog(this, "Digite o email do destinatario", 
                     "Envio email", JOptionPane.PLAIN_MESSAGE);
-            
+                System.out.println("parametros: " + destinatario + " " + chooser.getSelectedFile().getAbsolutePath() + " " + true + 
+         " " +txtMensagem.getText() +"  " + "  " + txtMensagem.getText());
             acbrNFe.enviarEmail(destinatario,
                                 chooser.getSelectedFile().getAbsolutePath(),
                                 true,
@@ -2095,6 +2096,7 @@ public class FrmMain extends javax.swing.JFrame {
                                 "",
                                 "",
                                 txtMensagem.getText());  
+            
             rtbRespostas.append("Enviado."); 
             
         } catch (Exception ex) {

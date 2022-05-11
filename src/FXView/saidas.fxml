@@ -27,7 +27,7 @@
          <effect>
             <ImageInput x="10.0" y="10.0">
                <source>
-                  <Image url="file:/C:/UniShop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                </source>
             </ImageInput>
          </effect>
@@ -37,7 +37,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button id="btQrcomprar" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" onAction="#qrComprarConectar" prefHeight="60.0" prefWidth="190.0" text="QRCOMPRAR" textFill="#f8f8f8">
+      <Button id="btQrcomprar" layoutX="370.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="190.0" text="QRCOMPRAR" textFill="#f8f8f8">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

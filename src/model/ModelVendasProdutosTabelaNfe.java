@@ -5,6 +5,11 @@
  */
 package model;
 
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 /**
  *
  * @author Fabio
@@ -15,15 +20,20 @@ public class ModelVendasProdutosTabelaNfe {
     float quantidade;
     double valorUnitario;
     double valorTotal;
+    float desconto;
     String dataVenda;
     String pesquisaVendido;
     double aliqIcms;
     double aliqIpi;
+    double aliqSubst;
     double valorIcms;
     double valorIpi;
+    double valorSubst;
     String cfop;
     String ncm;
     String csosn;
+    Button btEdita;
+    Button btRemove;
 
     public String getCsosn() {
         return csosn;
@@ -48,6 +58,14 @@ public class ModelVendasProdutosTabelaNfe {
 
     public void setCfop(String cfop) {
         this.cfop = cfop;
+    }
+
+    public float getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(float desconto) {
+        this.desconto = desconto;
     }
 
     
@@ -82,6 +100,22 @@ public class ModelVendasProdutosTabelaNfe {
 
     public void setValorIpi(double valorIpi) {
         this.valorIpi = valorIpi;
+    }
+
+    public double getAliqSubst() {
+        return aliqSubst;
+    }
+
+    public void setAliqSubst(double aliqSubst) {
+        this.aliqSubst = aliqSubst;
+    }
+
+    public double getValorSubst() {
+        return valorSubst;
+    }
+
+    public void setValorSubst(double valorSubst) {
+        this.valorSubst = valorSubst;
     }
           
     
@@ -145,6 +179,38 @@ public class ModelVendasProdutosTabelaNfe {
     public void setOrdem(int ordem) {
         this.ordem = ordem;
     }
+
+    public Button getBtEdita() {
+        return btEdita;
+    }
+
+    public void setBtEdita(Button btEdita) {
+        Node nd;
+        Image imgem = new Image("imagens/icons 20/icons8-editar-filled-50.png");
+        ImageView img = new ImageView(imgem);
+        img.setFitHeight(20.00);
+        img.setFitWidth(20.00);
+        nd = img;
+        btEdita.setGraphic(nd);
+        this.btEdita = btEdita;
+    }
+
+    public Button getBtRemove() {
+        return btRemove;
+    }
+
+    public void setBtRemove(Button btRemove) {
+        Node nd;
+        Image imgem = new Image("imagens/icons 20/icons8-não-perturbe-filled-50.png");
+        ImageView img = new ImageView(imgem);
+        img.setFitHeight(20.00);
+        img.setFitWidth(20.00);
+        nd = img;
+        btRemove.setGraphic(nd);
+        this.btRemove = btRemove;
+    }
+    
+    
 
     @Override
     public String toString() {

@@ -1,4 +1,8 @@
 package model;
+
+import java.sql.Date;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+
 /**
 *
 * @author Leandro
@@ -11,6 +15,7 @@ public class ModelNumeracao {
     private int serieNfe;
     private int serieNfce;
     private String ultimoNsu;
+    private String ultimaConsulta;
     
     
 
@@ -67,12 +72,17 @@ public class ModelNumeracao {
         this.ultimoNsu = ultimoNsu;
     }
 
-    @Override
-    public String toString() {
-        return "ModelNumeracao{" + "codigo=" + codigo + ", numeroNfe=" + numeroNfe + ", numeroNfce=" + numeroNfce + ", serieNfe=" + serieNfe + ", serieNfce=" + serieNfce + ", ultimoNsu=" + ultimoNsu + '}';
+    public String getUltimaConsulta() {
+        return ultimaConsulta;
     }
 
-    
+    public void setUltimaConsulta(String ultimaConsulta) {
+        this.ultimaConsulta = ultimaConsulta;
+    }
 
+    @Override
+    public String toString() {
+        return "ModelNumeracao{" + "codigo=" + codigo + ", numeroNfe=" + numeroNfe + ", numeroNfce=" + numeroNfce + ", serieNfe=" + serieNfe + ", serieNfce=" + serieNfce + ", ultimoNsu=" + ultimoNsu + ", ultimaConsulta=" + ultimaConsulta + '}';
+    }
 
 }

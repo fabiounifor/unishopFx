@@ -9,6 +9,7 @@ import controller.ControllerCaixa;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ import javafx.stage.StageStyle;
 import model.ModelCaixa;
 import model.ModelConfig;
 import model.ModelSessaoUsuario;
+import relatorios.DAORelatorios;
 import util.BLMascaras;
 import util.GerarCupom;
 import util.JavaMailApp;
@@ -59,6 +61,7 @@ public class controleCaixa extends Application implements Initializable {
     ModelCaixa modelCaixa = new ModelCaixa();
     ModelConfig modelConfig = new ModelConfig();
     BLMascaras bLMascaras = new BLMascaras();
+    DAORelatorios dAORelatorios = new DAORelatorios();
     
     
     
@@ -112,6 +115,7 @@ public class controleCaixa extends Application implements Initializable {
         }
     }.start();
 }
+     
 
      private void enviaEmail(String texto) {
     new Thread() {

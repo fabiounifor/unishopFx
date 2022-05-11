@@ -1,6 +1,7 @@
 package controller;
 
 import DAO.DAOConfiguracao;
+import java.sql.Date;
 import java.util.ArrayList;
 import model.ModelConfiguracao;
 
@@ -55,8 +56,7 @@ public class ControllerConfiguracao {
     public boolean atualizarConfiguracaoVisualizarNfceController(int pCodigo, int pConfiguracao){
         return this.daoConfiguracao.atualizarConfiguracaoVisualizarNfceDAO(pCodigo, pConfiguracao);
     }
-
-    /**
+     /**
     * exclui Configuracao
     * @param pCodigo
     * @return boolean

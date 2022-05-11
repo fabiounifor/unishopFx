@@ -73,6 +73,13 @@ public class ControllerVendas {
     public ArrayList<ModelVendas> getListaVendasController(int pCodigo) {
         return this.daoVendas.getListaVendasDAO(pCodigo);
     }
+    /* recupera uma lista deVendas
+    * @param pCodigo
+    * return ArrayList
+     */
+    public ArrayList<ModelVendas> getListaVendasPdvPorDataController(Date inicio, Date fim) {
+        return this.daoVendas.getListaVendasPdvPorDataDAO(inicio, fim);
+    }
 
     /**
      * atualiza Vendas
@@ -130,6 +137,12 @@ public class ControllerVendas {
 
     public boolean gerarRelatorioVendaTodosCliente(Date dataInicial, Date dataFinal) {
         return this.dAORelatorios.gerarRelatorioVendaTodosCliente(dataInicial, dataFinal);
+    }
+    public boolean gerarRelatorioVendaPdvTodosCliente(Date dataInicial, Date dataFinal) {
+        return this.dAORelatorios.gerarRelatorioVendaPdvTodosCliente(dataInicial, dataFinal);
+    }
+    public boolean imprimirRelatorioVendaPdvTodosCliente(Date dataInicial, Date dataFinal) {
+        return this.dAORelatorios.imprimirRelatorioVendaPdvTodosCliente(dataInicial, dataFinal);
     }
 
     /**

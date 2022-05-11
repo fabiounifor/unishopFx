@@ -24,7 +24,7 @@
                <children>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@cadastros.css">
                      <children>
-                        <TilePane layoutX="1.0" layoutY="568.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@saidas.css" />
+                        <TilePane layoutX="1.0" layoutY="568.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@cadastros.css" />
                         <Button id="btPesquisarCest" fx:id="btPesquisarCest" layoutX="575.0" layoutY="37.0" mnemonicParsing="false" onAction="#pesquisaProduto" prefHeight="53.0" prefWidth="84.0" text="PESQUISA" textAlignment="CENTER">
                            <cursor>
                               <Cursor fx:constant="E_RESIZE" />
@@ -53,16 +53,16 @@
                               <Pane layoutX="704.0" layoutY="574.0" />
                            </children>
                         </Group>
-                        <Button id="btDuplicarCest" fx:id="btDuplicarCest" layoutX="534.0" layoutY="567.0" mnemonicParsing="false" prefHeight="35.0" text="DUPLICAR | F4" />
-                        <Button id="btEditarCest" fx:id="btEditarCest" layoutX="676.0" layoutY="567.0" mnemonicParsing="false" prefHeight="35.0" text="EDITAR | F6" />
-                        <Button id="btNovoCest" fx:id="btNovoCest" layoutX="417.0" layoutY="567.0" mnemonicParsing="false" prefHeight="35.0" text="NOVO | F5" />
+                        <Button id="btDuplicarCest" fx:id="btDuplicarCest" layoutX="601.0" layoutY="567.0" mnemonicParsing="false" prefHeight="35.0" text="DUPLICAR | F4" />
+                        <Button id="btEditarCest" fx:id="btEditarCest" layoutX="710.0" layoutY="567.0" mnemonicParsing="false" prefHeight="35.0" text="EDITAR | F6" />
+                        <Button id="btNovoCest" fx:id="btNovoCest" layoutX="518.0" layoutY="567.0" mnemonicParsing="false" prefHeight="35.0" text="NOVO | F5" />
                         <Pane prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@cadastros.css">
                            <children>
                               <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
                                  <effect>
-                                    <ImageInput x="10.0" y="10.0">
+                                    <ImageInput x="5.0" y="5.0">
                                        <source>
-                                          <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                                          <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                                        </source>
                                     </ImageInput>
                                  </effect>

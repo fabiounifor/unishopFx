@@ -1,6 +1,14 @@
  .alert-pane{
   -fx-border-color:orange;
+  -fx-background-color:orange;
   -fx-border-width:2.0px;
+  
+ }
+ .dialog-pane{
+  -fx-border-color:orange;
+  -fx-background-color:orange;
+  -fx-border-width:2.0px;
+  
  }
 
 /**Costumization of The Bar where the buttons are located**/
@@ -50,7 +58,7 @@
 }
 
 .dialog-pane .button:hover{     
--fx-background-color: #3a3a3a;; 
+-fx-background-color: #3a3a3a; 
  }
 
 .label {
@@ -58,4 +66,11 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-opacity: 1;
+}
+.dialog-pane .text-field{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-background-color: derive(#FFEBCD,20%);
+    -fx-color: #FFEBCD;
+    
 }

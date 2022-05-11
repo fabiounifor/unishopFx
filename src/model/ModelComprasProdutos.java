@@ -5,7 +5,10 @@ import controller.ControllerProdutos;
 import java.util.ArrayList;
 import controller.ControllerFator;
 import controller.ControllerCFOP;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 /**
 *
 * @author BLSoft
@@ -315,6 +318,13 @@ public class ModelComprasProdutos {
     }
 
     public void setProcurarProduto(Button procurarProduto) {
+        Node nd;
+        Image imgem = new Image("imagens/icones 40 collor/icons8-pesquisar-40.png");
+        ImageView img = new ImageView(imgem);
+        img.setFitHeight(20.00);
+        img.setFitWidth(20.00);
+        nd = img;
+        procurarProduto.setGraphic(nd);
         this.procurarProduto = procurarProduto;
     }
 
@@ -323,7 +333,13 @@ public class ModelComprasProdutos {
     }
 
     public void setAdcionarProduto(Button adcionarProduto) {
-        adcionarProduto.setText("+");
+        Node nd;
+        Image imgem = new Image("imagens/icones 40 collor/icons8-mais-40.png");
+        ImageView img = new ImageView(imgem);
+        img.setFitHeight(20.00);
+        img.setFitWidth(20.00);
+        nd = img;
+        adcionarProduto.setGraphic(nd);
         this.adcionarProduto = adcionarProduto;
     }
 
@@ -332,6 +348,13 @@ public class ModelComprasProdutos {
     }
 
     public void setProcurarFator(Button procurarFator) {
+        Node nd;
+        Image imgem = new Image("imagens/icones 40 collor/icons8-pesquisar-40.png");
+        ImageView img = new ImageView(imgem);
+        img.setFitHeight(20.00);
+        img.setFitWidth(20.00);
+        nd = img;
+        procurarFator.setGraphic(nd);
         this.procurarFator = procurarFator;
     }
 
@@ -340,6 +363,13 @@ public class ModelComprasProdutos {
     }
 
     public void setProcurarCfop(Button procurarCfop) {
+        Node nd;
+        Image imgem = new Image("imagens/icones 40 collor/icons8-pesquisar-40.png");
+        ImageView img = new ImageView(imgem);
+        img.setFitHeight(20.00);
+        img.setFitWidth(20.00);
+        nd = img;
+        procurarCfop.setGraphic(nd);
         this.procurarCfop = procurarCfop;
     }
     

@@ -593,7 +593,7 @@ if (codigoProduto > 0){
         }
        
         codigoProduto = codigo;
-        cbTribEstadual.getSelectionModel().select(controllerTributacaoFederal.getTributacaoFederalController(controllerProdutos.getProdutosController(codigo).getTribEst()).getCodigo());
+        cbTribEstadual.getSelectionModel().select(controllerTributacaoEstadual.getTributacaoEstadualController(controllerProdutos.getProdutosController(codigo).getTribEst()).getCodigo());
         cbTribFederal.getSelectionModel().select(controllerTributacaoFederal.getTributacaoFederalController(controllerProdutos.getProdutosController(codigo).getTribFed()).getCodigo());
         tfPercGas.setText(String.valueOf(controllerProdutos.getProdutosController(codigo).getPercGlp()));
         tfPercGasNacional.setText(String.valueOf(controllerProdutos.getProdutosController(codigo).getPercGnn()));

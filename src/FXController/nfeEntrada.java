@@ -496,9 +496,9 @@ public class nfeEntrada extends Application implements Initializable{
           mcp.setBaseCalculoSub(bLMascaras.arredondamentoComPontoDuasCasasString(Float.parseFloat(bLMascaras.converterVirgulaParaPonto(listaComprados.get(i).getBaseCalculoSub()))));
           mcp.setBaseCalculoicms(bLMascaras.arredondamentoComPontoDuasCasasString(Float.parseFloat(bLMascaras.converterVirgulaParaPonto(listaComprados.get(i).getBaseCalculoicms()))));
           
-          if (controle != 3){
+          //if (controle != 3){
           controllerProdutos.atualizarProdutosQuantidadeUmController(controllerProdutos.getProdutosController(listaComprados.get(i).getNomeProdutoEstoque()).getCodigo(), (listaComprados.get(i).getQuantidade() + controllerProdutos.getProdutosController(listaComprados.get(i).getNomeProdutoEstoque()).getEstoque()));
-          }
+         // }
           listamodel.add(mcp);
       }
               for (int j=0; j<listamodel.size();j++){
@@ -574,6 +574,7 @@ public class nfeEntrada extends Application implements Initializable{
                             Logger.getLogger(nfeEntrada.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         atualizarListaDfe();
+                        classeInterfaces.avisaOuvintesNotificacao("principal", "atualiza");
                         fecharNfeEntrada(); 
                     }
                     });
@@ -623,7 +624,7 @@ public class nfeEntrada extends Application implements Initializable{
             }
         }
         listaDfe ld = new listaDfe();
-        ld.atualizarDfe(modelDfe.getCodigo(), 3, "imagens/lupa.png");
+        ld.atualizarDfe(modelDfe.getCodigo(), 4, "imagens/lupa.png");
         
     }
     

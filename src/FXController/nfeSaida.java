@@ -80,6 +80,9 @@ import model.ModelTributacaoFederal;
 import model.ModelIbpt;
 import nfe.model.ModelNFCe;
 import blserial.ConfigXML;
+import com.acbr.ACBrLibBase;
+import com.acbr.ACBrLibConfigBase;
+import com.acbr.ACBrSessao;
 import org.controlsfx.control.textfield.TextFields;
 import unishop.Unishop;
 import util.AguardeGerandoRelatorio;
@@ -102,12 +105,18 @@ import interfaces.classeInterfaces;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javafx.geometry.Pos;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import model.ModelCompras;
 import model.ModelConfig;
+import model.ModelCsosn;
 import model.ModelNumeracao;
 import model.ModelVendasProdutosTabelaNfe;
 import nfe.util.LerArqXML;
@@ -153,6 +162,8 @@ public class nfeSaida extends Application implements Initializable{
     @FXML public TextField tfInscricao;
     @FXML public TableColumn<ModelVendasProdutosTabelaNfe, String> percIcms;
     @FXML public TableColumn<ModelVendasProdutosTabelaNfe, String> percIpi;
+    @FXML public TableColumn<ModelVendasProdutosTabelaNfe, Button> tbBtEdita;
+    @FXML public TableColumn<ModelVendasProdutosTabelaNfe, Button> tbBtRemove;
     @FXML public TextField telefoneCliente;
     @FXML public TableView<ModelContaReceber> tabelaPagamentos;
     @FXML public TextField tfOutrasDespesas;
@@ -182,14 +193,34 @@ public class nfeSaida extends Application implements Initializable{
     @FXML public TextField tfTotalPag;
     @FXML public Button btClientes;
     @FXML public Button btProdutos;
+    @FXML public Button btEditaLocal;
+    @FXML public Button btRemoveLocal;
     @FXML Button btFecharRetorno;    
     @FXML TextArea tfStatus;    
     @FXML private Button btSair;
-    
+    @FXML private ScrollPane pnAlteraProduto;
+    @FXML private AnchorPane apAlteraProduto;
+    @FXML private ChoiceBox<String> cbCsosn;
+    @FXML private TextField edProduto;
+    @FXML private TextField edQuantidade;
+    @FXML private TextField edValorunitario;
+    @FXML private TextField edDesconto;
+    @FXML private TextField edValorTotal;
+    @FXML private TextField edValorTotalGeral;
+    @FXML private TextField edPercIcms;
+    @FXML private TextField edValorIcms;
+    @FXML private TextField edPercIpi;
+    @FXML private TextField edValorIpi;
+    @FXML private TextField edPercSubst;
+    @FXML private TextField edValorSubst;
+    @FXML private TextField edCfop;
+    @FXML private Button btConfirma;
+    @FXML private Button btCfop;
     
     public ArrayList<ModelVendasProdutosTabelaNfe> listavendidos ;
     int codigoProduto;
     int ordem = 1;
+    int linhaAlterar = 0;
     int codigoCliente;
     Double totalgeralfracao;
     double diminuir;
@@ -199,8 +230,10 @@ public class nfeSaida extends Application implements Initializable{
     int numeroCaixa = 1;
     String chaveCriada;
     ModelVendasProdutosTabelaNfe produtoexcluir;
+    ModelVendasProdutosTabelaNfe produtoalterar;
     ArrayList produtoexcluirmodel;
     Double valorUnitario;
+    Double valorAntesAlterar;
     int pond = 2;
     int soma = 0;
     int resto;
@@ -211,6 +244,7 @@ public class nfeSaida extends Application implements Initializable{
     float totalBaseCalculoIcms = 0.0f;
     float totalValorIcms = 0.0f;
     int idDestino = 0;
+    String emailDialogo;
     
     
     ModelXmlNfe modelXmlNfe = new ModelXmlNfe();
@@ -312,6 +346,9 @@ public class nfeSaida extends Application implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        classeInterfaces.addaoMudarTelaOuvinteCfopEntrada((String novaTela,String cfopRetorno)-> {
+                    edCfop.setText(cfopRetorno);
+                        });
          classeInterfaces.addaoMudarTelaRejeicao((String novaTela, String retorno) -> {
          tfStatus.setVisible(true);
          tfStatus.setFocusTraversable(true);
@@ -329,7 +366,14 @@ public class nfeSaida extends Application implements Initializable{
                     retornarprodutoPeloCodigo(codigo);
                     quantidade.requestFocus();
                         });
-       
+       btCfop.setOnMouseClicked((MouseEvent e)->{
+            ActionEvent evento = null;
+             try {
+                 procuraCfop(edCfop.getText());
+             } catch (Exception ex) {
+                 Logger.getLogger(nfeSaida.class.getName()).log(Level.SEVERE, null, ex);
+             }
+             });
         if (verificarCaixa() == true){
         iniciaFinalidade();
         iniciaIntermediador();
@@ -344,13 +388,14 @@ public class nfeSaida extends Application implements Initializable{
         verificarCliente();
         verificarProduto();
         listaEnter();
+        iniciaBotoes();
         setNextFocus(produto, quantidade, preco);
-        criarListaClientes();
-        criarListaTelefones();
-        criarlistaProdutos();
+        //criarListaClientes();
+        //criarListaTelefones();
+        //criarlistaProdutos();
         criarlistaPagamentos();
-        TextFields.bindAutoCompletion(nomeCliente,listaClientes ).setMinWidth(300);
-        TextFields.bindAutoCompletion(produto,listaProdutos ).setMinWidth(300);
+        //TextFields.bindAutoCompletion(nomeCliente,listaClientes ).setMinWidth(300);
+        //TextFields.bindAutoCompletion(produto,listaProdutos ).setMinWidth(300);
         
                  
         //zerarValoresCaixa();
@@ -361,7 +406,7 @@ public class nfeSaida extends Application implements Initializable{
     });
    nomeCliente.setOnKeyPressed((KeyEvent e)->{
        if(e.getCode()== KeyCode.ENTER){
-           retornarClientePeloNome();
+           listaClientes();
            nomeCliente.setFocusTraversable(false);
            telefoneCliente.setFocusTraversable(false);
       }
@@ -381,7 +426,11 @@ public class nfeSaida extends Application implements Initializable{
            }else if (((produto.getText().substring(0, 1)).equalsIgnoreCase("2")) && (produto.getText().length() == 13)){
                 retornarprodutoPeloCodBarrasPeso();
            }else{
-                procuraProduto();
+               try {
+                   listaProdutos();
+               } catch (Exception ex) {
+                   Logger.getLogger(nfeSaida.class.getName()).log(Level.SEVERE, null, ex);
+               }
            }
            total.setText(String.valueOf(calcularValorproduto(quantidade.getText(), (String.valueOf(bLMascaras.converterVirgulaParaPontoReturnDouble(preco.getText()))))));
            
@@ -445,7 +494,12 @@ calcularValor();
        }
     });
     
-        
+    
+    
+    btConfirma.setOnMouseClicked((MouseEvent e) ->{
+           insereProdutoAlterado();
+             });
+    
     tabelaProdutos.setOnKeyPressed((KeyEvent e)->{
        if(e.getCode()== KeyCode.DELETE){
            Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
@@ -481,6 +535,8 @@ calcularValor();
         valorIpi.setCellValueFactory(new PropertyValueFactory<>("valorIpi"));
         csosn.setCellValueFactory(new PropertyValueFactory<>("csosn"));
         cfop.setCellValueFactory(new PropertyValueFactory<>("cfop"));
+        tbBtEdita.setCellValueFactory(new PropertyValueFactory<>("btEdita"));
+        tbBtRemove.setCellValueFactory(new PropertyValueFactory<>("btRemove"));
        
 
    }else{
@@ -511,6 +567,44 @@ calcularValor();
             
         }
                 
+    }
+    
+    private void iniciaBotoes(){
+        btEditaLocal = new Button();
+        btRemoveLocal = new Button();
+        btEditaLocal.setAlignment(Pos.CENTER);
+        btRemoveLocal.setAlignment(Pos.CENTER);
+        btRemoveLocal.setOnMouseClicked((MouseEvent e) ->{
+           Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
+                ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.OK_DONE );
+                ButtonType btnNao = new ButtonType("não", ButtonBar.ButtonData.CANCEL_CLOSE);
+                
+                dialogoExe.setTitle("EXCLUIR PRODUTO?");
+                dialogoExe.setHeaderText("A T E N Ç Ã O !!!");
+                dialogoExe.setContentText("DESEJA RELAMENTE EXCLUIR O PRODUTO?");
+                dialogoExe.getButtonTypes().setAll(btnSim, btnNao);
+                dialogoExe.showAndWait().ifPresent(b -> {
+                    if (b == btnSim) { 
+                        excluirProduto();
+                    }
+                    });
+             });
+    
+    btEditaLocal.setOnMouseClicked((MouseEvent e) ->{
+           Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
+                ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.OK_DONE );
+                ButtonType btnNao = new ButtonType("não", ButtonBar.ButtonData.CANCEL_CLOSE);
+                
+                dialogoExe.setTitle("ALTERAR PRODUTO?");
+                dialogoExe.setHeaderText("A T E N Ç Ã O !!!");
+                dialogoExe.setContentText("DESEJA RELAMENTE ALTERAR O PRODUTO?");
+                dialogoExe.getButtonTypes().setAll(btnSim, btnNao);
+                dialogoExe.showAndWait().ifPresent(b -> {
+                    if (b == btnSim) { 
+                        editarProduto();                    
+                    }
+                    });
+             });
     }
     
      public void sair(){
@@ -660,7 +754,6 @@ if(quantidade.getText() != " " &&  preco.getText() != " "){
          
          ModelVendasProdutosTabelaNfe mvptn = new ModelVendasProdutosTabelaNfe();
          listavendidos = new ArrayList<>();
-         
          mvptn.setOrdem(ordem);
          mvptn.setProduto(produto.getText());
          mvptn.setQuantidade(bLMascaras.converterVirgulaParaPontoReturnFloat(quantidade.getText()));
@@ -685,9 +778,11 @@ if(quantidade.getText() != " " &&  preco.getText() != " "){
          else if(me != mc && (cbFinalidade.getSelectionModel().getSelectedIndex() != (3))){
         mvptn.setCfop("6"+(String.valueOf(controllerCFOP.getCFOPController(controllerTributacaoEstadual.getTributacaoEstadualController(controllerProdutos.getProdutosController(produto.getText()).getTribEst()).getIdcfop()).getCfop())).substring(1,4));
          }
+         mvptn.setBtEdita(btEditaLocal);
+         mvptn.setBtRemove(btRemoveLocal);
         
         listavendidos.add(mvptn);
-        
+        iniciaBotoes();
         ordem ++;
         
         atualizarTabela();
@@ -831,7 +926,7 @@ if(quantidade.getText() != " " &&  preco.getText() != " "){
             quantidade = 0.000;
         }
         try {
-            valorUnitario = Double.parseDouble(pValorUnitario);
+            valorUnitario = bLMascaras.converterVirgulaParaPontoReturnDouble(pValorUnitario);
         } catch (Exception e) {
             valorUnitario = 0.000;
         }
@@ -1301,7 +1396,9 @@ else {
             int inicio = ((procuraRetorno(ret,chaveDFE))+tamanhochaveDFE);
             String nomeArquivo = ret.substring(inicio,(inicio + 44) )+"-nfe.xml";
             acbrNFe.gravarXml(0, nomeArquivo, caminho );
-            gravaNFeNoBanco(nomeArquivo,caminho);
+            if (gravaNFeNoBanco(nomeArquivo,caminho) == true){
+                enviarEmailNfe(caminho+"\\"+nomeArquivo+"-nfe.xml", codigoVenda);
+            }
             int atualizaNumero =  controllerNumeracao.getNumeracaoController(1).getNumeroNfe();
             controllerNumeracao.atualizarNumeracaoNfeController(atualizaNumero);
             acbrNFe.imprimir();
@@ -1316,71 +1413,92 @@ else {
    }
    
    
+   public void enviarEmailNfe(String chaveDfe, int codigoVendaRetorno) throws Exception{
+       ACBrNFe acb = new ACBrNFe();
+       modelVendas = controllerVendas.getVendasController(codigoVendaRetorno);
+       int codigoCliente = modelVendas.getClientesCodigo();
+       String emailCliente = "";
+       if (codigoCliente != 0){
+        emailCliente = controllerCliente.getClienteControllerCod(codigoCliente).getEmail();
+       }
+
+       if (emailCliente.length() > 5){
+        try {
+            acb.enviarEmail(emailDialogo, chaveDfe, true, "Nota Fiscal Emitida","",chaveDfe,"Qualquer dúvida estamos à Disposição");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.getDialogPane().getStylesheets().add("/FXView/alert.css");
+            alert.setTitle("SUCESSO");
+            alert.setContentText("EMAIL ENVIADO COM SUCESSO");
+            alert.show();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(nfeSaida.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.getDialogPane().getStylesheets().add("/FXView/alert.css");
+            alert.setTitle("ERRO");
+            alert.setContentText("EMAIL NÃO ENVIADO");
+            alert.show();
+        }
+        
+        }else{
+            TextInputDialog dialogoNome = new TextInputDialog();
+            
+            dialogoNome.getDialogPane().getStylesheets().add("/FXView/alert.css");
+            dialogoNome.setTitle("Enviar email");
+            dialogoNome.setHeaderText("Digite o email ==============================>");
+            dialogoNome.setContentText("Email:");
+            // se o usuário fornecer um valor, assignamos ao nome
+            dialogoNome.showAndWait().ifPresent(v -> emailDialogo = v);
+            
+            try {
+            if (emailDialogo != null){
+            acb.enviarEmail(emailDialogo, chaveDfe, true, "Nota Fiscal Emitida","fiscalunifor@gmail.com",chaveDfe,"email teste");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.getDialogPane().getStylesheets().add("/FXView/alert.css");
+            alert.setTitle("SUCESSO");
+            alert.setContentText("EMAIL ENVIADO COM SUCESSO");
+            alert.show();
+            }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.getDialogPane().getStylesheets().add("/FXView/alert.css");
+            alert.setTitle("ERRO");
+            alert.setContentText("EMAIL NÃO ENVIADO");
+            alert.show();
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(nfeSaida.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.getDialogPane().getStylesheets().add("/FXView/alert.css");
+            alert.setTitle("ERRO");
+            alert.setContentText("EMAIL NÃO ENVIADO");
+            alert.show();
+        }
+            
+            
+       }
+       
+   }
    
     /**
      *
      * @param nomeArquivo
      * @param caminho
      */
-    public void gravaNFeNoBanco(String nomeArquivo, String caminho) throws Exception{
+    public Boolean gravaNFeNoBanco(String nomeArquivo, String caminho) throws Exception{
        String caminhoArquivo = caminho+ "\\"+nomeArquivo;
        ViewLeitorNotaXML leitorNotaXml = new ViewLeitorNotaXML();
        
        lerArqxml = new LerArqXML();
               
        leitorNotaXml.lerarq(caminhoArquivo, codigoVenda);
+       return true;
    }
-   
   
-   public void atualizarConfig(int numeroOrigem ){
-     ModelConfig modelConfig = new ModelConfig(); 
-     modelConfig = ManipularXML.lerXmlConfig();
-     int ambiente = modelConfig.getAmbiente();
-     String CaminhoMySQL = modelConfig.getCaminhoMySQL();
-     String ImpressoraCozinha = modelConfig.getImpressoraCozinha();
-     String ImpressoraDelivery = modelConfig.getImpressoraDelivery();
-     String ImpressoraPDV = modelConfig.getImpressoraPDV();
-     String Ip = modelConfig.getIp();
-     String NomeBanco = modelConfig.getNomeBanco();
-     int NumeroNfce = modelConfig.getNumeroNfce();
-     int OnOfLine = modelConfig.getOnOfLine();
-     int QuantidadeImprimir = modelConfig.getQuantidadeImprimir();
-     int QuantidadeMesas = modelConfig.getQuantidadeMesas();
-     String Senha = modelConfig.getSenha();
-     int SerieNfce = modelConfig.getSerieNfce();
-     int SerieNfe = modelConfig.getSerieNfe();
-     String Usuario = modelConfig.getUsuario();
-     int modeloImprimir = modelConfig.getModeloImprimir();
-     int modeloCupomMesa = modelConfig.getModelocupomMesa();
-     int classificacaoFiscal = modelConfig.getClassificacaoFiscal();
-     
-     
-           
-     modelConfig.setAmbiente(ambiente);
-     modelConfig.setCaminhoMySQL(CaminhoMySQL);
-     modelConfig.setImpressoraCozinha(ImpressoraCozinha);
-     modelConfig.setImpressoraDelivery(ImpressoraDelivery);
-     modelConfig.setImpressoraPDV(ImpressoraPDV);
-     modelConfig.setIp(Ip);
-     modelConfig.setNomeBanco(NomeBanco);
-     modelConfig.setNumeroNfce(NumeroNfce);
-     modelConfig.setNumeroNfe(numeroOrigem + 1);
-     modelConfig.setOnOfLine(OnOfLine);
-     modelConfig.setQuantidadeImprimir(QuantidadeImprimir);
-     modelConfig.setQuantidadeMesas(QuantidadeMesas);
-     modelConfig.setSenha(Senha);
-     modelConfig.setSerieNfce(SerieNfce);
-     modelConfig.setSerieNfe(SerieNfe);
-     modelConfig.setUsuario(Usuario);
-     modelConfig.setModeloImprimir(modeloImprimir);
-     modelConfig.setModelocupomMesa(modeloCupomMesa);
-     modelConfig.setClassificacaoFiscal(classificacaoFiscal);
-     
-     manipularXML.gravaXML(modelConfig);
-     
-   }
    public void nfeFinalizar(){
-       cadastrarVenda();
+       if (tfPedido.getText().equals("NOVO")){
+           cadastrarVenda();
+       }
        Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
                 ButtonType btnSim = new ButtonType("Sim");
                 ButtonType btnNao = new ButtonType("não", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -1402,7 +1520,7 @@ else {
         } catch (Exception ex) {
             Logger.getLogger(Unishop.class.getName()).log(Level.SEVERE, null, ex);
         }
-          sair();
+          
     }
    
    public void nfeSalvar(){
@@ -1454,6 +1572,7 @@ else {
                 modelVendas.setIpiCst(listadeProdutos.get(i).getIpiCst());
                 modelVendas.setPisCst(listadeProdutos.get(i).getPisCst());
                 modelVendas.setCofinsCst(listadeProdutos.get(i).getCofinsCst());
+                modelVendas.setSubTribut(listadeProdutos.get(i).getSubTribut());
                 modelVendas.setOrdem(listadeProdutos.get(i).getOrdem() - 1);
                 try {
                     modelVendas.setTipoPagamento(codPagamento);
@@ -1558,6 +1677,8 @@ else {
         quantidade.setFocusTraversable(true);
         preco.setFocusTraversable(true);
         total.setFocusTraversable(true);
+        pnAlteraProduto.setVisible(false);
+        apAlteraProduto.setVisible(false);
         ordem = 1;
         totalgeralfracao = 0.0d;
     
@@ -1597,7 +1718,13 @@ else {
  
     }  
     public void gerarNfe(){
-        int codigo = codigoVenda;
+        int codigo;
+        if(tfPedido.equals("")){
+            codigo = codigoVenda;
+        }else{
+            codigo = Integer.parseInt(tfPedido.getText());
+        }
+        
         float valorTotal = bLMascaras.converterVirgulaParaPontoReturnFloat(tfTotalGeral.getText());
         final AguardeGerandoRelatorio carregando = new AguardeGerandoRelatorio();
         final ControllerVendas controllerVendas = new ControllerVendas();
@@ -1649,7 +1776,7 @@ else {
         cbFinalidade.setValue("Nfe - Normal");
         cbNatOperacao.setValue("Venda");
         cbFormaPag.setValue("DINHEIRO");
-        cbIdConsumidor.setValue("Não se Aplica");
+        cbIdConsumidor.setValue("0 - Não se Aplica");
         cbTpConsumidor.setValue("Normal");
         cbModeloFrete.setValue("Sem Frete");
         tfBcIcms.setText("0.0");
@@ -1663,6 +1790,8 @@ else {
         tfTotalPag.setText("0.0");
         tfValorIcms.setText("0.0");
         tfValorIpi.setText("0.0");
+        tfValorSubst.setText("0.0");
+        tfCofinsProdutos.setText("0.0");
         
     }
     public void lancamento() throws Exception{
@@ -1690,6 +1819,7 @@ else {
             tfPedido.setText(String.valueOf(modelVendas.getCodigo()));
             totalgeralProdutos.setText(String.valueOf(modelVendas.getValorTotal()));
             tfTotalGeral.setText(String.valueOf(modelVendas.getValorTotal()));
+            tfTotalProdutosItens.setText(String.valueOf(modelVendas.getValorTotal()-modelVendas.getDesconto()));
             tfTotalPag.setText(String.valueOf(modelVendas.getValorTotal()));
             total.setText(String.valueOf(modelVendas.getValorTotal()));
             nomeCliente.setText(controllerCliente.getClienteControllerCod(modelVendas.getClientesCodigo()).getNome());
@@ -1706,7 +1836,9 @@ else {
                 mvptn.setValorTotal(bLMascaras.truncamentoComPontoDuasCasasDouble(listamodel.get(i).getQuantidade() * listamodel.get(i).getValorUnitario()));
                 mvptn.setAliqIcms(controllerTributacaoEstadual.getTributacaoEstadualController(controllerProdutos.getProdutosController(produto.getText()).getTribEst()).getPercentual());
                 mvptn.setAliqIpi(0.0);
+                mvptn.setAliqSubst(0.0);
                 mvptn.setValorIpi(0.0);
+                mvptn.setValorSubst(0.0);
                 mvptn.setValorIcms((listamodel.get(i).getValorUnitario())*(controllerTributacaoEstadual.getTributacaoEstadualController(controllerProdutos.getProdutosController(produto.getText()).getTribEst()).getPercentual()));
                 mvptn.setCfop(String.valueOf(controllerCFOP.getCFOPController(controllerTributacaoEstadual.getTributacaoEstadualController(controllerProdutos.getProdutosController(produto.getText()).getTribEst()).getIdcfop()).getCfop()));
                 mvptn.setCsosn(String.valueOf(controllerCsosn.getCsosnController(controllerTributacaoEstadual.getTributacaoEstadualController(controllerProdutos.getProdutosController(produto.getText()).getTribEst()).getIdcsosn()).getCodigo()));
@@ -1897,8 +2029,132 @@ else {
     public void setNumeroCaixa(int numeroCaixa) {
         this.numeroCaixa = numeroCaixa;
     }
-
     
+    private void editarProduto(){
+        ModelVendasProdutosTabelaNfe modelAlteraraqui = new ModelVendasProdutosTabelaNfe();
+            linhaAlterar = tabelaProdutos.focusModelProperty().get().focusedCellProperty().getValue().getRow();
+            tabelaProdutos.getSelectionModel().select(linhaAlterar);
+            String produto = tabelaProdutos.getItems().get(linhaAlterar).getProduto();
+            modelAlteraraqui = tabelaProdutos.getItems().get(linhaAlterar);
+            listaVendidos.addAll(listamodel);
+            pnAlteraProduto.setVisible(true);
+            apAlteraProduto.setVisible(true);
+            recuperaProdutoAlterar(modelAlteraraqui);
+            
+    }
+    
+    
+    private void inicializacbCsnosn(){
+    ArrayList<ModelCsosn> modelCsosn = controllerCsosn.getListaCsosnController();
+        ArrayList<String> Csosn = new ArrayList<>();
+        modelCsosn.stream()
+                .forEach(e-> Csosn.add(String.valueOf(e.getNumero())));
+        cbCsosn.getItems().addAll(Csosn);
+}
+    
+    
+    private void recuperaProdutoAlterar(ModelVendasProdutosTabelaNfe modelAlterar){
+        inicializacbCsnosn();
+        edDesconto.setText("0,0");
+        edProduto.setText(modelAlterar.getProduto());
+        edPercIcms.setText(String.valueOf(modelAlterar.getAliqIcms()));
+        edPercIpi.setText(String.valueOf(modelAlterar.getAliqIpi()));
+        edPercSubst.setText(String.valueOf(modelAlterar.getAliqSubst()));
+        edValorIcms.setText(String.valueOf(modelAlterar.getValorIcms()));
+        edValorIpi.setText(String.valueOf(modelAlterar.getValorIpi()));
+        edValorSubst.setText(String.valueOf(modelAlterar.getValorSubst()));
+        edValorunitario.setText(String.valueOf(modelAlterar.getValorUnitario()));
+        edValorTotal.setText(String.valueOf(modelAlterar.getValorTotal()));
+        edValorTotalGeral.setText(String.valueOf(modelAlterar.getValorTotal()));
+        edQuantidade.setText(String.valueOf(modelAlterar.getQuantidade()));
+        edCfop.setText(String.valueOf(modelAlterar.getCfop()));
+        cbCsosn.setValue(modelAlterar.getCsosn());
+        valorAntesAlterar = modelAlterar.getValorTotal();
+    }
+    private void insereProdutoAlterado(){
+        produtoalterar = new ModelVendasProdutosTabelaNfe();
+        inicializacbCsnosn();
+        produtoalterar.setDesconto(bLMascaras.converterVirgulaParaPontoReturnFloat(edDesconto.getText()));
+        produtoalterar.setProduto(edProduto.getText());
+        produtoalterar.setAliqIcms(bLMascaras.converterVirgulaParaPontoReturnFloat(edPercIcms.getText()));
+        produtoalterar.setAliqIpi(bLMascaras.converterVirgulaParaPontoReturnFloat(edPercIpi.getText()));
+        produtoalterar.setAliqSubst(bLMascaras.converterVirgulaParaPontoReturnFloat(edPercSubst.getText()));
+        produtoalterar.setValorIcms(bLMascaras.converterVirgulaParaPontoReturnFloat(edValorIcms.getText()));
+        produtoalterar.setValorIpi(bLMascaras.converterVirgulaParaPontoReturnFloat(edValorIpi.getText()));
+        produtoalterar.setValorSubst(bLMascaras.converterVirgulaParaPontoReturnFloat(edValorSubst.getText()));
+        produtoalterar.setValorUnitario(bLMascaras.converterVirgulaParaPontoReturnFloat(edValorunitario.getText()));
+        produtoalterar.setValorTotal(bLMascaras.converterVirgulaParaPontoReturnFloat(edValorTotalGeral.getText()));
+        produtoalterar.setQuantidade(bLMascaras.converterVirgulaParaPontoReturnFloat(edQuantidade.getText()));
+        produtoalterar.setCsosn(cbCsosn.getSelectionModel().getSelectedItem());
+        produtoalterar.setCfop(edCfop.getText());
+        produtoalterar.setOrdem(linhaAlterar+1);
+        produtoalterar.setBtEdita(btEditaLocal);
+        produtoalterar.setBtRemove(btRemoveLocal);
+               
+        iniciaBotoes();
+        tabelaProdutos.getItems().set(linhaAlterar, produtoalterar);
+        
+        tabelaProdutos.refresh();
+        
+        pnAlteraProduto.setVisible(false);
+        apAlteraProduto.setVisible(false);
+        
+        atualizaGeral(produtoalterar, valorAntesAlterar);
+        atualizarmodelAlterado(produtoalterar);
+    }
+    
+    public void atualizaTotalAlterado(){
+    edValorTotal.setText(String.valueOf((bLMascaras.converterVirgulaParaPontoReturnFloat(edQuantidade.getText())*bLMascaras.converterVirgulaParaPontoReturnFloat(edValorunitario.getText()))));
+    edValorTotalGeral.setText(String.valueOf((bLMascaras.converterVirgulaParaPontoReturnFloat(edQuantidade.getText())*bLMascaras.converterVirgulaParaPontoReturnFloat(edValorunitario.getText())) + Float.parseFloat(edValorSubst.getText())+ Float.parseFloat(edValorIpi.getText())));
+}
+
+    private void atualizaGeral(ModelVendasProdutosTabelaNfe modelAlterado, Double valorAntes){
+        //atualizarTabela();
+        totalgeralfracao = bLMascaras.arredondamentoComPontoDuasCasasDouble(modelAlterado.getValorTotal() + (totalgeralfracao - valorAntes));
+        tfTotalGeral.setText(String.valueOf(totalgeralfracao));
+        tfTotalPag.setText(String.valueOf(totalgeralfracao));
+        totalgeralProdutos.setText(String.valueOf(totalgeralfracao));
+        tfTotalProdutosItens.setText(String.valueOf(totalgeralfracao));
+        tfValorIcms.setText(String.valueOf(Double.parseDouble(tfValorIcms.getText())+modelAlterado.getValorIcms()));
+        tfValorIpi.setText(String.valueOf(Double.parseDouble(tfValorIpi.getText())+modelAlterado.getValorIpi()));
+        tfValorSubst.setText(String.valueOf(Double.parseDouble(tfValorSubst.getText())+modelAlterado.getValorSubst()));
+        total.setText(String.valueOf(totalgeralfracao));
+        
+    }
+    public void atualizarmodelAlterado(ModelVendasProdutosTabelaNfe modelAlterado) {
+         codigoProduto = controllerProdutos.getProdutosController(modelAlterado.getProduto()).getCodigo();
+        ModelVendasProdutos mvp = new ModelVendasProdutos(); 
+                        
+        mvp.setCodigo(codigoVenda);
+        mvp.setCodigo_produto(codigoProduto);
+        mvp.setCodigo_venda(codigoVenda);
+        mvp.setQuantidade(modelAlterado.getQuantidade());
+        mvp.setValorUnitario(modelAlterado.getValorUnitario());
+        mvp.setCfop(modelAlterado.getCfop());
+        mvp.setIcmsCst(String.valueOf(controllerCsosn.getCsosnController(controllerTributacaoEstadual.getTributacaoEstadualController(controllerProdutos.getProdutosController(codigoProduto).getTribEst()).getIdcsosn()).getNumero()));
+        mvp.setIpiCst(String.valueOf(controllerCsosnFederal.getCsosnFederalController(controllerTributacaoFederal.getTributacaoFederalController(controllerProdutos.getProdutosController(codigoProduto).getTribFed()).getIdIpi()).getNumero()));
+        mvp.setPisCst(String.valueOf(controllerCstPiscofins.getCstPiscofinsController(controllerTributacaoFederal.getTributacaoFederalController(controllerProdutos.getProdutosController(codigoProduto).getTribFed()).getIdPisCofins()).getNumero()));
+        mvp.setCofinsCst(String.valueOf(controllerCstPiscofins.getCstPiscofinsController(controllerTributacaoFederal.getTributacaoFederalController(controllerProdutos.getProdutosController(codigoProduto).getTribFed()).getIdPisCofins()).getNumero()));
+        mvp.setOrdem(modelAlterado.getOrdem());
+        listamodel.remove(modelAlterado.getOrdem() - 1);
+        listamodel.add(modelAlterado.getOrdem() - 1,mvp);
+        listadeProdutos.remove(modelAlterado.getOrdem() - 1);
+        listadeProdutos = FXCollections.observableArrayList(listamodel);
+       
+     }
+    
+    private void procuraCfop(String cfop) throws IOException, Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXView/pesqCfop.fxml"));
+        Parent entradaProduto = (Parent) loader.load();
+        listaCfop localizaCfop = loader.getController();
+        localizaCfop.pesquisaCfopEntrada(cfop);
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(entradaProduto));
+        stage.show();
+   
+        
+    }
                 
 }
 

@@ -7,47 +7,48 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ImageInput?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="600.0" prefHeight="506.0" prefWidth="336.0" stylesheets="@Darkness.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unishop.Unishop">
+<Pane maxHeight="600.0" prefHeight="506.0" prefWidth="336.0" styleClass="pane" stylesheets="@Darkness.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unishop.Unishop">
    <children>
-      <Pane id="painel" layoutX="-2.0" layoutY="-5.0" prefHeight="516.0" prefWidth="342.0" style="-fx-background-color: WHITE;" stylesheets="@Darkness.css">
+      <Pane id="painel" layoutX="-2.0" layoutY="-5.0" prefHeight="516.0" prefWidth="342.0" style="-fx-background-color: WHITE;" styleClass="pane" stylesheets="@Darkness.css">
          <children>
-            <TextField id="usuario" fx:id="usuario" layoutX="15.0" layoutY="320.0" prefHeight="35.0" prefWidth="310.0" style="-fx-background-color: derive(#8FBC8F,20%);;">
+            <TextField id="usuario" fx:id="usuario" layoutX="15.0" layoutY="367.0" prefHeight="35.0" prefWidth="310.0" style="-fx-background-color: derive(#8FBC8F,20%);;">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></TextField>
-            <PasswordField id="senha" fx:id="senha" layoutX="16.0" layoutY="396.0" prefHeight="35.0" prefWidth="310.0" style="-fx-background-color: derive(#8FBC8F,20%);;">
+            <PasswordField id="senha" fx:id="senha" layoutX="16.0" layoutY="432.0" prefHeight="35.0" prefWidth="310.0" style="-fx-background-color: derive(#8FBC8F,20%);;">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></PasswordField>
-            <Label id="titulo" fx:id="titulo" layoutX="142.0" layoutY="196.0" style="-fx-text-fill: BLACK;" text="EMPRESA" textFill="WHITE">
+            <Label id="titulo" fx:id="titulo" layoutX="18.0" layoutY="253.0" style="-fx-text-fill: BLACK;" text="EMPRESA" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="27.0" />
                </font>
             </Label>
             <TilePane layoutX="1.0" layoutY="481.0" prefHeight="35.0" prefWidth="342.0" style="-fx-background-color: derive(#8FBC8F,20%);" />
-            <Button id="btAutenticar" fx:id="btAutenticar" layoutX="209.0" layoutY="481.0" mnemonicParsing="false" onAction="#iniciarcampos" prefHeight="35.0" prefWidth="134.0" stylesheets="@Darkness.css" text="AUTENTICAR">
+            <Button id="btAutenticar" fx:id="btAutenticar" layoutX="188.0" layoutY="481.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="155.0" stylesheets="@Darkness.css" text="    AUTENTICAR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Label layoutX="16.0" layoutY="295.0" style="-fx-text-fill: BLACK;" text="USUÁRIO" textFill="WHITE">
+            <Label layoutX="16.0" layoutY="346.0" style="-fx-text-fill: BLACK;" text="USUÁRIO" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="16.0" layoutY="373.0" style="-fx-text-fill: BLACK;" text="SENHA" textFill="WHITE">
+            <Label layoutX="16.0" layoutY="410.0" style="-fx-text-fill: BLACK;" text="SENHA" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Button id="cancelar" fx:id="cancelar" layoutX="75.0" layoutY="481.0" mnemonicParsing="false" onAction="#fecha" prefHeight="35.0" prefWidth="134.0" stylesheets="@Darkness.css" text="CANCELAR">
+            <Button id="cancelar" fx:id="cancelar" layoutX="65.0" layoutY="481.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="134.0" stylesheets="@Darkness.css" text="CANCELAR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <TextField id="empresa" fx:id="empresa" alignment="CENTER" editable="false" focusTraversable="false" layoutX="15.0" layoutY="229.0" prefHeight="35.0" prefWidth="310.0" style="-fx-background-color: derive(#8FBC8F,20%);;">
+            <TextField id="empresa" fx:id="empresa" alignment="CENTER" editable="false" focusTraversable="false" layoutX="15.0" layoutY="278.0" prefHeight="35.0" prefWidth="310.0" style="-fx-background-color: derive(#8FBC8F,20%);;">
                <opaqueInsets>
                   <Insets bottom="6.0" top="100.0" />
                </opaqueInsets>
@@ -56,17 +57,22 @@
                </font></TextField>
             <Pane layoutY="5.0" prefHeight="30.0" prefWidth="342.0" style="-fx-background-color: GREEN;" styleClass="HBox" stylesheets="@Darkness.css">
                <children>
-                  <Button id="btSair" fx:id="btSair" layoutX="300.0" layoutY="-11.0" mnemonicParsing="false" onAction="#fecha">
+                  <Button id="btSair" fx:id="btSair" layoutX="300.0" layoutY="-11.0" mnemonicParsing="false">
                      <effect>
-                        <ImageInput x="10.0" y="10.0">
+                        <ImageInput x="5.0" y="5.0">
                            <source>
-                              <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                              <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                            </source>
                         </ImageInput>
                      </effect>
                   </Button>
                </children>
             </Pane>
+            <ImageView fitHeight="192.0" fitWidth="226.0" layoutX="98.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/logoini.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </children>

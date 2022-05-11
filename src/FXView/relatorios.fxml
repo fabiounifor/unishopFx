@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language JavaScript?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+
+<HBox prefHeight="594.0" prefWidth="788.0" styleClass="background" stylesheets="@auxiliares.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.Relatorios">
+   <children>
+      <AnchorPane prefHeight="594.0" prefWidth="760.0">
+         <children>
+            <Pane prefHeight="592.0" prefWidth="797.0">
+               <children>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="797.0" styleClass="background" stylesheets="@auxiliares.css">
+                     <children>
+                        <Pane stylesheets="@auxiliares.css" />
+                        <TilePane layoutX="-3.0" layoutY="559.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@auxiliares.css" />
+                        <Group layoutX="154.0" layoutY="-10.0" />
+                        <Group />
+                        <Pane layoutX="-3.0" prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@auxiliares.css">
+                           <children>
+                              <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
+                                 <effect>
+                                    <ImageInput x="5.0" y="5.0">
+                                       <source>
+                                          <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
+                                       </source>
+                                    </ImageInput>
+                                 </effect>
+                              </Button>
+                              <Label layoutX="14.0" layoutY="6.0" style="-fx-text-fill: white;" text="Relatórios" />
+                           </children>
+                        </Pane>
+                        <ScrollPane layoutX="-2.0" layoutY="30.0" prefHeight="531.0" prefWidth="195.0" styleClass="background" stylesheets="@auxiliares.css">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="528.0" prefWidth="193.0" styleClass="TilePane" stylesheets="@auxiliares.css">
+                                 <children>
+                                    <SplitMenuButton fx:id="SmProdutos" mnemonicParsing="false" prefHeight="31.0" prefWidth="191.0" text="Produtos">
+                                      <items>
+                                        <MenuItem fx:id="MiProdutos" mnemonicParsing="false" text="Produtos" />
+                                        <MenuItem fx:id="MiProdutosEstoque" mnemonicParsing="false" text="Produtos com Estoque" />
+                                          <MenuItem fx:id="MiProdutosGrupo" mnemonicParsing="false" onAction="#produtoPorGrupo" text="Produtos por Grupo" />
+                                      </items>
+                                    </SplitMenuButton>
+                                    <SplitMenuButton fx:id="SmPessoas" layoutY="30.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="191.0" text="Pessoas">
+                                       <items>
+                                          <MenuItem fx:id="MiClientes" mnemonicParsing="false" text="Clientes" />
+                                          <MenuItem fx:id="MiClientesRanking" mnemonicParsing="false" text="Clientes Ranking" />
+                                       </items>
+                                    </SplitMenuButton>
+                                    <SplitMenuButton fx:id="SmEntradas" layoutY="60.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="191.0" text="Entradas">
+                                       <items>
+                                          <MenuItem fx:id="MiEntradas" mnemonicParsing="false" text="Entradas" />
+                                          <MenuItem fx:id="MiEntradasFornecedor" mnemonicParsing="false" text="Entradas Fornecedor" />
+                                       </items>
+                                    </SplitMenuButton>
+                                    <SplitMenuButton fx:id="SmSaidas" layoutY="90.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="191.0" text="Saidas">
+                                       <items>
+                                          <MenuItem mnemonicParsing="false" text="Vendas Por Periodo" />
+                                          <MenuItem mnemonicParsing="false" text="Vendas Por Grupo" />
+                                       </items>
+                                    </SplitMenuButton>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <Pane fx:id="pnProdutosGrupo" layoutX="193.0" layoutY="30.0" prefHeight="266.0" prefWidth="606.0" visible="false">
+                           <children>
+                              <DatePicker fx:id="dpInicio" layoutX="50.0" layoutY="102.0" />
+                              <DatePicker fx:id="dpFim" layoutX="342.0" layoutY="102.0" />
+                              <Label layoutX="56.0" layoutY="78.0" text="Inicio" />
+                              <Label layoutX="349.0" layoutY="78.0" text="Fim" />
+                              <ChoiceBox fx:id="cbGrupo" layoutX="47.0" layoutY="188.0" prefHeight="31.0" prefWidth="230.0" />
+                              <Button fx:id="btGerar" layoutX="344.0" layoutY="186.0" mnemonicParsing="false" onAction="#gerarRealtorioPorGrupo" prefHeight="35.0" prefWidth="221.0" style="-fx-text-fill: White;" text="Gerar" />
+                              <Label layoutX="54.0" layoutY="164.0" text="Grupo" />
+                              <Label layoutX="47.0" layoutY="14.0" text="Relatorio de Produtos Vendidos por Grupo e Período" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

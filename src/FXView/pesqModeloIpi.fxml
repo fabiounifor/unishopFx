@@ -23,7 +23,7 @@
                <children>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@cadastros.css">
                      <children>
-                        <TilePane layoutY="565.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@saidas.css" />
+                        <TilePane layoutY="565.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@cadastros.css" />
                         <Button id="btPesquisarModeloIpi" fx:id="btPesquisarModeloIpi" layoutX="567.0" layoutY="37.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="84.0" text="PESQUISA" textAlignment="CENTER">
                            <effect>
                               <ImageInput x="5.0" y="5.0">

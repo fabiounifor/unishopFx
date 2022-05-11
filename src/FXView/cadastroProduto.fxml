@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.effect.ImageInput?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -44,14 +45,70 @@
       <TilePane layoutY="563.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@cadastros.css" />
       <Button id="btSalvarProduto" fx:id="btSalvarProduto" layoutX="508.0" layoutY="563.0" mnemonicParsing="false" onAction="#salvarProduto" prefHeight="35.0" prefWidth="147.0" text="SALVAR | F5" />
       <Button id="btImprimirProduto" fx:id="btImprimirProduto" layoutX="653.0" layoutY="563.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="147.0" text="IMPRIMIR |  F7" />
-      <Button id="btUnidades" fx:id="btUnidades" layoutX="138.0" layoutY="311.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoUnidades" prefHeight="37.0" prefWidth="59.0" text="Button" />
-      <Button id="btMarcas" fx:id="btMarcas" layoutX="288.0" layoutY="185.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="59.0" text="Button" />
-      <Button id="btGrupos" fx:id="btGrupos" layoutX="288.0" layoutY="120.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="59.0" style="-fx-text-fill: white;" text="..." />
-      <Button id="btFatores" fx:id="btFatores" layoutX="278.0" layoutY="443.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoFator" prefHeight="37.0" prefWidth="59.0" text="Button" />
-      <Button id="btTribEstaduais" fx:id="btTribEstaduais" layoutX="741.0" layoutY="376.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoTribEstadual" prefHeight="37.0" prefWidth="59.0" text="Button" />
-      <Button id="btTribFederais" fx:id="btTribFederais" layoutX="740.0" layoutY="445.0" minWidth="53.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="59.0" text="Button" />
-      <Button id="btNcms" fx:id="btNcms" layoutX="555.0" layoutY="514.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoNcm" prefHeight="35.0" prefWidth="59.0" text="Button" />
-      <Button id="btCests" fx:id="btCests" layoutX="741.0" layoutY="514.0" minWidth="53.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="59.0" text="Button" />
+      <Button id="btUnidades" fx:id="btUnidades" layoutX="138.0" layoutY="311.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoUnidades" prefHeight="37.0" prefWidth="59.0" text="Button">
+         <effect>
+            <ImageInput x="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+               </source>
+            </ImageInput>
+         </effect></Button>
+      <Button id="btMarcas" fx:id="btMarcas" layoutX="288.0" layoutY="185.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="59.0" text="Button">
+         <effect>
+            <ImageInput x="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+               </source>
+            </ImageInput>
+         </effect></Button>
+      <Button id="btGrupos" fx:id="btGrupos" layoutX="288.0" layoutY="120.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="59.0" style="-fx-text-fill: white;" text="...">
+         <effect>
+            <ImageInput x="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+               </source>
+            </ImageInput>
+         </effect></Button>
+      <Button id="btFatores" fx:id="btFatores" layoutX="278.0" layoutY="443.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoFator" prefHeight="37.0" prefWidth="59.0" text="Button">
+         <effect>
+            <ImageInput x="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+               </source>
+            </ImageInput>
+         </effect></Button>
+      <Button id="btTribEstaduais" fx:id="btTribEstaduais" layoutX="742.0" layoutY="376.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoTribEstadual" prefHeight="37.0" prefWidth="59.0" text="Button">
+         <effect>
+            <ImageInput x="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+               </source>
+            </ImageInput>
+         </effect></Button>
+      <Button id="btTribFederais" fx:id="btTribFederais" layoutX="741.0" layoutY="445.0" minWidth="53.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="59.0" text="Button">
+         <effect>
+            <ImageInput x="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+               </source>
+            </ImageInput>
+         </effect></Button>
+      <Button id="btNcms" fx:id="btNcms" layoutX="555.0" layoutY="514.0" minWidth="53.0" mnemonicParsing="false" onAction="#novoNcm" prefHeight="35.0" prefWidth="59.0" text="Button">
+         <effect>
+            <ImageInput x="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+               </source>
+            </ImageInput>
+         </effect></Button>
+      <Button id="btCests" fx:id="btCests" layoutX="741.0" layoutY="514.0" minWidth="53.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="59.0" text="Button">
+         <effect>
+            <ImageInput x="10.0">
+               <source>
+                  <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+               </source>
+            </ImageInput>
+         </effect></Button>
       <TextField id="cest" fx:id="cest" layoutX="615.0" layoutY="513.0" prefHeight="25.0" prefWidth="129.0" />
       <TextField id="ncm" fx:id="ncm" layoutX="437.0" layoutY="513.0" prefHeight="25.0" prefWidth="120.0" />
       <Label layoutX="31.0" layoutY="32.0" text="Nome" />
@@ -102,13 +159,20 @@
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
+               <effect>
+                  <ImageInput>
+                     <source>
+                        <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
             </Button>
          </children>
       </HBox>
       <ChoiceBox id="cbMarca" fx:id="cbMarca" layoutX="13.0" layoutY="185.0" prefHeight="31.0" prefWidth="271.0" />
       <ChoiceBox id="cbGrupo" fx:id="cbGrupo" layoutX="12.0" layoutY="122.0" prefHeight="31.0" prefWidth="271.0" />
-      <ChoiceBox id="cbTribEstadual" fx:id="cbTribEstadual" layoutX="436.0" layoutY="377.0" prefHeight="31.0" prefWidth="305.0" />
-      <ChoiceBox id="cbTribFederal" fx:id="cbTribFederal" layoutX="432.0" layoutY="447.0" prefHeight="31.0" prefWidth="305.0" />
+      <ChoiceBox id="cbTribEstadual" fx:id="cbTribEstadual" layoutX="436.0" layoutY="377.0" prefHeight="31.0" prefWidth="314.0" />
+      <ChoiceBox id="cbTribFederal" fx:id="cbTribFederal" layoutX="432.0" layoutY="447.0" prefHeight="31.0" prefWidth="314.0" />
       <ChoiceBox id="cbTipo" fx:id="cbTipo" layoutX="208.0" layoutY="313.0" prefHeight="31.0" prefWidth="136.0" />
       <AnchorPane id="pnGlp" fx:id="pnGlp" layoutX="446.0" layoutY="79.0" prefHeight="272.0" prefWidth="320.0">
          <children>

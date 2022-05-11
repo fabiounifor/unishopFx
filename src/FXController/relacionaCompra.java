@@ -34,6 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -204,7 +205,7 @@ public class relacionaCompra extends Application implements Initializable {
     public void preencheTabela(ArrayList produtos){
         if (!(produtos.isEmpty())){
         tamanho = tamanho + 1;
-        tabelaProdutoCompra.setPrefHeight((tamanho * 35)+ 55);
+        tabelaProdutoCompra.setPrefHeight((tamanho * 55)+ 55);
         }
         if (tabelaProdutoCompra.getPrefHeight() > 550){
             tabelaProdutoCompra.setPrefHeight(550);
@@ -258,10 +259,11 @@ public class relacionaCompra extends Application implements Initializable {
     
     private void iniciaBotoes(){
         
-        btProcuraProduto = new Button("...");
-        btCfop = new Button("...");
-        btFator = new Button("...");
-        btAdcionaProduto = new Button("+");
+        btProcuraProduto = new Button();
+        btCfop = new Button();
+        btFator = new Button();
+        btAdcionaProduto = new Button();
+        btAdcionaProduto.setAlignment(Pos.CENTER);
         
                 
         btCfop.setOnMouseClicked((MouseEvent e)->{
@@ -399,8 +401,8 @@ else {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             iniciaBotoes();
-            classeInterfaces.addaoMudarTelaCaminho((String novaTela,String caminho)-> {
-                System.out.println("CAMINHO RELACIONA" + caminho );
+             classeInterfaces.addaoMudarTelaCaminho((String novaTela,String caminho)-> {
+                System.out.println("CAMINHO RELACIONA");
                 recuperaXml(caminho);
             });            
                     classeInterfaces.addaoMudarTelaOuvinteProdutos((String novaTela,  ArrayList produtos, ArrayList nfe,ArrayList fornecedor,ArrayList contasPagar) -> {

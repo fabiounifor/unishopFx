@@ -5,6 +5,7 @@
  */
 package FXController;
 
+import com.acbr.bal.ACBrBAL;
 import interfaces.classeInterfaces;
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import relatorios.DAORelatorios;
-import util.BLMascaras;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,21 +29,38 @@ import javafx.stage.StageStyle;
 import model.ModelProgresso;
 import unishop.Unishop;
 import util.BackupMySQL;
-import FXController.geradorSintegra;
 import com.acbr.nfe.ACBrNFe;
 import com.acbr.nfe.demo.FrmMain;
 import conexoes.ConexaoMySql;
+import controller.ControllerDfe;
 import controller.ControllerEmpresa;
+import controller.ControllerNumeracao;
 import controller.ControllerUsuario;
 import java.io.File;
 import java.util.Calendar;
 import java.sql.Date;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javax.swing.JFrame;
+import javafx.scene.text.TextFlow;
+import model.ModelDfe;
+import model.ModelNumeracao;
+import nfe.model.ModelXmlDfe;
 import util.BLMascaras;
 import util.Backup;
+import util.ManipularXML;
+import controller.ControllerEmpresa;
+import controller.ControllerNumeracao;
+import controller.ControllerEmpresaCidadeEstado;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Preloader;
+import javafx.scene.Node;
 
 /**
  *
@@ -52,9 +69,11 @@ import util.Backup;
 public class novoPrincipal extends Application implements Initializable{
     
     @FXML private Button btFinanceiro;
+    @FXML private Button btCadastro;
     @FXML private Button btEntrada;
-    @FXML private Button btsaida;
     @FXML private Button btSaida;
+    @FXML private Button btAuxiliares;
+    @FXML private Button bt;
     @FXML private Button btMinimizar;
     @FXML private Button btFechar;
     @FXML private ProgressIndicator piProcesso;
@@ -62,7 +81,10 @@ public class novoPrincipal extends Application implements Initializable{
     @FXML private Label lbEmpresa;
     @FXML private Label lbCnpj;
     @FXML private Label lbUsuario;
+    @FXML private Label lbVersaoJava;
     @FXML private Label lbCertificado;
+    @FXML private TextFlow tflNot;
+    @FXML private TextFlow tflNotConsultaSefaz;
     @FXML public StackPane painelJanela;
     @FXML public StackPane stkPainel;
     @FXML public ImageView foto;
@@ -72,18 +94,31 @@ public class novoPrincipal extends Application implements Initializable{
     @FXML private FlowPane saidasPainel;
     @FXML private FlowPane financeiroPainel;
     @FXML private FlowPane auxiliaresPainel;
+    @FXML private ImageView imgvCadastros;
+    @FXML private ImageView imgvEntradas;
+    @FXML private ImageView imgvSaidas;
+    @FXML private ImageView imgvFinanceiro;
+    @FXML private ImageView imgvAuxiliares;
     int codigoUsuario;
-    public static Stage raizPrincipal;
+    String cnpj;
+    int codUf;
+    String nsu ;
+    String nsuAtual ;
+    String retorno;
+    int inicioNsu = 0;
+    ArrayList<String> chavesNovas = new ArrayList<>();
     private ModelProgresso progresso = new ModelProgresso();
     ControllerUsuario controllerUsuario = new ControllerUsuario();
+    ControllerEmpresa controllerEmpresa = new ControllerEmpresa();
+    ControllerNumeracao controllerNumeracao = new ControllerNumeracao();
+    ControllerDfe controllerDfe = new ControllerDfe();
+    ControllerEmpresaCidadeEstado controllerEmpresaCidadeEstado = new ControllerEmpresaCidadeEstado();
     BLMascaras bLMascaras = new BLMascaras();
     
     @Override
     public void start(Stage primaryStage) throws IOException {
         
-        raizPrincipal = primaryStage;
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/FXView/principal.fxml")); 
-        
         Parent root = loader.load(); 
         primaryStage.setScene(new Scene(root)); 
         primaryStage.setMaximized(true);
@@ -106,6 +141,9 @@ public class novoPrincipal extends Application implements Initializable{
         classeInterfaces.addaoMudarTelaOuvinteProgresso((String novaTela, Boolean ativo) -> {
         piProcesso.setVisible(ativo);
         });
+        classeInterfaces.addaoMudarTelaNotificacao((String novaTela, String atualiza) -> {
+        ativarNotificacao();
+        });
         cadastrosPainel.setVisible(false);
         entradasPainel.setVisible(false);
         saidasPainel.setVisible(false);
@@ -113,11 +151,35 @@ public class novoPrincipal extends Application implements Initializable{
         auxiliaresPainel.setVisible(false);
         bkpFinal();
         arquivosFiscais();
+        mostrarBotoes();
+        verificarUltimaConsulta();
+        ativarNotificacao();
+        consultaEmUmaHora();
     }
     
     public void mostrarBotoes(){
-        painelBotoes.setVisible(true);
+        //painelBotoes.setVisible(true);
+        imgvAuxiliares.setVisible(true);
+        imgvCadastros.setVisible(true);
+        imgvEntradas.setVisible(true);
+        imgvSaidas.setVisible(true);
+        imgvFinanceiro.setVisible(true);
     }
+    public void mostrarBotoesTexto(){
+        btEntrada.setVisible(true);
+        btFinanceiro.setVisible(true);
+        btAuxiliares.setVisible(true);
+        btCadastro.setVisible(true);
+        btSaida.setVisible(true);
+    }
+    public void esconderBotoesTexto(){
+        btEntrada.setVisible(false);
+        btFinanceiro.setVisible(false);
+        btAuxiliares.setVisible(false);
+        btCadastro.setVisible(false);
+        btSaida.setVisible(false);
+    }
+    
     public int procuraBarra(String retorno, String barra ){
         int indice = 0;
         if(retorno.contains(barra)){
@@ -126,14 +188,33 @@ public class novoPrincipal extends Application implements Initializable{
         return indice;
     }
 
-    public void iniciarBotoes(int usuario, int empresa) throws Exception{
-        ACBrNFe acbr = new ACBrNFe();
+    private void verificarUltimaConsulta(){
+    final Timeline timeline = new Timeline();
+
+     timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.minutes(5.0),ev -> {
+            consultaDfePrincipal();
+        }));
+     timeline.setCycleCount(Animation.INDEFINITE);
+     timeline.setAutoReverse(true);
+     timeline.play();      
+    }  
+    
+    public void iniciarBotoes(int usuario, int empresa) {
+        String versaoJavaAtual = System.getProperty("sun.arch.data.model");;
+        
+        ACBrNFe acbr = null;
+        try {
+            acbr = new ACBrNFe();
+        } catch (Exception ex) {
+            Logger.getLogger(novoPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String Barra = "/";
         ControllerEmpresa controllerEmpresa = new ControllerEmpresa();
         piProcesso.setVisible(false);
         lbEmpresa.setText(controllerEmpresa.getEmpresaController(empresa).getModelEmpresa().getRazaoSocial());
         lbCnpj.setText(controllerEmpresa.getEmpresaController(empresa).getModelEmpresa().getCnpj());
         lbUsuario.setText(controllerUsuario.getUsuarioController(usuario).getNome());
+        lbVersaoJava.setText("Sistema: " + versaoJavaAtual + " Bits  ");
         codigoUsuario = controllerUsuario.getUsuarioController(usuario).getCodigo();
         try {
             String ret = acbr.obterCertificados();
@@ -141,7 +222,11 @@ public class novoPrincipal extends Application implements Initializable{
         } catch (Exception ex) {
             Logger.getLogger(novoPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        try {
+            acbr.limparLista();
+        } catch (Exception ex) {
+            Logger.getLogger(novoPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void saidas() throws IOException{
@@ -435,8 +520,16 @@ public class novoPrincipal extends Application implements Initializable{
         fecharAuxiliares();
     }
     public void relatorios() throws Exception{
-    
+        Relatorios rel = new Relatorios();
+        try {
+            rel.start(new Stage());
+        } catch (Exception ex) {
+            Logger.getLogger(Unishop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        fecharAuxiliares();
     }
+    
+    
     public void configuracoes(){
             FrmMain configuracao = new FrmMain();
         try {
@@ -547,6 +640,68 @@ public class novoPrincipal extends Application implements Initializable{
             conn.fecharConexao();
         } catch (Exception e) {
         }
+    }
+    
+    private void consultaEmUmaHora(){
+           final Timeline timeline = new Timeline();
+     timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.minutes(65),ev -> {
+        consultaDfePrincipal();
+    }));
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.setAutoReverse(true);
+    timeline.play();           
+    
+    }  
+    public void consultaDfePrincipal(){
+        listaDfe lf = new listaDfe();
+        ControllerNumeracao controllerNumeracao = new ControllerNumeracao();
+        ModelNumeracao modelNumeracao = new ModelNumeracao();
+        modelNumeracao = controllerNumeracao.getNumeracaoController(1);
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss.SSS");
+        LocalDateTime dt1= LocalDateTime.parse(modelNumeracao.getUltimaConsulta(), f);
+        LocalDateTime dt2= LocalDateTime.parse(bLMascaras.retornarDataHora(), f);
+        long diferencaMin = Duration.between(dt1, dt2).toMinutes();
+        if (diferencaMin < 60){
+                        }else{
+        try {
+           lf.consultaDfe();
+           String dia  = String.valueOf(dt2).substring(8, 10);
+           String mes  = String.valueOf(dt2).substring(5, 7);
+           String ano  = String.valueOf(dt2).substring(0, 4);
+           String hora  = String.valueOf(dt2).substring(11);
+           String dataCompleta = (dia + "/" + mes + "/" + ano+ " " + hora);        
+           controllerNumeracao.atualizarConsultaController(1,dataCompleta);
+        } catch (Exception ex) {
+            Logger.getLogger(novoPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+   }
+    
+    public void ativarNotificacao(){
+        ControllerDfe cd = new ControllerDfe();
+        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> result2 = new ArrayList<>();
+        ArrayList<ModelDfe> listaDfe = cd.getListaDfeController();
+        
+        listaDfe.stream()
+                .filter(e -> e.getSituacao() == 0)
+                .forEach(e -> result.add(e.getChavenfe()));
+        listaDfe.stream()
+                .filter(e -> e.getSituacao() == 3)
+                .forEach(e -> result2.add(e.getChavenfe()));
+        
+        if (result.size() > 0 || result2.size() > 0 ){
+            tflNot.setVisible(true);
+            tflNot.setMaxHeight(15.0);
+            tflNotConsultaSefaz.setVisible(true);
+            tflNotConsultaSefaz.setMaxHeight(15.0);
+        }else{
+            tflNot.setVisible(false);
+            tflNot.setMaxHeight(0.0);
+            tflNotConsultaSefaz.setVisible(false);
+            tflNotConsultaSefaz.setMaxHeight(0.0);
+        }
+        
     }
 
 

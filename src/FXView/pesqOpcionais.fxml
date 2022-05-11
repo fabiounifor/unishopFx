@@ -46,14 +46,14 @@
                </children>
             </Group>
             <Button id="btAdcionar" fx:id="btAdcionar" layoutX="653.0" layoutY="565.0" mnemonicParsing="false" onAction="#novoOpcao" prefHeight="35.0" prefWidth="147.0" text="NOVO | F5" />
-            <Button id="btSeleciona" fx:id="btSeleciona" layoutX="508.0" layoutY="565.0" mnemonicParsing="false" onAction="#editarOpcao" prefHeight="35.0" prefWidth="147.0" text="ALETERAR" />
+            <Button id="btSeleciona" fx:id="btSeleciona" layoutX="508.0" layoutY="565.0" mnemonicParsing="false" onAction="#editarOpcao" prefHeight="35.0" prefWidth="147.0" text="ALTERAR" />
             <Pane prefHeight="30.0" prefWidth="800.0" styleClass="HBox" stylesheets="@cadastros.css">
                <children>
                   <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
                      <effect>
-                        <ImageInput x="10.0" y="10.0">
+                        <ImageInput x="5.0" y="5.0">
                            <source>
-                              <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                              <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                            </source>
                         </ImageInput>
                      </effect>

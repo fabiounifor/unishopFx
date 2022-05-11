@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -175,19 +176,21 @@
                               <Font size="15.0" />
                            </font>
                         </TextField>
-                        <TableView id="tabelaProdutos" fx:id="tabelaProdutos" editable="true" focusTraversable="false" layoutX="5.0" layoutY="144.0" prefHeight="245.0" prefWidth="761.0">
+                        <TableView id="tabelaProdutos" fx:id="tabelaProdutos" editable="true" focusTraversable="false" layoutX="5.0" layoutY="118.0" prefHeight="390.0" prefWidth="761.0" style="-fx-cell-size: 35;">
                            <columns>
                               <TableColumn id="ordemTabela" fx:id="ordemTabela" prefWidth="42.0" text="ITEM" />
                               <TableColumn id="prodTabela" fx:id="prodTabela" prefWidth="294.3333435058594" text="PRODUTO" />
                               <TableColumn id="cfop" fx:id="cfop" minWidth="0.0" prefWidth="57.666656494140625" text="CFOP" />
-                              <TableColumn id="csosn" fx:id="csosn" minWidth="0.0" prefWidth="57.666656494140625" text="CSOSN" />
+                              <TableColumn id="csosn" fx:id="csosn" minWidth="0.0" prefWidth="65.0" text="CSOSN" />
                               <TableColumn id="quantTabela" fx:id="quantTabela" minWidth="0.0" prefWidth="66.66665649414062" text="QUANT" />
-                              <TableColumn id="valuniTabela" fx:id="valuniTabela" prefWidth="56.333343505859375" text="VALOR" />
-                              <TableColumn id="valorIcms" fx:id="valorIcms" prefWidth="56.333343505859375" text="ICMS" />
-                              <TableColumn id="percIcms" fx:id="percIcms" prefWidth="53.0" text="\% ICMS" />
-                              <TableColumn id="valorIpi" fx:id="valorIpi" prefWidth="57.0" text="IPI" />
-                              <TableColumn id="percIpi" fx:id="percIpi" prefWidth="33.6666259765625" text="\% IPI" />
+                              <TableColumn id="valuniTabela" fx:id="valuniTabela" text="VALOR" />
+                              <TableColumn id="valorIcms" fx:id="valorIcms" prefWidth="56.333343505859375" text="ICMS" visible="false" />
+                              <TableColumn id="percIcms" fx:id="percIcms" prefWidth="53.0" text="\% ICMS" visible="false" />
+                              <TableColumn id="valorIpi" fx:id="valorIpi" prefWidth="57.0" text="IPI" visible="false" />
+                              <TableColumn id="percIpi" fx:id="percIpi" prefWidth="33.6666259765625" text="\% IPI" visible="false" />
                               <TableColumn id="totalTabela" fx:id="totalTabela" minWidth="0.0" prefWidth="63.0" text="TOTAL" />
+                              <TableColumn id="percIpi" fx:id="tbBtEdita" prefWidth="33.6666259765625" text="tbBtEdita" />
+                              <TableColumn id="percIpi" fx:id="tbBtRemove" prefWidth="33.6666259765625" text="tbBtRemove" />
                            </columns>
                         </TableView>
                         <Label layoutX="411.0" layoutY="48.0" text="Quantidade" textFill="#fcfafa">
@@ -210,7 +213,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Button id="btProdutos" fx:id="btProdutos" layoutX="364.0" layoutY="71.0" mnemonicParsing="false" onAction="#listaProdutos" prefHeight="45.0" prefWidth="58.0" text="Button">
+                        <Button id="btProdutos" fx:id="btProdutos" layoutX="364.0" layoutY="71.0" mnemonicParsing="false" onAction="#listaProdutos" prefHeight="45.0" prefWidth="44.0" text="Button">
                            <effect>
                               <ImageInput>
                                  <source>
@@ -220,16 +223,62 @@
                            </effect>
                         </Button>
                         <Button id="btAdcionar" fx:id="btAdcionar" layoutX="704.0" layoutY="70.0" mnemonicParsing="false" onAction="#adcionar" prefHeight="45.0" prefWidth="61.0" text="+" />
-                        <TextField id="tfTotalProdutosItens" fx:id="tfTotalProdutosItens" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="543.0" layoutY="458.0" prefHeight="37.0" prefWidth="194.0" style="-fx-text-fill: darkgreen;">
+                        <TextField id="tfTotalProdutosItens" fx:id="tfTotalProdutosItens" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="542.0" layoutY="511.0" prefHeight="55.0" prefWidth="226.0" style="-fx-font-size: 26;">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </TextField>
-                        <Label layoutX="392.0" layoutY="467.0" text="TOTAL PRODUTOS" textFill="WHITE">
+                        <Label layoutX="329.0" layoutY="521.0" style="-fx-font-size: 24;" text="TOTAL PRODUTOS" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
+                        <ScrollPane fx:id="pnAlteraProduto" layoutX="5.0" layoutY="160.0" prefHeight="348.0" prefWidth="763.0">
+                          <content>
+                            <AnchorPane fx:id="apAlteraProduto" layoutX="50.0" layoutY="50.0" minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="732.0">
+                                 <children>
+                                    <ChoiceBox fx:id="cbCsosn" layoutX="33.0" layoutY="26.0" prefHeight="31.0" prefWidth="327.0" />
+                                    <TextField fx:id="edProduto" layoutX="34.0" layoutY="89.0" prefHeight="37.0" prefWidth="683.0" />
+                                    <TextField fx:id="edQuantidade" layoutX="34.0" layoutY="155.0" onKeyReleased="#atualizaTotalAlterado" prefHeight="37.0" prefWidth="144.0" />
+                                    <TextField fx:id="edValorunitario" layoutX="193.0" layoutY="155.0" onKeyReleased="#atualizaTotalAlterado" prefHeight="37.0" prefWidth="158.0" />
+                                    <TextField fx:id="edDesconto" layoutX="366.0" layoutY="155.0" onKeyReleased="#atualizaTotalAlterado" prefHeight="37.0" prefWidth="130.0" />
+                                    <TextField fx:id="edValorTotal" layoutX="508.0" layoutY="155.0" prefHeight="37.0" prefWidth="209.0" />
+                                    <TextField fx:id="edPercIcms" layoutX="34.0" layoutY="229.0" prefHeight="37.0" prefWidth="144.0" />
+                                    <TextField fx:id="edValorIcms" layoutX="193.0" layoutY="229.0" onKeyReleased="#atualizaTotalAlterado" prefHeight="37.0" prefWidth="158.0" />
+                                    <TextField fx:id="edPercIpi" layoutX="366.0" layoutY="229.0" prefHeight="37.0" prefWidth="130.0" />
+                                    <TextField fx:id="edValorIpi" layoutX="508.0" layoutY="229.0" onKeyReleased="#atualizaTotalAlterado" prefHeight="37.0" prefWidth="207.0" />
+                                    <TextField fx:id="edPercSubst" layoutX="35.0" layoutY="298.0" prefHeight="37.0" prefWidth="144.0" />
+                                    <TextField fx:id="edValorSubst" layoutX="194.0" layoutY="298.0" onKeyReleased="#atualizaTotalAlterado" prefHeight="37.0" prefWidth="158.0" />
+                                    <TextField id="edValorTotalGeral" fx:id="edValorTotalGeral" layoutX="367.0" layoutY="298.0" prefHeight="37.0" prefWidth="207.0" />
+                                    <Label layoutX="38.0" layoutY="2.0" text="CSOSN" />
+                                    <Label layoutX="37.0" layoutY="65.0" text="PRODUTO" />
+                                    <Label layoutX="36.0" layoutY="132.0" text="Quant." />
+                                    <Label layoutX="198.0" layoutY="131.0" text="Valor Unitário" />
+                                    <Label layoutX="370.0" layoutY="131.0" text="Valor Desc" />
+                                    <Label layoutX="510.0" layoutY="131.0" text="Valor Total" />
+                                    <Label layoutX="37.0" layoutY="207.0" text="Perc Icms" />
+                                    <Label layoutX="199.0" layoutY="206.0" text="Valor Icms" />
+                                    <Label layoutX="371.0" layoutY="206.0" text="Perc Ipi" />
+                                    <Label layoutX="511.0" layoutY="206.0" text="Valor Ipi" />
+                                    <Label layoutX="37.0" layoutY="276.0" text="Perc Subst" />
+                                    <Label layoutX="199.0" layoutY="275.0" text="Valor Subst" />
+                                    <Label layoutX="368.0" layoutY="276.0" text="Valor Total Geral" />
+                                    <Button fx:id="btConfirma" layoutX="587.0" layoutY="296.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="130.0" text="CONFIRMA" />
+                                    <TextField id="edCfop" fx:id="edCfop" layoutX="378.0" layoutY="23.0" prefHeight="37.0" prefWidth="274.0" />
+                                    <Label layoutX="380.0" layoutY="2.0" text="CFOP" />
+                                    <Button id="btCfop" fx:id="btCfop" layoutX="655.0" layoutY="23.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="58.0">
+                                       <effect>
+                                          <ImageInput x="10.0">
+                                             <source>
+                                                <Image url="file:/C:/UniShop/src/imagens/icones%2040/lupa.png" />
+                                             </source>
+                                          </ImageInput>
+                                       </effect>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
                      </children>
                   </AnchorPane>
             </content>
@@ -328,9 +377,9 @@
          <children>
             <Button id="btSair" fx:id="btSair" layoutX="734.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
                <effect>
-                  <ImageInput x="10.0" y="10.0">
+                  <ImageInput x="5.0" y="5.0">
                      <source>
-                        <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                        <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                      </source>
                   </ImageInput>
                </effect>

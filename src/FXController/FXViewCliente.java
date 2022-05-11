@@ -138,6 +138,11 @@ public class FXViewCliente  extends Application implements Initializable{
                    salvarCliente();
                } catch (IOException ex) {
                    Logger.getLogger(novoProduto.class.getName()).log(Level.SEVERE, null, ex);
+                     Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+            dialogoInfo.setTitle("INFORMAÇÃO");
+            dialogoInfo.setHeaderText("ERRO AO GRAVAR");
+            dialogoInfo.setContentText("MOTIVO: " + ex);
+            dialogoInfo.showAndWait();
                }
            }
        });
@@ -373,7 +378,6 @@ public class FXViewCliente  extends Application implements Initializable{
             
             if (codigoCliente > 0){
                 modelCliente.setCodigo(codigoCliente);
-                                
                 controllerCliente.atualizarClienteController(modelCliente);
                 Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
             dialogoInfo.setTitle("COMFIRMAÇÃO");
@@ -384,14 +388,13 @@ public class FXViewCliente  extends Application implements Initializable{
              sair();
                 return true;
             }else if (controllerCliente.salvarClienteController(modelCliente) > 0) {
-         
-                Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+            Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
             dialogoInfo.setTitle("COMFIRMAÇÃO");
             dialogoInfo.setHeaderText("INFORMAÇÃO SALVA");
             dialogoInfo.setContentText("REGISTRO OK");
             dialogoInfo.showAndWait();
-             atualizarLista();
-             sair();
+            atualizarLista();
+            sair();
             this.limparCampos();
                 return true;
             } else {
@@ -527,7 +530,6 @@ public class FXViewCliente  extends Application implements Initializable{
         bairro.setText(rBairro);
         listaModelEstado = controllerEstado.getListaEstadoController();
         for (int e = 0 ; e < listaModelEstado.size(); e++){
-            System.out.println("estado lista"+ listaModelEstado.get(e).getUf() + " estado recup "+ rEstado);
             if (listaModelEstado.get(e).getUf().equals(rEstado)){
                 uf.setText(listaModelEstado.get(e).getCodigo() + " " + rEstado);
             }

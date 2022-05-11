@@ -41,6 +41,10 @@ import com.acbr.nfe.ACBrNFe;
 import controller.ControllerContaPagar;
 import controller.ControllerFornecedor;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import model.ModelContaPagar;
 import model.ModelFornecedor;
@@ -84,6 +88,7 @@ public class listaCompras extends Application implements Initializable{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/FXView/pesqCompras.fxml")); 
         Parent raiz = loader.load();   
         listaStage.setScene(new Scene(raiz));
+        listaStage.setMaximized(false);
         listaStage.initStyle(StageStyle.UNDECORATED);
         listaStage.initModality(Modality.APPLICATION_MODAL);
         listaStage.show();
@@ -101,6 +106,15 @@ public class listaCompras extends Application implements Initializable{
            
             
             linhaCompras.setCellValueFactory(new PropertyValueFactory<>("pesquisa"));  
+                        btPesquisarCompras.setOnMouseClicked((MouseEvent e)->{
+            if(e.getClickCount() == 1){
+            if(pesquisaCompras.getText().equals("")){
+                listaTodos();
+            }else{
+               listaFiltro();
+            }
+                 }
+             });
             
             pesquisaCompras.setOnKeyPressed((KeyEvent e)->{
         if(e.getCode()== KeyCode.ENTER){
@@ -277,6 +291,9 @@ public class listaCompras extends Application implements Initializable{
         nfe.controle = 3;
         nfe.preencherEntradas(modelComprasProdutos, modelNF, modelFornecedor, modelContaPagar);
         compraStage.setScene(new Scene(raizNfe));
+        compraStage.setMaximized(false);
+        compraStage.initStyle(StageStyle.UNDECORATED);
+        compraStage.initModality(Modality.APPLICATION_MODAL);
         compraStage.show();
         fecharSaida();
   

@@ -509,10 +509,10 @@ public class BLMascaras {
      */
     public String retornarDataHora() {
         Date date = new Date();
-        SimpleDateFormat teste = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
+        SimpleDateFormat teste = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
         return teste.format(date);
     }
-/**
+    /**
      * retornar data e hora tempo real
      *
      * @return

@@ -25,7 +25,7 @@
                      <children>
                         <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@entradas.css">
                            <children>
-                              <Button id="btPesquisarCompras" fx:id="btPesquisarCompras" alignment="CENTER" contentDisplay="CENTER" layoutX="619.0" layoutY="36.0" mnemonicParsing="false" onAction="#listaFiltro" prefHeight="53.0" prefWidth="48.0" text="PESQUISA" textAlignment="CENTER">
+                              <Button id="btPesquisarCompras" fx:id="btPesquisarCompras" alignment="CENTER" contentDisplay="CENTER" layoutX="619.0" layoutY="36.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="48.0" text="PESQUISA" textAlignment="CENTER">
                                  <effect>
                                     <ImageInput x="6.0" y="6.0">
                                        <source>
@@ -63,9 +63,9 @@
                            <children>
                               <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair" prefHeight="39.0" prefWidth="42.0">
                                  <effect>
-                                    <ImageInput x="10.0" y="10.0">
+                                    <ImageInput x="5.0" y="5.0">
                                        <source>
-                                          <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                                          <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                                        </source>
                                     </ImageInput>
                                  </effect>

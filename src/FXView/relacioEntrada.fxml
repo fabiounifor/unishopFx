@@ -12,18 +12,18 @@
 
 <Pane prefHeight="627.0" prefWidth="1024.0" styleClass="background" stylesheets="@entradas.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.relacionaCompra">
    <children>
-      <TableView id="tabelaProdutoCompra" fx:id="tabelaProdutoCompra" accessibleRole="TEXT_FIELD" editable="true" layoutY="42.0" prefHeight="410.0" prefWidth="1024.0">
+      <TableView id="tabelaProdutoCompra" fx:id="tabelaProdutoCompra" accessibleRole="TEXT_FIELD" layoutY="42.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="410.0" prefWidth="1024.0">
         <columns>
             <TableColumn id="barrasForn" fx:id="barrasForn" maxWidth="100.0" minWidth="85.0" prefWidth="100.0" sortable="false" style="-fx-font-size: 12;" text="BARRAS" />
             <TableColumn id="cfopForn" fx:id="cfopForn" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" sortable="false" style="-fx-font-size: 12;" text="CFOP" />
           <TableColumn id="descProdutoForn" fx:id="descProdutoForn" maxWidth="350.0" minWidth="250.0" prefWidth="250.0" sortable="false" style="-fx-font-size: 12;" text="PRODUTO" />
             <TableColumn id="descProdutoEstoque" fx:id="descProdutoEstoque" maxWidth="350.0" minWidth="219.0" prefWidth="219.0" sortable="false" style="-fx-font-size: 12;" text="PRODUTO ESTOQUE" />
-            <TableColumn id="btnProcuraProduto" fx:id="btnProcuraProduto" maxWidth="75.0" minWidth="44.0" prefWidth="75.0" sortable="false" style="-fx-font-size: 10;" />
-            <TableColumn id="btnAdcionaProduto" fx:id="btnAdcionaProduto" maxWidth="68.0" minWidth="49.0" prefWidth="68.0" sortable="false" style="-fx-font-size: 10;" />
+            <TableColumn id="btnProcuraProduto" fx:id="btnProcuraProduto" editable="false" maxWidth="75.0" minWidth="44.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: center;" />
+            <TableColumn id="btnAdcionaProduto" fx:id="btnAdcionaProduto" editable="false" maxWidth="68.0" minWidth="49.0" prefWidth="68.0" sortable="false" style="-fx-alignment: center;" />
             <TableColumn id="fatConversao" fx:id="fatConversao" maxWidth="90.0" minWidth="36.0" prefWidth="36.0" sortable="false" style="-fx-font-size: 12;" text="FATOR" />
-            <TableColumn id="btnFator" fx:id="btnFator" maxWidth="69.0" minWidth="60.0" prefWidth="69.0" sortable="false" style="-fx-font-size: 10;" />
+            <TableColumn id="btnFator" fx:id="btnFator" editable="false" maxWidth="69.0" minWidth="60.0" prefWidth="69.0" resizable="false" sortable="false" style="-fx-alignment: center;" />
             <TableColumn id="cfopEstoque" fx:id="cfopEstoque" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" sortable="false" style="-fx-font-size: 12;" text="CFOP ENTRADA" />
-            <TableColumn id="btnCfop" fx:id="btnCfop" maxWidth="79.0" minWidth="60.0" prefWidth="79.0" sortable="false" style="-fx-font-size: 10;" />
+            <TableColumn id="btnCfop" fx:id="btnCfop" editable="false" maxWidth="79.0" minWidth="60.0" prefWidth="79.0" resizable="false" sortable="false" style="-fx-alignment: center;" />
         </columns>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -37,9 +37,9 @@
          <children>
             <Button id="btSair" fx:id="btSair" layoutX="986.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
                <effect>
-                  <ImageInput x="10.0" y="10.0">
+                  <ImageInput x="5.0" y="5.0">
                      <source>
-                        <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                        <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                      </source>
                   </ImageInput>
                </effect>

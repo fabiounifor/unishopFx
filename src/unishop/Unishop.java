@@ -5,6 +5,7 @@
  */
 package unishop;
 
+import FXController.inicio;
 import FXController.novoPrincipal;
 import blserial.BLCriptografiaReversivel;
 import blserial.ConfigXML;
@@ -25,7 +26,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -42,14 +42,17 @@ import model.ModelSessaoUsuario;
 import model.ModelUsuario;
 import util.ManipularXML;
 import com.acbr.nfe.demo.FrmMain;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import util.AguardeGerandoRelatorio;
 import util.Backup;
 import util.BackupMySQL;
-import conexoes.ConexaoMySql;
-import javafx.event.EventHandler;
-import javafx.stage.WindowEvent;
+import interfaces.classeInterfaces;
+import javafx.scene.control.ProgressIndicator;
+import javafx.stage.Modality;
+import util.logutil;
 
 /**
  *
@@ -71,14 +74,18 @@ public class Unishop extends Application implements Initializable {
     private Button btAutenticar;
     @FXML
     private Button config;
-    @FXML
+    @FXML 
     private Button cancelar;
+    @FXML 
+    private Button btSair;
     @FXML
     private Button salvar;
     @FXML
     private ComboBox comboEmpresa;
     @FXML
     private ProgressBar progresso;
+    @FXML
+    private ProgressIndicator piLogin;
     @FXML
     private Label titulo;
     int codUsuario = 0;
@@ -96,39 +103,63 @@ public class Unishop extends Application implements Initializable {
 
     @Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-        //    Native.setProtected(true);
         carregarDadosDoBanco();
         passarcomEnter();
         setNextFocus(usuario, senha);
         retornarEmpresa();
-
+               
         btAutenticar.setOnKeyPressed((KeyEvent e) -> {
             if (e.getCode() == KeyCode.ENTER) {
-                try {
+          try {
                     autenticar();
                 } catch (IOException ex) {
                     Logger.getLogger(Unishop.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+            };
+        });
+     
+        btAutenticar.setOnMouseClicked((MouseEvent e) -> {        
+            if(e.getClickCount() == 1){
+      try {
+                    autenticar();
+                } catch (IOException ex) {
+                    Logger.getLogger(Unishop.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            };
+        });
+        cancelar.setOnMouseClicked((MouseEvent e) -> {        
+            if(e.getClickCount() == 1){
+                fecha();
+                System.exit(0);
+            };
+        });
+        btSair.setOnMouseClicked((MouseEvent e) -> {        
+            if(e.getClickCount() == 1){
+                fecha();
+                System.exit(0);
+            };
         });
 
         senha.setOnKeyPressed((KeyEvent e) -> {
             if (e.getCode() == KeyCode.ENTER) {
+        
                 try {
                     autenticar();
                 } catch (IOException ex) {
                     Logger.getLogger(Unishop.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+            };
         });
+
+
         usuario.setOnKeyPressed((KeyEvent e) -> {
             if (e.getCode() == KeyCode.F12) {
                 abrirConfig();
             }
         });
+       
 
     }
-
     public void abrirConfig() {
         FrmMain configuracao = new FrmMain();
         try {
@@ -144,8 +175,8 @@ public class Unishop extends Application implements Initializable {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        logutil.info("Iniciando sistema");
         launch(args);
-
     }
 
     public void passarcomEnter() {
@@ -154,7 +185,7 @@ public class Unishop extends Application implements Initializable {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage priStage) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/FXView/login.fxml"));
 
@@ -163,10 +194,11 @@ public class Unishop extends Application implements Initializable {
         setNextFocus(usuario, senha);
 
         Scene scene = new Scene(raiz);
-        primaryStage.setScene(scene);
-        primaryStage.setMaximized(false);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.show();
+        priStage.setScene(scene);
+        priStage.setMaximized(false);
+        priStage.initStyle(StageStyle.TRANSPARENT);
+        priStage.setAlwaysOnTop(true);
+        priStage.show();
     }
 
     public void setNextFocus(TextField usuario, TextField senha) {
@@ -181,7 +213,7 @@ public class Unishop extends Application implements Initializable {
 
         }
     }
-
+   
     private void carregarDadosDoBanco() {
         modelConfig = new ModelConfig();
         modelConfig = ManipularXML.lerXmlConfig();
@@ -218,13 +250,14 @@ public class Unishop extends Application implements Initializable {
 
         try {
             if (controllerUsuario.getUsuarioController(modelUsuario)) {
-
                 modelUsuario = controllerUsuario.getUsuarioController(modelUsuario.getLogin());
                 ModelSessaoUsuario.nome = modelUsuario.getNome();
                 ModelSessaoUsuario.codigo = modelUsuario.getCodigo();
                 ModelSessaoUsuario.login = modelUsuario.getLogin();
                 codUsuario = modelUsuario.getCodigo();
                 principal();
+               
+                
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("LOGIN");
@@ -232,24 +265,30 @@ public class Unishop extends Application implements Initializable {
                 alert.show();
             }
         } catch (Exception e) {
+            System.err.println("erro ao tentar conectar no usuario");
             try {
                 ControllerBanco controllerBanco = new ControllerBanco();
                 if (controllerBanco.criarBancoCtrl()) {
                     criarEstruturaBanco();
                 } else {
+                    System.err.println("erro ao criar banco");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("NOVO BANCO DE DADOS");
                     alert.setContentText("NÃO FOI POSSIVEL CRIAR BANCO");
                     alert.show();
                 }
             } catch (Exception ex) {
+                System.err.println("erro ao criar banco");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("NOVO BANCO DE DADOS");
                 alert.setContentText("NÃO FOI POSSIVEL CRIAR BANCO");
                 alert.show();
             }
         }
-
+    }
+    
+    private void fecharPreload() throws IOException{
+    classeInterfaces.avisaOuvintesProgresso("novaTela",Boolean.TRUE);
     }
 
     private void criarEstruturaBanco() {
@@ -298,9 +337,6 @@ public class Unishop extends Application implements Initializable {
 
     public void configuracao() throws IOException {
 
-        //caminho.setVisible(true);
-        //empresa.setVisible(true);
-        //salvar.setVisible(true);
         try {
             listaModelEmpresas = controllerEmpresa.getListaEmpresaController();
             for (int i = 0; i < listaModelEmpresas.size(); i++) {
@@ -314,24 +350,26 @@ public class Unishop extends Application implements Initializable {
 
     }
 
-    private void principal() throws IOException, Exception {
+    public void principal() throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/FXView/principal.fxml"));
         Parent raiz = loader.load();
         novoPrincipal nPrincipal = loader.getController();
         nPrincipal.iniciarBotoes(codUsuario, codEmpresa);
+        nPrincipal.consultaDfePrincipal();
         Stage listaStage = new Stage();
         listaStage.setScene(new Scene(raiz));
         listaStage.setMaximized(true);
         listaStage.initStyle(StageStyle.TRANSPARENT);
         listaStage.show();
-
+        fecharPreload();
         fecha();
+        
     }
 
     public void fecha() {
         Stage estagio = (Stage) cancelar.getScene().getWindow();
         estagio.close();
-        
+                
     }
 
     public void salvarConfiguracao() {

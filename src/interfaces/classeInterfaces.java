@@ -25,6 +25,7 @@ public class classeInterfaces {
    public static ArrayList<aoMudarTelaCodigoVenda> ouvinteCodigoVenda = new ArrayList();
    public static ArrayList<aoMudarTelaOpcionais> ouvinteOpcionais = new ArrayList();
    public static ArrayList<aoMudarTelaNcm> ouvinteNcm = new ArrayList();
+   public static ArrayList<aoMudarTelaNotificacao> ouvinteNotificacao = new ArrayList();
    
    
     public static interface aoMudarTela{
@@ -32,6 +33,9 @@ public class classeInterfaces {
     }
     public static interface aoMudarTelaNcm{
         void telaModificada(String novaTela, String Ncm);
+    }
+    public static interface aoMudarTelaNotificacao{
+        void telaModificada(String novaTela, String Notificacao);
     }
     public static interface aoMudarTelaOpcionais{
         void telaModificada(String novaTela, String opcionais);
@@ -68,6 +72,9 @@ public class classeInterfaces {
    }
    public static void addaoMudarTelaNcm(aoMudarTelaNcm novoMudarTelaNcm){
        ouvinteNcm.add(novoMudarTelaNcm);
+   }
+   public static void addaoMudarTelaNotificacao(aoMudarTelaNotificacao novoMudarTelaNotificacao){
+       ouvinteNotificacao.add(novoMudarTelaNotificacao);
    }
    public static void addaoMudarTelaCaminho(aoMudarTelaCaminho novoMudarTelaCaminho){
        ouvinteCaminho.clear();
@@ -114,6 +121,12 @@ public class classeInterfaces {
            l.telaModificada(novaTela, Ncm);
        }
    }
+   public static void avisaOuvintesNotificacao(String novaTela, String Notificacao){
+       
+       for(aoMudarTelaNotificacao l : ouvinteNotificacao){
+           l.telaModificada(novaTela, Notificacao);
+       }
+   }
    public static void avisaOuvintesOpcionais(String novaTela, String opcionais){
        
        for(aoMudarTelaOpcionais l : ouvinteOpcionais){
@@ -122,10 +135,10 @@ public class classeInterfaces {
    }
   
    public static void avisaOuvintesCaminho(String novaTela, String caminho){
-       
+      
        for(aoMudarTelaCaminho l : ouvinteCaminho){
            l.telaModificadaCaminho(novaTela, caminho);
-       }
+        }
    }
    
    public static void avisaOuvintesProgresso(String novaTela, Boolean ativo){

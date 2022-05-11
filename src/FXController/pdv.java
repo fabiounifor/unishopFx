@@ -81,6 +81,7 @@ import model.ModelNumeracao;
 import nfe.model.ModelNF;
 import nfe.model.ModelNFCe;
 import blserial.ConfigXML;
+import com.acbr.bal.ACBrBAL;
 import unishop.Unishop;
 import util.BLMascaras;
 import util.ManipularXML;
@@ -366,6 +367,11 @@ public class pdv extends Application implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+         //   iniciaBalanca();
+        } catch (Exception ex) {
+            Logger.getLogger(pdv.class.getName()).log(Level.SEVERE, null, ex);
+        }
         carregarConfiguracoes();
         classeInterfaces.addaoMudarTelaCodigoVenda((String novaTela, int codigoVendaLocal) -> {
             recuperarVenda(codigoVendaLocal);
@@ -511,9 +517,7 @@ public class pdv extends Application implements Initializable {
                 if (e.getCode() == KeyCode.F3) {
                     habilitarSangria();
                 }
-                if (e.getCode() == KeyCode.F10) {
-                    lerportaserial();
-                }
+                
                 if (e.getCode() == KeyCode.F11) {
                     irPraTabela();
                 }
@@ -779,7 +783,7 @@ public class pdv extends Application implements Initializable {
             ButtonType btnNao = new ButtonType("não", ButtonBar.ButtonData.CANCEL_CLOSE);
 
             dialogoExe.setTitle("CANCELAR VENDA");
-            dialogoExe.setContentText("DESEJA CANCELAR A VENDA: " + numeroNfceCancelar + "DA VENDA:" + pedidoNfceCancelar + " ?");
+            dialogoExe.setContentText("DESEJA CANCELAR A VENDA: " + numeroNfceCancelar + " DA VENDA: " + pedidoNfceCancelar + " ?");
             dialogoExe.getDialogPane().getStylesheets().add("/FXView/alert.css");
             dialogoExe.getButtonTypes().setAll(btnSim, btnNao);
             dialogoExe.showAndWait().ifPresent(b -> {
@@ -788,7 +792,6 @@ public class pdv extends Application implements Initializable {
                         acbrNFe = new ACBrNFe();
                         String ret = acbrNFe.cancelar(chave, motivo, cnpj);
                         atualizarNFCECancelada(pedidoNfceCancelar);
-                        controllerVendasProdutos.excluirVendasProdutosCodVendaController(pedidoNfceCancelar);
 
                     } catch (Exception ex) {
                         Logger.getLogger(pdv.class.getName()).log(Level.SEVERE, null, ex);
@@ -823,7 +826,6 @@ public class pdv extends Application implements Initializable {
         ArrayList<ModelVendasProdutos> listaLocal = new ArrayList();
         ModelVendasProdutosTabela mvpt = new ModelVendasProdutosTabela();
         listaLocal = controllerVendasProdutos.getListaVendasProdutosController(0);
-
         for (int f = 0; f < listaLocal.size(); f++) {
             mvpt.setOrdem(listaLocal.get(f).getOrdem());
             mvpt.setProduto(listaLocal.get(f).getNomeProduto());
@@ -885,13 +887,6 @@ public class pdv extends Application implements Initializable {
         tfValorUnitarioPdv.setText(String.valueOf(mvpt.getValorUnitario()));
         tfUltimoVendido.setText(mvpt.getProduto());
         limpaTelaNovoProduto();
-
-    }
-
-    public void lerportaserial() {
-        int timeout = 1000;
-        String portas = "COM1";
-        int portadisponivel = CommPortIdentifier.PORT_SERIAL;
 
     }
 
@@ -986,6 +981,27 @@ public class pdv extends Application implements Initializable {
 
     private void retornarprodutoPeloCodBarrasPeso() {
         //INICIO recupera o codigo de barras
+        modelProdutos = controllerProdutos.getProdutosCodigoBarrasController(String.valueOf(Integer.parseInt(tfDescricaoPdv.getText().substring(2, 5))));
+
+        double totalBarras = ((Double.parseDouble(this.tfDescricaoPdv.getText().substring(7, 12))) * 0.01);
+        double pesoBarras = (bLMascaras.truncamentoComPontoTresCasasDouble(totalBarras / (modelProdutos.getValor())));
+
+        this.tfValorUnitarioPdv.setText(String.valueOf(modelProdutos.getValor()));
+        this.tfQuantidadePdv.setText(String.valueOf(pesoBarras));
+        //FIM recupera o nome
+        tfValorTotalPdv.setText(calcularValorproduto(this.tfQuantidadePdv.getText(), this.tfValorUnitarioPdv.getText()) + "");
+        tfDescricaoPdv.setText(modelProdutos.getNome());
+        codigoProduto = (modelProdutos.getCodigo());
+        tfDescricaoPdv.requestFocus();
+
+    }
+    private void iniciaBalanca() throws Exception{
+        ACBrBAL acbrPeso = new ACBrBAL();
+        acbrPeso.configGravar();
+    }
+    private void retornarprodutoPeloPeso() throws Exception {
+            
+        
         modelProdutos = controllerProdutos.getProdutosCodigoBarrasController(String.valueOf(Integer.parseInt(tfDescricaoPdv.getText().substring(2, 5))));
 
         double totalBarras = ((Double.parseDouble(this.tfDescricaoPdv.getText().substring(7, 12))) * 0.01);
@@ -1400,8 +1416,6 @@ public class pdv extends Application implements Initializable {
                     + "email=fabio.braga.suporte@gmail.com\n"
                     + "fone=2730308326";
 
-            
-            logutil.info("Chave Acesso: "+  chaveCriada);
             manipularXml.gravaININfce(arquivoINI, chaveCriada);
 
             return true;
@@ -1427,7 +1441,7 @@ public class pdv extends Application implements Initializable {
         String msg = "Msg=";
 
         logutil.info("Inicia transmissao");
-        
+
         if (carregarIniNfce(codigoVendaretorno, valorTotal, fPagamento, valorDesconto, documentoAvulso, clienteAvulso, valorTroco, valorAcrescimo) == true) {
             carregarConfiguracoes();
             acbrNFe.limparLista();
@@ -1444,12 +1458,12 @@ public class pdv extends Application implements Initializable {
                 try {
                     ret = acbrNFe.enviar(0, false, false, true);
                 } catch (Exception e) {
-                     logutil.error(e);
+                    logutil.error(e);
                     classeInterfaces.avisaOuvintesRejeicao("pdv", (e.getMessage()));
                 }
             }
-            
-             logutil.info("Verificando resultado");
+
+            logutil.info("Verificando resultado");
 
             int inicioStatus = (procuraRetorno(ret, status) + status.length());
             int inicioMotivo = (procuraRetorno(ret, motivoErro) + motivoErro.length());
@@ -1470,6 +1484,7 @@ public class pdv extends Application implements Initializable {
                 }
             }
         }
+        logutil.info("Trasmissao finalizada com o status: "+ret);
         return ret;
     }
 
@@ -1558,6 +1573,7 @@ public class pdv extends Application implements Initializable {
 
         }
 
+        logutil.info("Finalizou impressão");
     }
 
     private String ultimoArquivo(String caminhoBuscar) {
@@ -1683,14 +1699,15 @@ public class pdv extends Application implements Initializable {
      * @param nomeArquivo
      * @param caminho
      */
-
     public void gravaNFceNoBanco(String nomeArquivo, String caminho, String Status) throws Exception {
+        logutil.info("Inicia gravacao no banco");
         if (!(Status.equals("100"))) {
             nomeArquivo = ultimoArquivo(caminho);
         }
         String caminhoArquivo = caminho + "\\" + nomeArquivo;
         ViewLeitorNotaXML leitorNotaXml = new ViewLeitorNotaXML();
         leitorNotaXml.lerarq(caminhoArquivo, codigoVenda);
+         logutil.info("Finaliza gravacao no banco");
     }
 
     /* public void gravaNFceNoBanco(String nomeArquivo, String caminho, String Status) throws Exception{
@@ -1889,6 +1906,8 @@ public class pdv extends Application implements Initializable {
         lVendas.listaFiltroPreVendas();
         Stage stageVendas = new Stage();
         stageVendas.setScene(new Scene(raizVendas));
+        stageVendas.initStyle(StageStyle.UNDECORATED);
+        stageVendas.initModality(Modality.APPLICATION_MODAL);
         stageVendas.show();
     }
 
@@ -1900,6 +1919,8 @@ public class pdv extends Application implements Initializable {
         lVendas.listaFiltroMesas();
         Stage stageVendas = new Stage();
         stageVendas.setScene(new Scene(raizVendas));
+        stageVendas.initStyle(StageStyle.UNDECORATED);
+        stageVendas.initModality(Modality.APPLICATION_MODAL);
         stageVendas.show();
     }
 
@@ -2202,7 +2223,9 @@ public class pdv extends Application implements Initializable {
         carregarConfiguracoes();
 
         if (classificacaoFiscal == 0) {
+            atualizarFormaPagamento(codigo, fPagamento);
             imprimirPedido(codigo);
+            
         } else if (classificacaoFiscal == 1) {
             classeInterfaces.avisaOuvintesProgresso("pdv", Boolean.TRUE);
             final ControllerVendas controllerVendas = new ControllerVendas();
@@ -2227,7 +2250,9 @@ public class pdv extends Application implements Initializable {
                         System.out.println(e);
                     }
                     classeInterfaces.avisaOuvintesProgresso("pdv", Boolean.FALSE);
+
                 }
+
             };
 
             t.start();
@@ -2262,7 +2287,7 @@ public class pdv extends Application implements Initializable {
                                 } catch (Exception e) {
                                     logutil.error(e);
                                 }
-                                try {                                    
+                                try {
                                     imprime(retorno);
                                 } catch (Exception e) {
                                     logutil.log(Level.SEVERE, e.toString());

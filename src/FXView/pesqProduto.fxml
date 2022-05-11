@@ -50,9 +50,9 @@
                   <Label prefHeight="21.0" prefWidth="745.0" style="-fx-text-fill: WHITE;" text="Pesquisa Produto" />
                   <Button id="btSair" fx:id="btSair" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#sair" prefHeight="35.0" prefWidth="38.0">
                      <effect>
-                        <ImageInput x="10.0" y="3.0">
+                        <ImageInput>
                            <source>
-                              <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                              <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                            </source>
                         </ImageInput>
                      </effect>

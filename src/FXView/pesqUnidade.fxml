@@ -23,7 +23,7 @@
                <children>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@cadastros.css">
                      <children>
-                        <TilePane layoutY="565.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@saidas.css" />
+                        <TilePane layoutY="565.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@cadastros.css" />
                         <Button id="btPesquisarUnidade" fx:id="btPesquisarUnidade" layoutX="540.0" layoutY="60.0" mnemonicParsing="false" onAction="#pesquisaUnidade" prefHeight="53.0" prefWidth="84.0" text="PESQUISA" textAlignment="CENTER">
                            <effect>
                               <ImageInput x="5.0" y="5.0">
@@ -56,9 +56,9 @@
                            <children>
                               <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
                                  <effect>
-                                    <ImageInput x="10.0" y="10.0">
+                                    <ImageInput x="5.0" y="5.0">
                                        <source>
-                                          <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                                          <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png " />
                                        </source>
                                     </ImageInput>
                                  </effect>

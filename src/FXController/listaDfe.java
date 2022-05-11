@@ -51,10 +51,13 @@ import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import model.ModelConfig;
 import model.ModelDfe;
-import model.ModelNumeracao;
 import nfe.model.ModelXmlDfe;
 import util.AguardeGerandoRelatorio;
 import util.BLMascaras;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import model.ModelNumeracao;
 
 /**
  *
@@ -118,7 +121,7 @@ public class listaDfe extends Application implements Initializable{
     
     
     ModelConfig modelConfig = new ModelConfig(); 
-    
+    BLMascaras bLMascaras = new BLMascaras();
     ControllerVendas controllerVendas = new ControllerVendas();
     ControllerNumeracao controllerNumeracao = new ControllerNumeracao();
     ControllerVendasProdutos controllerVendasProdutos = new ControllerVendasProdutos();
@@ -151,7 +154,7 @@ public class listaDfe extends Application implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
             iniciaStatus();
             linhaDfe.setCellValueFactory(new PropertyValueFactory<>("pesquisa"));  
-            imageDfe.setCellValueFactory(new PropertyValueFactory<>("imagem"));  
+            //imageDfe.setCellValueFactory(new PropertyValueFactory<>("imagem"));  
             listaTodos();
             pesquisaDfe.setOnKeyPressed((KeyEvent e)->{
         if(e.getCode()== KeyCode.ENTER){
@@ -177,7 +180,7 @@ public class listaDfe extends Application implements Initializable{
     
     }
     public void iniciaStatus(){
-       cbStatus.getItems().addAll("AGUARDANDO","CIENCIA", "CONFIRMAÇÃO","NFE CADASTRADA");
+       cbStatus.getItems().addAll("AGUARDANDO","CIENCIA", "CONFIRMAÇÃO","XML DISPONÍVEL","NFE CADASTRADA");
        
     }
     
@@ -185,7 +188,39 @@ public class listaDfe extends Application implements Initializable{
          Stage estagiosaida = (Stage) btSair.getScene().getWindow();
           estagiosaida.close();
      }
+public void chamaConsultaDfe(){
+ModelNumeracao modelNumeracao = new ModelNumeracao();
+modelNumeracao = controllerNumeracao.getNumeracaoController(1);
+DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss.SSS");
+LocalDateTime dt1= LocalDateTime.parse(modelNumeracao.getUltimaConsulta(), f);
+LocalDateTime dt2= LocalDateTime.parse(bLMascaras.retornarDataHora(), f);
+long diferencaMin = Duration.between(dt1, dt2).toMinutes();
+        if (diferencaMin < 60){
+             Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
+                dialogoExe.setTitle("CONSULTAS REPETIDAS");
+                dialogoExe.setHeaderText("A T E N Ç Ã O !!!");
+                dialogoExe.setContentText("A SUA ÚLTIMA CONSULTA FOI AS: "+ dt1 + " NÃO DEVERÁ CONSULTAR EM MENOS DE UMA HORA");
+                dialogoExe.show();
+                }else{
+    try {
+        consultaDfe();
+        String dia  = String.valueOf(dt2).substring(8, 10);
+        String mes  = String.valueOf(dt2).substring(5, 7);
+        String ano  = String.valueOf(dt2).substring(0, 4);
+        String hora  = String.valueOf(dt2).substring(11);
+        String dataCompleta = (dia + "/" + mes + "/" + ano+ " " + hora);        
+        controllerNumeracao.atualizarConsultaController(1,dataCompleta);
+    } catch (Exception ex) {
+        Logger.getLogger(listaDfe.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        }
+        
+        
+    }
     public void consultaDfe() throws Exception{
+        final String nsu; 
+        final String cnpj; 
+        final int codUf;
         String caminhoRetorno = "C:\\UniShop\\dfe\\" + controllerEmpresa.getEmpresaController(1).getModelEmpresa().getCnpj()+"\\xmlsEntrada\\Nfe\\";
         ACBrNFe acbrNFe = new ACBrNFe();
         String ultimoNsu = "ultNSU=";
@@ -203,10 +238,14 @@ public class listaDfe extends Application implements Initializable{
             public void run() {
                 try{
                     if(chavesNovas.isEmpty()){
+                    //String retorno;    
                     retorno = acbrNFe.distribuicaoDFeporUltNSU(codUf, cnpj, nsu);
                     inicioNsu = (procuraRetorno(retorno,ultimoNsu)+ultimoNsu.length());
                     nsuAtual = retorno.substring(inicioNsu,inicioNsu+15);
-                    controllerNumeracao.atualizarNumeracaoNsuController(nsuAtual, 1);
+                        
+                    if (Integer.parseInt(nsuAtual) > Integer.parseInt(nsu)){
+                        controllerNumeracao.atualizarNumeracaoNsuController(nsuAtual, 1);
+                    }
                     recuperarChaves(caminhoRetorno);
                     }
                 }catch(Exception e)
@@ -216,7 +255,7 @@ public class listaDfe extends Application implements Initializable{
             }
        };
         t.start();
-    }
+     }
     
     
     
@@ -251,7 +290,6 @@ public class listaDfe extends Application implements Initializable{
     }       
     
     public void processarRetorno(ArrayList chavesRecuperadas){
-        //System.out.println("CHAVES RECUPERADAS " + chavesRecuperadas);
         for (int i = 0 ; i< chavesRecuperadas.size(); i++){
             String chave = chavesRecuperadas.get(i).toString();
             if (chave.length() >= 44){
@@ -259,6 +297,11 @@ public class listaDfe extends Application implements Initializable{
             controllerDfe.salvarDfeController(gravarRetornoBanco(chave.substring(0, 55),chave.substring(55) ));
             chavesNovas.add(chave);
             }
+            if ((controllerDfe.getDfeChaveController(chave.substring(0, 44)).getSituacao() != 4) && chave.substring(44,52).equalsIgnoreCase("-nfe.xml")){
+            int codigoLocal = controllerDfe.getDfeChaveController(chave.substring(0, 44)).getCodigo();
+            atualizarDfe(codigoLocal, 3, "imagens/lupa.png");
+            }
+            
             }
         }
     }
@@ -293,14 +336,15 @@ public class listaDfe extends Application implements Initializable{
       tabelaListaDfe.getItems().clear();
       listaResultado  = new ArrayList<>();
       listaModelDfe = controllerDfe.getListaDfeController();
-        for (int i = 0; i < listaModelDfe.size(); i++) {
-            if (listaModelDfe.get(i).getSituacao() == cbStatus.getSelectionModel().getSelectedIndex()){
-            listaResultado.add(listaModelDfe.get(i)); 
-            }
-        }
+        listaModelDfe.stream()
+              .filter(e-> e.getSituacao() == cbStatus.getSelectionModel().getSelectedIndex())
+              .filter(e -> e.getPesquisa().contains(pesquisaDfe.getText()))
+              .forEach(e -> listaResultado.add(e))
+              ;
        listadeDfe = FXCollections.observableArrayList(listaResultado);
        Collections.reverse(listadeDfe);
        tabelaListaDfe.getItems().addAll(listadeDfe);
+       mostrarBotoes();
      }
 
     
@@ -309,17 +353,58 @@ public class listaDfe extends Application implements Initializable{
       tabelaListaDfe.getItems().clear();
       listaResultado  = new ArrayList<>();
       listaModelDfe = controllerDfe.getListaDfeController();
-        for (int i = 1; i < listaModelDfe.size(); i++) {
-            if (listaModelDfe.get(i).getSituacao() == cbStatus.getSelectionModel().getSelectedIndex()){
-            if (listaModelDfe.get(i).getPesquisa().contains(pesquisaDfe.getText())){
-             listaResultado.add(listaModelDfe.get(i)); 
-            }
-            }
-        } 
+      
+      listaModelDfe.stream()
+              .filter(e-> e.getSituacao() == cbStatus.getSelectionModel().getSelectedIndex())
+              .filter(e -> e.getPesquisa().contains(pesquisaDfe.getText()))
+              .forEach(e -> listaResultado.add(e))
+              ;
+      
        listadeDfe = FXCollections.observableArrayList(listaResultado);
        Collections.reverse(listadeDfe);
        tabelaListaDfe.getItems().addAll(listadeDfe);
+       mostrarBotoes();
               
+    }
+    
+    private void mostrarBotoes(){
+        int seleciona = cbStatus.getSelectionModel().getSelectedIndex();
+        switch (seleciona){
+            case 0:
+            btCienciaOp.setVisible(true);
+            btConfirmaOp.setVisible(true);
+            btConsulta.setVisible(true);
+            btImportaOp.setVisible(false);
+            break;
+            case 1:
+            btCienciaOp.setVisible(false);
+            btConfirmaOp.setVisible(true);
+            btConsulta.setVisible(true);
+            btImportaOp.setVisible(false);    
+            break;
+            case 2:
+            btCienciaOp.setVisible(false);
+            btConfirmaOp.setVisible(false);
+            btConsulta.setVisible(true);
+            btImportaOp.setVisible(false);    
+            break;
+            case 3:
+            btCienciaOp.setVisible(false);
+            btConfirmaOp.setVisible(false);
+            btConsulta.setVisible(true);
+            btImportaOp.setVisible(true);    
+            break;
+            case 4:
+            btCienciaOp.setVisible(false);
+            btConfirmaOp.setVisible(false);
+            btConsulta.setVisible(false);
+            btImportaOp.setVisible(true);    
+            break;
+        }
+                ;
+        if (cbStatus.getSelectionModel().getSelectedIndex() == 0){
+            
+        }
     }
     
     public void atualizarDfe(int codigo,int atualizar, String imagemCaminho){
@@ -373,6 +458,7 @@ public class listaDfe extends Application implements Initializable{
                         { System.out.println(e);
                 }
                 classeInterfaces.avisaOuvintesProgresso("principal", Boolean.FALSE);
+                classeInterfaces.avisaOuvintesNotificacao("principal", "atualiza");     
             }
        };
         t.start();
@@ -445,6 +531,7 @@ public class listaDfe extends Application implements Initializable{
                         { System.out.println(e);
                 }
                 classeInterfaces.avisaOuvintesProgresso("principal", Boolean.FALSE);
+                classeInterfaces.avisaOuvintesNotificacao("principal", "atualiza");     
             }
        };
         t.start();
@@ -477,7 +564,6 @@ public class listaDfe extends Application implements Initializable{
 "tpEvento=210210\n"+
 "nSeqEvento=1\n"+
 "versaoEvento=1.00";
-        
    return eventoConfirma;
     }    
     
@@ -490,32 +576,30 @@ public class listaDfe extends Application implements Initializable{
         int codigoAtualizar = tabelaListaDfe.getItems().get(posicaoConfirmar).getCodigo();
         String dataNota = tabelaListaDfe.getItems().get(posicaoConfirmar).getDatahoraemisao();
         chaveConfirmar = tabelaListaDfe.getItems().get(posicaoConfirmar).getChavenfe();
-        if((tabelaListaDfe.getItems().get(posicaoConfirmar).getSituacao() == 2) || (tabelaListaDfe.getItems().get(posicaoConfirmar).getSituacao() == 3)){
+        if(tabelaListaDfe.getItems().get(posicaoConfirmar).getSituacao() == 3 || tabelaListaDfe.getItems().get(posicaoConfirmar).getSituacao() == 2 ){
                 Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
                 ButtonType btnSim = new ButtonType("Sim", ButtonBar.ButtonData.OK_DONE );
                 ButtonType btnNao = new ButtonType("não", ButtonBar.ButtonData.CANCEL_CLOSE);
                 
                 dialogoExe.setTitle("XML DA COMPRA");
                 dialogoExe.setHeaderText("A T E N Ç Ã O !!!");
-                dialogoExe.setContentText("DESEJA FAZER O DOWNLOAD DO XML DA COMPRA "+ chaveConfirmar +" ?");
+                dialogoExe.setContentText("DESEJA FAZER A IMPORTAÇÃO DO XML DA COMPRA "+ chaveConfirmar +" ?");
                 dialogoExe.getButtonTypes().setAll(btnSim, btnNao);
                 dialogoExe.showAndWait().ifPresent(b -> {
                     if (b == btnSim) { 
         relacionaCompra rCompra = new relacionaCompra();
         Thread t = new Thread() {
             @Override
-            public void run() {
+public void run() {
                 try{                    
-                            
                             caminhoComleto = "C:\\UniShop\\dfe\\"+controllerEmpresa.getEmpresaController(1).getModelEmpresa().getCnpj()+"\\xmlsEntrada\\NFe\\"
                             +(dataNota.substring(0, 4))+(dataNota.substring(5, 7))+"\\"+chaveConfirmar+"-nfe.xml";
-                            acbrNFe.distribuicaoDFeporChave(codUf,cnpj,chaveConfirmar);
                             if (!(new File(caminhoComleto).exists())){
-                                System.out.println("NENHUM ARQUIVO ENCONTRADO NA SEFAZ TENTE NOVAMENTE EM ALGUNS MINUTOS");
-                                classeInterfaces.avisaOuvintesProgresso("principal", Boolean.FALSE);
-                            }
-                            classeInterfaces.avisaOuvintesCaminho("novaTela",caminhoComleto);
-                            listaTodos();
+                                acbrNFe.distribuicaoDFeporChave(codUf, cnpj, chaveConfirmar);
+                            }    
+                                Thread.sleep(2000);
+                                classeInterfaces.avisaOuvintesCaminho("novaTela",caminhoComleto);
+                                listaTodos();
                             
                 }catch(Exception e)
                         { System.out.println(e);
@@ -530,7 +614,7 @@ public class listaDfe extends Application implements Initializable{
             } catch (IOException ex) {
             Logger.getLogger(listaDfe.class.getName()).log(Level.SEVERE, null, ex);
             }
-                    classeInterfaces.avisaOuvintesProgresso("principal", Boolean.TRUE);
+            classeInterfaces.avisaOuvintesProgresso("principal", Boolean.TRUE);
             }else{
                         
     }

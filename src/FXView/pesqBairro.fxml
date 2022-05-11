@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="431.0" prefWidth="431.0" styleClass="background" stylesheets="@Darkness.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.listaBairro">
+<HBox prefHeight="431.0" prefWidth="431.0" styleClass="background" stylesheets="@cadastros.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.listaBairro">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@cadastros.css">
          <children>
@@ -38,7 +38,7 @@
               </columns>
             </TableView>
             <TilePane layoutY="566.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@cadastros.css" />
-            <Group>
+            <Group styleClass="background" stylesheets="@cadastros.css">
                <children>
                   <Group />
                   <Pane layoutX="550.0" layoutY="574.0" />
@@ -51,9 +51,9 @@
                <children>
                   <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
                      <effect>
-                        <ImageInput x="10.0" y="10.0">
+                        <ImageInput x="5.0" y="5.0">
                            <source>
-                              <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                              <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                            </source>
                         </ImageInput>
                      </effect>
@@ -63,7 +63,7 @@
             </Pane>
          </children>
       </Pane>
-      <AnchorPane prefHeight="433.0" prefWidth="428.0">
+      <AnchorPane prefHeight="433.0" prefWidth="428.0" styleClass="background" stylesheets="@cadastros.css">
          <children>
             <Pane />
          </children>

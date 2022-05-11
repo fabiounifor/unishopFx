@@ -5,7 +5,9 @@
  */
 package FXController;
 
+import controller.ControllerEmpresa;
 import interfaces.classeInterfaces;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javafx.application.Application;
@@ -27,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
+import model.ModelEmpresa;
 import relatorios.DAORelatorios;
 import util.ManipularXML;
 
@@ -97,14 +100,25 @@ public class geradorSintegra extends Application implements Initializable {
          Stage estagiosaida = (Stage) btSair.getScene().getWindow();
           estagiosaida.close();
      }
+     
+    private void criarPastaRelatorios(String nome){
+    ControllerEmpresa ce = new ControllerEmpresa();
+    ModelEmpresa me = new ModelEmpresa();
+    me = ce.getEmpresaController(1).getModelEmpresa();
+    File folder = new File("C:\\UniShop\\Dfe\\"+me.getCnpj()+"\\relatorios\\"+nome);    
+    if (!(folder.exists())){
+        folder.mkdir();
+    }
+    }
     
     public void sintegra(Date inicio, Date fim, Date Inventario) throws Exception{
     String sintegra, nome;    
     gerarSintegra gs = new gerarSintegra();
     ManipularXML mx = new ManipularXML();
     nome = ("sintegra"+inicio.toString().substring(0,4)+ inicio.toString().substring(5,7)+inicio.toString().substring(8,10)+ fim.toString().substring(0,4)+fim.toString().substring(5,7)+fim.toString().substring(8,10));
+    
     if (cbInventario.isSelected()){
-        sintegra = 
+     sintegra = 
     (gs.registroDez(String.valueOf(inicio), String.valueOf(fim), "331"))+
     (gs.registroOnze())+
     ((gs.registroCinquentaSaida(inicio, fim, "55")) +(gs.registroCinquentaEntrada(inicio, fim, "55")) )+
@@ -170,6 +184,7 @@ public class geradorSintegra extends Application implements Initializable {
           Date inicio = Date.valueOf(dpInicio.getValue());
           Date fim = Date.valueOf(dpFim.getValue());
           Date inventario;
+          criarPastaRelatorios(inicio.toString().substring(0,4)+ inicio.toString().substring(5,7));
           if (cbInventario.isSelected()){
               inventario = Date.valueOf(dpInventario.getValue());
           }else{
@@ -180,12 +195,13 @@ public class geradorSintegra extends Application implements Initializable {
             @Override
             public void run() {
                 try{
-                    System.out.println("inicio sintegra");
-                  sintegra(inicio,fim, inventario);
                   rel.gerarRelatorioNfeSaidaPorData(inicio, fim);
+                  rel.gerarRelatorioNfeCanceladaSaidaPorData(inicio, fim);
                   rel.gerarRelatorioNfeEntradaPorData(inicio, fim);
                   rel.gerarRelatorioCfopSaidaPorData(inicio, fim);
                   rel.gerarRelatorioCfopEntradaPorData(inicio, fim);
+                  System.out.println("inicio sintegra");
+                  sintegra(inicio,fim, inventario);
                 }catch(Exception e)
                         { System.out.println(e);
                 }

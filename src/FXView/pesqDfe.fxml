@@ -17,20 +17,20 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.listaDfe">
+<HBox prefHeight="603.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.listaDfe">
    <children>
-      <AnchorPane>
+      <AnchorPane prefHeight="603.0" prefWidth="821.0">
          <children>
             <Group>
                <children>
-                  <Pane>
+                  <Pane prefHeight="600.0" prefWidth="830.0" styleClass="background" stylesheets="@entradas.css">
                      <children>
                         <Pane prefHeight="35.0" prefWidth="800.0" styleClass="HBox" stylesheets="@entradas.css">
                            <children>
                               <Button id="btFecharRetorno" fx:id="btFecharRetorno" layoutX="605.0" layoutY="346.0" mnemonicParsing="false" onAction="#fecharRetorno" prefHeight="45.0" prefWidth="146.0" text="FECHAR | F2" visible="false" />
                            </children>
                         </Pane>
-                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="835.0" styleClass="background" stylesheets="@entradas.css">
+                        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@entradas.css">
                            <children>
                               <TilePane layoutX="-1.0" layoutY="568.0" prefHeight="35.0" prefWidth="800.0" styleClass="TilePane" stylesheets="@entradas.css" />
                               <Button id="btPesquisarDfe" fx:id="btPesquisarDfe" alignment="CENTER" contentDisplay="CENTER" layoutX="579.0" layoutY="36.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="48.0" text="PESQUISA" textAlignment="CENTER">
@@ -48,30 +48,29 @@
                               <TableView id="tabelaListaDfe" fx:id="tabelaListaDfe" layoutX="12.0" layoutY="130.0" prefHeight="427.0" prefWidth="812.0">
                                 <columns>
                                   <TableColumn id="linhaVendas" fx:id="linhaDfe" prefWidth="811.0" />
-                                    <TableColumn id="imageDfe" fx:id="imageDfe" prefWidth="789.0" />
                                 </columns>
                               </TableView>
                               <Group>
                                  <children>
-                                    <Group layoutY="11.0">
+                                    <Group layoutX="-1.0" layoutY="11.0">
                                        <children>
-                                          <Button id="btImportaOp" fx:id="btImportaOp" layoutX="646.0" layoutY="557.0" mnemonicParsing="false" onAction="#baixarXml" prefHeight="35.0" prefWidth="189.0" text="IMPORTAR OP | F5" />
+                                          <Button id="btImportaOp" fx:id="btImportaOp" layoutX="646.0" layoutY="557.0" mnemonicParsing="false" onAction="#baixarXml" prefHeight="35.0" prefWidth="188.0" text="IMPORTAR OP | F5" />
                                           <Button id="btConfirmaOp" fx:id="btConfirmaOp" layoutX="467.0" layoutY="557.0" mnemonicParsing="false" onAction="#confirmacaoOperacao" prefHeight="35.0" prefWidth="181.0" text="CONFIRMA OP| F3" />
                                           <Button id="btCienciaOp" fx:id="btCienciaOp" layoutX="289.0" layoutY="557.0" mnemonicParsing="false" onAction="#cienciaOperacao" prefHeight="35.0" prefWidth="182.0" text="CIENCIA OP | F6" />
-                                          <Button id="btConsulta" fx:id="btConsulta" layoutX="108.0" layoutY="557.0" mnemonicParsing="false" onAction="#consultaDfe" prefHeight="35.0" prefWidth="182.0" text="CONSULTA | F9" />
+                                          <Button id="btConsulta" fx:id="btConsulta" layoutX="108.0" layoutY="557.0" mnemonicParsing="false" onAction="#chamaConsultaDfe" prefHeight="35.0" prefWidth="182.0" text="CONSULTA | F9" />
                                        </children>
                                     </Group>
                                     <Pane layoutX="550.0" layoutY="574.0" />
                                     <Pane layoutX="704.0" layoutY="574.0" />
                                  </children>
                               </Group>
-                              <Pane prefHeight="30.0" prefWidth="836.0" styleClass="HBox" stylesheets="@entradas.css">
+                              <Pane layoutX="-3.0" prefHeight="30.0" prefWidth="836.0" styleClass="HBox" stylesheets="@entradas.css">
                                  <children>
-                                    <Button id="btSair" fx:id="btSair" layoutX="795.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair" prefHeight="40.0" prefWidth="30.0">
+                                    <Button id="btSair" fx:id="btSair" layoutX="791.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair" prefHeight="40.0" prefWidth="30.0">
                                        <effect>
-                                          <ImageInput x="10.0" y="10.0">
+                                          <ImageInput x="5.0" y="5.0">
                                              <source>
-                                                <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                                                <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                                              </source>
                                           </ImageInput>
                                        </effect>

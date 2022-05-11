@@ -416,6 +416,67 @@ public class DAOVendas extends ConexaoMySql {
         }
         return listamodelVendas;
     }
+    /**
+     * recupera uma lista de orcamentos return ArrayList
+     * @param inicio
+     * @param fim
+     * @return 
+     */
+    public ArrayList<ModelVendas> getListaVendasPdvPorDataDAO(Date inicio, Date fim) {
+        ArrayList<ModelVendas> listamodelVendas = new ArrayList();
+        ModelVendas modelVendas = new ModelVendas();
+        try {
+            this.conectar();
+            this.executarSQL(
+                    "SELECT "
+                    + "codigo,"
+                    + "valor_total,"
+                    + "clientes_codigo,"
+                    + "data_venda,"
+                    + "hora_venda,"        
+                    + "desconto, "
+                    + "tipo_pagamento, "
+                    + "tipo, "
+                    + "observacao,"
+                    + "codigo_usuario, "
+                    + "taxa_entrega, "
+                    + "caixa, "
+                    + "mesa,"
+                    + "garcon,"                
+                    + "vencimento "
+                    + " FROM"
+                    + " vendas "
+                    + "WHERE "
+                    + "(data_venda BETWEEN  '" + inicio + "' AND '" + fim + "') "
+                    + " AND (tipo = '65');"
+            );
+
+            while (this.getResultSet().next()) {
+                modelVendas = new ModelVendas();
+                modelVendas.setCodigo(this.getResultSet().getInt(1));
+                modelVendas.setValorTotal(this.getResultSet().getFloat(2));
+                modelVendas.setClientesCodigo(this.getResultSet().getInt(3));
+                modelVendas.setDataVenda(this.getResultSet().getDate(4));
+                modelVendas.setHoraVenda(this.getResultSet().getString(5));
+                modelVendas.setDesconto(this.getResultSet().getFloat(6));
+                modelVendas.setTipoPagamento(this.getResultSet().getInt(7));
+                modelVendas.setTipo(this.getResultSet().getInt(8));
+                modelVendas.setObservacao(this.getResultSet().getString(9));
+                modelVendas.setCodigoUsuario(this.getResultSet().getInt(10));
+                modelVendas.setTaxaEntrega(this.getResultSet().getFloat(11));
+                modelVendas.setCaixa(this.getResultSet().getInt(12));
+                modelVendas.setMesa(this.getResultSet().getInt(13));
+                modelVendas.setGarcon(this.getResultSet().getInt(14));
+                modelVendas.setVencimento(this.getResultSet().getString(15));
+                listamodelVendas.add(modelVendas);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            this.fecharConexao();
+        }
+        return listamodelVendas;
+    }
 
     /**
      * recupera uma lista de Vendas return ArrayList

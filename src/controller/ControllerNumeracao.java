@@ -1,8 +1,13 @@
 package controller;
 
 import DAO.DAONumeracao;
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.ModelNumeracao;
+import util.BLMascaras;
 
 /**
 *
@@ -11,6 +16,7 @@ import model.ModelNumeracao;
 public class ControllerNumeracao {
 
     private DAONumeracao daoNumeracao = new DAONumeracao();
+    private BLMascaras bLMascaras = new BLMascaras();
 
         
 /**
@@ -55,6 +61,15 @@ public class ControllerNumeracao {
     */
     public boolean atualizarNumeracaoNsuController(String pNumeracao, int pCodigo){
         return this.daoNumeracao.atualizarNumeracaoNsuDAO(pNumeracao, pCodigo);
+    }
+    /**
+    * atualiza Numeracao
+    * @param pCodigo
+    * @param pNumero
+    * @return boolean
+    */
+    public boolean atualizarConsultaController(int pNumeracao, String pDataHora) throws Exception{
+        return this.daoNumeracao.atualizarConsultaDAO(pDataHora, pNumeracao);
     }
     /**
     * atualiza Numeracao

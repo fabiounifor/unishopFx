@@ -1,6 +1,10 @@
 package DAO;
 
 import conexoes.ConexaoMySql;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import util.BLMascaras;
 import java.util.ArrayList;
 import model.ModelNumeracao;
 
@@ -9,7 +13,7 @@ import model.ModelNumeracao;
  * @author Leandro
  */
 public class DAONumeracao extends ConexaoMySql {
-
+BLMascaras bLMascaras = new BLMascaras();
 /**
     * grava Numeracao
     * @param pModelNumeracao 
@@ -25,14 +29,16 @@ public class DAONumeracao extends ConexaoMySql {
                     + "numero_nfce,"
                     + "serie_nfe,"
                     + "serie_nfce,"
-                    + "ultimo_nsu "
+                    + "ultimo_nsu, "
+                    + "ultima_consulta "
                 + ") VALUES ("
                     + "'" + pModelNumeracao.getCodigo() + "',"
                     + "'" + pModelNumeracao.getNumeroNfe()+ "',"
                     + "'" + pModelNumeracao.getNumeroNfce()+ "',"
                     + "'" + pModelNumeracao.getSerieNfe()+ "',"
                     + "'" + pModelNumeracao.getSerieNfce()+ "',"
-                    + "'" + pModelNumeracao.getUltimoNsu()+ "'"
+                    + "'" + pModelNumeracao.getUltimoNsu()+ "',"
+                    + "'" + pModelNumeracao.getUltimaConsulta()+ "'"
                 + ");"
             );
         }catch(Exception e){
@@ -59,7 +65,8 @@ public class DAONumeracao extends ConexaoMySql {
                     + "numero_nfce,"
                     + "serie_nfe,"
                     + "serie_nfce,"
-                    + "ultimo_nsu "
+                    + "ultimo_nsu, "
+                    + "ultima_consulta "
                  + " FROM"
                      + " numeracao"
                  + " WHERE"
@@ -74,6 +81,7 @@ public class DAONumeracao extends ConexaoMySql {
                 modelNumeracao.setSerieNfe(this.getResultSet().getInt(4));
                 modelNumeracao.setSerieNfce(this.getResultSet().getInt(5));
                 modelNumeracao.setUltimoNsu(this.getResultSet().getString(6));
+                modelNumeracao.setUltimaConsulta(this.getResultSet().getString(7));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -98,7 +106,8 @@ public class DAONumeracao extends ConexaoMySql {
                     + "numero_nfce,"
                     + "serie_nfe,"
                     + "serie_nfce,"
-                    + "ultimo_nsu"
+                    + "ultimo_nsu,"
+                    + "ultima_consulta"
                  + " FROM"
                      + " numeracao"
                  + " WHERE"
@@ -113,6 +122,7 @@ public class DAONumeracao extends ConexaoMySql {
                 modelNumeracao.setSerieNfe(this.getResultSet().getInt(4));
                 modelNumeracao.setSerieNfce(this.getResultSet().getInt(5));
                 modelNumeracao.setUltimoNsu(this.getResultSet().getString(6));
+                modelNumeracao.setUltimaConsulta(this.getResultSet().getString(7));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -138,7 +148,8 @@ public class DAONumeracao extends ConexaoMySql {
                     + "numero_nfce,"
                     + "serie_nfe,"
                     + "serie_nfce,"
-                    + "ultimo_nsu"
+                    + "ultimo_nsu,"
+                    + "ultima_consulta"
                     + " FROM"
                      + " numeracao"
                 + ";"
@@ -152,6 +163,7 @@ public class DAONumeracao extends ConexaoMySql {
                 modelNumeracao.setSerieNfe(this.getResultSet().getInt(4));
                 modelNumeracao.setSerieNfce(this.getResultSet().getInt(5));
                 modelNumeracao.setUltimoNsu(this.getResultSet().getString(6));
+                modelNumeracao.setUltimaConsulta(this.getResultSet().getString(7));
                 listamodelNumeracao.add(modelNumeracao);
             }
         }catch(Exception e){
@@ -176,7 +188,8 @@ public class DAONumeracao extends ConexaoMySql {
                     + "numero_nfce = '" + (pModelNumeracao.getNumeroNfce())+ "',"
                     + "serie_nfe = '" + (pModelNumeracao.getSerieNfe())+ "',"
                     + "numero_nfce = '" + (pModelNumeracao.getSerieNfce())+ "',"
-                    + "ultimo_nsu = '" + (pModelNumeracao.getUltimoNsu())+ "'"
+                    + "ultimo_nsu = '" + (pModelNumeracao.getUltimoNsu())+ "',"
+                    + "ultima_consulta = '" + (pModelNumeracao.getUltimaConsulta())+ "'"
                     + " WHERE "
                     + "codigo = '" + pModelNumeracao.getCodigo() + "'"
                 + ";";
@@ -223,6 +236,24 @@ public class DAONumeracao extends ConexaoMySql {
             String sql = 
                 "UPDATE numeracao SET "
                     + "ultimo_nsu = '" + pNumero+ "'"
+                    + " WHERE "
+                    + "codigo = '" + pCodigo + "'"
+                + ";";
+            return this.executarUpdateDeleteSQL(sql);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }finally{
+            this.fecharConexao();
+        }
+    }
+    
+    public boolean atualizarConsultaDAO(String pDataHora, int pCodigo){
+        try {
+            this.conectar();
+            String sql = 
+                "UPDATE numeracao SET "
+                    + "ultima_consulta = '" + pDataHora+ "'"
                     + " WHERE "
                     + "codigo = '" + pCodigo + "'"
                 + ";";

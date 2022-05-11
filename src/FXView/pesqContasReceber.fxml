@@ -63,9 +63,9 @@
                                  <children>
                                     <Button id="btSair" fx:id="btSair" layoutX="759.0" layoutY="-10.0" mnemonicParsing="false" onAction="#sair">
                                        <effect>
-                                          <ImageInput x="10.0" y="10.0">
+                                          <ImageInput x="5.0" y="5.0">
                                              <source>
-                                                <Image url="file:/C:/unishop/src/imagens/icons%2030/icons8-fechar-janela-filled-50.png" />
+                                                <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
                                              </source>
                                           </ImageInput>
                                        </effect>

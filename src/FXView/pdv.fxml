@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
@@ -137,7 +139,14 @@
             </FlowPane>
          </center>
          <right>
-            <Button id="btFecharJanela" fx:id="btFecharJanela" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" onAction="#fechar" prefHeight="45.0" prefWidth="55.0" text="x" BorderPane.alignment="TOP_LEFT" />
+            <Button id="btFecharJanela" fx:id="btFecharJanela" alignment="TOP_LEFT" focusTraversable="false" mnemonicParsing="false" onAction="#fechar" prefHeight="45.0" prefWidth="55.0" text="x" BorderPane.alignment="TOP_LEFT">
+               <effect>
+                  <ImageInput x="7.0" y="4.0">
+                     <source>
+                        <Image url="file:/C:/UniShop/src/imagens/icones%2040%20collor/icons8-cancelar-40.png" />
+                     </source>
+                  </ImageInput>
+               </effect></Button>
          </right>
       </BorderPane>
    </top>
@@ -171,7 +180,7 @@
                   </TableView>
                   <TableView id="tabelaCupom" fx:id="tabelaCupom" focusTraversable="false" layoutY="49.0" maxHeight="800.0" maxWidth="1200.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="432.0" prefWidth="610.0" stylesheets="@saidasPdv.css">
                     <columns>
-                        <TableColumn id="item" fx:id="item" editable="false" prefWidth="39.0" sortType="DESCENDING" text="ITEM" />
+                        <TableColumn id="item" fx:id="item" editable="false" prefWidth="39.0" sortType="DESCENDING" sortable="false" text="ITEM" />
                       <TableColumn id="descProduto" fx:id="descProduto" editable="false" prefWidth="314.0" sortType="DESCENDING" text="PRODUTO" />
                         <TableColumn id="quant" fx:id="quant" editable="false" minWidth="0.0" prefWidth="78.0" sortType="DESCENDING" text="QUANT." />
                         <TableColumn id="valUnitario" fx:id="valUnitario" editable="false" minWidth="0.0" prefWidth="51.0" sortType="DESCENDING" text="VAL. UNI" />

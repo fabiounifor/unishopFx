@@ -1,5 +1,5 @@
 .background {
-    -fx-background-color:  #FF4500;
+    -fx-background-color:  #FFFFF0;
 }
 .togle-button {
     -fx-border-color:#d4d4d4;
@@ -26,15 +26,62 @@
     -fx-text:"NÃO";
 }
 
+.split-menu-button {
+   -fx-color: #FF4500;
+   -fx-focus-color: #FF4500;
+   -fx-faint-focus-color: derive(#FF4500,90%);
+   -fx-control-inner-background: #FF4500;
+   -fx-selection-bar: derive(#FF4500,90%);
+   -fx-selection-bar-text-fill: white;
+   -fx-selection-bar-background: #FF4500;
+}
+
+
+
+/*.split-menu-button .menu{
+    -fx-background-color: #FF4500;
+    }*/
+
+/*.split-menu-button .menu-item {
+    -fx-background-color: #FF4500;
+    }*/
+
+.split-menu-button .button {
+    -fx-background-color: blue;
+    }
+
+.split-menu-button .menu-bar {
+    -fx-background-color: blue;
+    }
+
+/*.split-menu-button .arrow-button {
+    -fx-background-color: yellow ;
+}*/
+
+.split-menu-button .label{
+    -fx-text-fill: white;
+}
+.split-menu-button .background{
+    -fx-text-fill: black;
+}
+
+.split-menu-button .menu-button {
+    -fx-background-color: #FF4500;
+    }
+
+.split-menu-button .arrow {
+    -fx-background-color: white;
+    }
+
 .choice-box .label {
      -fx-text-fill: black;
 }
 .choice-box {
-   -fx-background-color:#FF4500;
-   -fx-focus-color: midnightblue;
-   -fx-faint-focus-color: derive(#4B0082,90%);
-   -fx-control-inner-background: #FF4500;
-   -fx-selection-bar: derive(#4B0082,90%);
+   -fx-background-color: #FF4500;
+   -fx-focus-color: midnightorange;
+   -fx-faint-focus-color: derive(#FF4500,90%);
+   -fx-control-inner-background: #FFFFF0;
+   -fx-selection-bar: derive(#FF4500,90%);
 -fx-selection-bar-text-fill: white;
 }
 .choice-box .label {
@@ -45,10 +92,11 @@
      -fx-text-fill: black;
 }
 
+
 .date-picker .text-field {
     -fx-background-color:
-        linear-gradient(to bottom, derive(#FF4500, -90%), white, white),
-        linear-gradient(from 0px 0px to 0px 5px, derive(#FF4500, -90%), white,white);
+        linear-gradient(to bottom, derive(#FFEBCD, -90%), white, white),
+        linear-gradient(from 0px 0px to 0px 5px, derive(#FFEBCD, -90%), white,white);
     -fx-background-insets: 1 0 1 1;
     -fx-background-radius: 2 0 0 2;
 }
@@ -307,7 +355,7 @@
 .text-field {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-background-color: derive(#B0C4DE,20%);
+    -fx-background-color: derive(#FFEBCD,20%);
 }
 
 /* 
@@ -316,7 +364,7 @@
  * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
  */
 .button {
-    -fx-padding: 5 22 5 22;   
+    -fx-padding: 5 5 5 5;   
     -fx-border-color: #e2e2e2;
     -fx-border-width: 2;
     -fx-background-radius: 0;
@@ -363,7 +411,7 @@
     -fx-background-color: #FF4500;
 }
 .TilePane {
-   -fx-background-color: derive(#B0C4DE,20%);
+   -fx-background-color: derive(#FFEBCD,20%);
    -fx-border-color: #e2e2e2;
    -fx-border-width: 2;
 }

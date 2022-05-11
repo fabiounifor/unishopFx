@@ -39,14 +39,16 @@ public class ModelDfe {
         String Status = "";
         if (situacao == 0){
             Status = "AGUARDANDO";
-            } else if(situacao == 1){
+            }else if(situacao == 1){
             Status = "CIENCIA";
             }else if(situacao == 2){
             Status = "CONFIRMAÇÃO";
             }else if(situacao == 3){
+            Status = "XML DISPONÍVEL";
+            }else if(situacao == 4){
             Status = "NFE CADASTRADA";
             }
-        return (chavenfe + "            " + datahoraemisao+ "            "+Status+ "                    "+ valorTotal +"\n" + fornecedornome+"\n" );
+        return (chavenfe + "      " + datahoraemisao+ "        "+ valorTotal +"\n" + fornecedornome+"\n" );
     }
 
     public void setPesquisa(String pesquisa) {

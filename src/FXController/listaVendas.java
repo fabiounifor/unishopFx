@@ -51,8 +51,12 @@ import util.BLMascaras;
 import com.acbr.nfe.ACBrNFe;
 import controller.ControllerConfiguracao;
 import controller.ControllerEmpresa;
+import controller.ControllerCliente;
 import java.util.Collections;
+import java.util.stream.Collectors;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
+import model.ModelCliente;
 import model.ModelConfig;
 import model.ModelVendasProdutosTabela;
 import nfe.model.ModelNF;
@@ -70,12 +74,15 @@ public class listaVendas extends Application implements Initializable{
     @FXML Button btExcluirVenda;
     @FXML Button btImprimirVenda;
     @FXML Button btDevolucaoNfe;
+    @FXML Button btEmail;
     @FXML private Button btSair;
     @FXML TableView <ModelVendas> tabelaListaVendas = new TableView();;
     @FXML TableColumn<ModelVendas, String> linhaVendas;
     ArrayList<ModelVendas> listaResultado  = new ArrayList<>();
     public ArrayList<ModelVendas> listaTabelaVendas ;
     public ArrayList<ModelVendasProdutos> listaProdutoRetornar ;
+    ControllerCliente controllerCliente = new ControllerCliente();
+    ArrayList<ModelCliente> listaClientes = new ArrayList<>();
     ArrayList<ModelVendas> listaModelVendas = new ArrayList<>();
     ObservableList<ModelVendas> listadeVendas;
     private ControllerNF controllerNF = new ControllerNF();
@@ -118,7 +125,6 @@ public class listaVendas extends Application implements Initializable{
            
             
             linhaVendas.setCellValueFactory(new PropertyValueFactory<>("pesquisa"));  
-            
             pesquisaVendas.setOnKeyPressed((KeyEvent e)->{
         if(e.getCode()== KeyCode.ENTER){
             if((pesquisaVendas.getText().equals(""))){
@@ -127,9 +133,10 @@ public class listaVendas extends Application implements Initializable{
                listaFiltro();
             }
        }
+        
         if(e.getCode()== KeyCode.F12){
             try {
-                dAORelatorios.gerarRelatorioVendaTodosCliente(bLMascaras.converterDataStringData(bLMascaras.retornarData()), bLMascaras.converterDataStringData(bLMascaras.retornarData()));
+                dAORelatorios.gerarRelatorioVendaPdvTodosCliente(bLMascaras.converterDataStringData(bLMascaras.retornarData()), bLMascaras.converterDataStringData(bLMascaras.retornarData()));
             } catch (Exception ex) {
                 Logger.getLogger(listaVendas.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -145,42 +152,6 @@ public class listaVendas extends Application implements Initializable{
                 }
             });
     }
-    
-  /*  public void gerarNfeTabela(){
-        int posicaovenda = tabelaListaVendas.getSelectionModel().getFocusedIndex();
-        int codigoVenda = tabelaListaVendas.getItems().get(posicaovenda).getCodigo();
-        ArrayList<String> tipoPagamento = new ArrayList<>();
-        tipoPagamento.add(String.valueOf(tabelaListaVendas.getItems().get(posicaovenda).getTipoPagamento()));
-        Float valorTotal = controllerVendas.getVendasClienteController(codigoVenda).getValorTotal();
-        Float valorDesconto = controllerVendas.getVendasClienteController(codigoVenda).getDesconto();
-        Float valorTroco = 0.0f;
-        final AguardeGerandoRelatorio carregando = new AguardeGerandoRelatorio();
-        final ControllerVendas controllerVendas = new ControllerVendas();
-        carregando.setVisible(true);
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                // gerar nfe
-                try{
-                    if(controllerVendas.getVendasController(codigoVenda).getClientesCodigo() == 0){
-                        pdv Pdv = new pdv();
-                      Pdv.gerarNfce(codigoVenda, valorTotal, tipoPagamento, valorTroco, valorDesconto);
-                    }else{
-                    nfeSaida nfs = new nfeSaida();
-                    nfs.transmitirNfe(codigoVenda, valorTotal);
-                    }
-                    
-                }catch(Exception e)
-                        { System.out.println(e);
-                    
-                }
-                
-                carregando.dispose();
-            }
-       };
-        t.start();
-                }*/
-    
     
     
     public void cancelarVendaSelecionada(){
@@ -213,7 +184,6 @@ public class listaVendas extends Application implements Initializable{
                             acbrNFe = new ACBrNFe();
                             acbrNFe.cancelar(chave, motivo, cnpj);
                             atualizarNFECancelada(pedidoNfceCancelar);
-                            controllerVendasProdutos.excluirVendasProdutosCodVendaController(pedidoNfceCancelar);
                             } catch (Exception ex) {
                             Logger.getLogger(pdv.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -248,24 +218,7 @@ public class listaVendas extends Application implements Initializable{
          return inverso;
      }
      
-     public void devolucaoNfe() throws IOException{
-        int posicaoDevolver;
-        int pedidoNfeDevolver;
-         posicaoDevolver = tabelaListaVendas.getSelectionModel().getFocusedIndex();
-         pedidoNfeDevolver = tabelaListaVendas.getItems().get(posicaoDevolver).getCodigo();
-         
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/FXView/nfeSaida.fxml")); 
-        Parent raiz = loader.load();
-        nfeSaida nfe = loader.getController();
-        nfe.devolucaoNfe(pedidoNfeDevolver);
-        Stage nfeStage = new Stage();
-        nfeStage.setScene(new Scene(raiz));
-        nfeStage.initStyle(StageStyle.UNDECORATED);
-        nfeStage.initModality(Modality.APPLICATION_MODAL);
-        nfeStage.show();
-         
-     }
-    
+     
     public void sair(){
          Stage estagiosaida = (Stage) btSair.getScene().getWindow();
           estagiosaida.close();
@@ -301,20 +254,39 @@ public class listaVendas extends Application implements Initializable{
         t.start();
         }
     private void listaFiltro(){
+      
+      listaClientes = controllerCliente.getListaClienteController();
       listaResultado.clear();
       tabelaListaVendas.getItems().clear();
       listaResultado  = new ArrayList<>();
       listaModelVendas = controllerVendas.getListaPedidosController();
+      ArrayList<ModelCliente> clienteCodigo = new ArrayList<>();
         final novoPrincipal principal = new novoPrincipal();
         classeInterfaces.avisaOuvintesProgresso("principal",Boolean.TRUE);
         Thread t = new Thread() {
             @Override
             public void run() {
-        for (int i = 1; i < listaModelVendas.size(); i++) {
+                if (pesquisaVendas.getText().matches("-?\\d+")){
+                    listaModelVendas.stream()
+                        .filter(e->((e.getCodigo() == Integer.parseInt(pesquisaVendas.getText()))))
+                        .forEach(e -> listaResultado.add(e));
+                }else{
+                    listaClientes.stream()
+                         .filter(e1->(e1.getNome().contains(pesquisaVendas.getText())))
+                         .forEach(e1->clienteCodigo.add((e1)));
+                    listaModelVendas.stream()
+                        .filter(e->((e.getClientesCodigo() == clienteCodigo.get(0).getCodigo())))
+                        .forEach(e -> listaResultado.add(e));
+                }
+                listaResultado = listaModelVendas.stream().filter(item1 -> {
+            return listaClientes.stream().filter(item2 -> new Integer(item2.getCodigo()).equals(item1.getClientesCodigo())).findAny().isPresent();
+        }).collect(Collectors.toList());
+                
+        /*for (int i = 1; i < listaModelVendas.size(); i++) {
             if (listaModelVendas.get(i).getPesquisa().contains(pesquisaVendas.getText().toUpperCase())){
              listaResultado.add(listaModelVendas.get(i)); 
             }
-        } 
+        } */
        listadeVendas = FXCollections.observableArrayList(listaResultado);
        Collections.reverse(listadeVendas);
        tabelaListaVendas.getItems().addAll(listadeVendas);
@@ -556,11 +528,14 @@ public class listaVendas extends Application implements Initializable{
         System.out.println(origemOp +" ORIGEM OPERACAO");
         if (origemOp == 0){
         if (controllerVendas.getVendasController(codigoAbrir).getTipo() == 55){
-            if (controllerNF.getNFVendaController(codigoAbrir).getPedido() == 0){
-            seleciona = 1;
-            ControllerNF controllerNF = new ControllerNF();
-            nfeSaida nfe = loaderNfe.getController();
-            nfe.abrirVenda(codigoAbrir);
+        if (controllerNF.getNFVendaController(codigoAbrir).getPedido() == 0){
+        nfeSaida nfe = loaderNfe.getController();
+        nfe.abrirVenda(codigoAbrir);
+        Stage nfeStage = new Stage();
+        nfeStage.setScene(new Scene(raizNfe));
+        nfeStage.initStyle(StageStyle.UNDECORATED);
+        nfeStage.initModality(Modality.APPLICATION_MODAL);
+        nfeStage.show();
             }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("ERRO");
@@ -575,24 +550,57 @@ public class listaVendas extends Application implements Initializable{
             alert.show();
         }else{
         
-        }
+        }/*
         if (seleciona == 0){
         Stage vendaStage = new Stage();
         vendaStage.setScene(new Scene(raizVenda));
         vendaStage.show();
         fecharSaida();
-        } else if (seleciona == 1){
+        } else if (seleciona == 1000){
         Stage vendaStage = new Stage();
         vendaStage.setScene(new Scene(raizNfe));
         vendaStage.show();
         fecharSaida();
-        }
+        }*/
         }else{
               classeInterfaces.avisaOuvintesCodigoVenda("pdv",codigoAbrir);
               fecharSaida();
             
         }
   
+    }
+    
+    public void enviarEmailVendaLista() throws Exception{
+        nfeSaida nfe = new nfeSaida();
+        String tipo = "";
+        int posicaoEnviarEmail = tabelaListaVendas.getSelectionModel().getFocusedIndex();
+        int codigoEnviarEmail = tabelaListaVendas.getItems().get(posicaoEnviarEmail).getCodigo();
+        String data = String.valueOf(controllerVendas.getVendasController(codigoEnviarEmail).getDataVenda());
+        String chaveEmail = controllerNF.getNFVendaController(codigoEnviarEmail).getChaveNfe();
+        if (controllerVendas.getVendasController(codigoEnviarEmail).getTipo() == 65){
+            tipo = "NFCe";
+        }else if(controllerVendas.getVendasController(codigoEnviarEmail).getTipo() == 55){
+            tipo = "NFe";
+        }
+
+        String caminho = "C:\\UniShop\\dfe\\"+controllerEmpresa.getEmpresaController(1).
+        getModelEmpresa().getCnpj()+"\\Enviado\\"+tipo+"\\"+((data).substring(0, 4)) + ((data).substring(5, 7));
+        if (!((controllerVendas.getVendasController(codigoEnviarEmail).getTipo() == 65)||(controllerVendas.getVendasController(codigoEnviarEmail).getTipo() == 55))){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("ERRO");
+            alert.setContentText("NÃO É POSSÍVEL ENVIAR EMAIL DE UMA PRE-VENDA");
+            alert.show();
+            }else{
+            nfe.enviarEmailNfe(caminho+"\\"+chaveEmail+"-nfe.xml", codigoEnviarEmail);
+            }
+   }
+    
+    public void pesquisaClique(){
+        if((pesquisaVendas.getText().equals(""))){
+                listaTodos();
+            }else{
+               listaFiltro();
+            }
     }
     public void fecharSaida(){
           Stage estagioListaVendas = (Stage) btEditarVenda.getScene().getWindow();

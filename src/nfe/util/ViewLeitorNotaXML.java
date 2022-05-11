@@ -32,10 +32,12 @@ import util.BLMascaras;
 import nfe.controller.ControllerNF;
 import controller.ControllerEstado;
 import controller.ControllerCliente;
+import controller.ControllerVendas;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import model.ModelContaPagar;
 import model.ModelDfe;
+import util.logutil;
 
 /**
  *
@@ -393,7 +395,7 @@ public class ViewLeitorNotaXML extends javax.swing.JFrame {
     }
     
     public void trataElement(Element element, int codigo) throws Exception {
-       
+          logutil.info("Inicia conversao de XMl para Objeto");
         //Recuperamos os atributos filhos (Attributes)  
         List atributes = element.getAttributes();
         Iterator i_atr = atributes.iterator();
@@ -413,7 +415,7 @@ public class ViewLeitorNotaXML extends javax.swing.JFrame {
         while (it.hasNext()) {
             
             BLMascaras bLMascaras = new BLMascaras();
-            
+            ControllerVendas controllerVendas = new ControllerVendas();
             Element el = (Element) it.next();
             listaNfe = new ArrayList<>();
             
@@ -421,7 +423,6 @@ public class ViewLeitorNotaXML extends javax.swing.JFrame {
             trataElement(el, codigo);
             modelNF.setCodBanco(0);
             modelNF.setEmpresa(1);
-            modelNF.setCodCliente(1);
             if (el.getName().equals("nNF")){modelNF.setNumeroNfe(el.getValue());System.out.println("nNfe");}
             if (el.getName().equals("pag")){modelNF.setCodTipoDoc((el.getValue()).substring(1,2));System.out.println("pag");}
             if (el.getName().equals("mod")){modelNF.setModelonfe(el.getValue());System.out.println("mod");}
@@ -452,6 +453,13 @@ public class ViewLeitorNotaXML extends javax.swing.JFrame {
             modelNF.setCodTransportadora(1);
             modelNF.setPedido(codigo);
             modelNF.setPedidoCliente(String.valueOf(codigo));
+            if (((controllerCliente.getClienteControllerCod(controllerVendas.getVendasController(codigo).getClientesCodigo())).getCodigo()) == 0){
+                modelNF.setCodCliente(1);
+                modelNF.setDocCliente(controllerCliente.getClienteControllerCod(1).getCpfCNPJ());
+            }else{
+                modelNF.setCodCliente((controllerCliente.getClienteControllerCod(controllerVendas.getVendasController(codigo).getClientesCodigo())).getCodigo());
+                modelNF.setDocCliente((controllerCliente.getClienteControllerCod(controllerVendas.getVendasController(codigo).getClientesCodigo())).getCpfCNPJ());
+            }
             modelNF.setDataDigitacao(bLMascaras.converterDataParaDateUS(new java.util.Date(System.currentTimeMillis())));
             modelNF.setDataDevolucao(bLMascaras.converterDataParaDateUS(new java.util.Date(System.currentTimeMillis())));
             modelNF.setDataCancelamento(bLMascaras.converterDataParaDateUS(new java.util.Date(System.currentTimeMillis())));
@@ -460,6 +468,7 @@ public class ViewLeitorNotaXML extends javax.swing.JFrame {
             
              
             listaNfe.add(modelNF);
+            logutil.info("Inicia conversao de XMl para Objeto");
         }
 
      

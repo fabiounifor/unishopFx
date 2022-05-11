@@ -102,7 +102,7 @@ public class gerarSintegra {
             resultado = vazio+""+campoTamanho;
     } else if(campoTamanho.length() > limite ){
         
-        resultado = campoTamanho.substring(0, limite);
+        resultado = campoTamanho.substring(campoTamanho.length() - limite);
     } 
         }
     return resultado;
@@ -172,6 +172,7 @@ public class gerarSintegra {
     fax = ajustarTamanho(modelEmpresa.getTelefone(), 10);
     total_dez += 1;
     registro_dez = ("10"+modelEmpresa.getCnpj()+ie+razao+municipio+uf+fax+dataInicial.substring(0, 4)+dataInicial.substring(5, 7)+dataInicial.substring(8, 10)+dataFinal.substring(0, 4)+dataFinal.substring(5, 7)+dataFinal.substring(8, 10)+convenio+"\r\n");
+        System.out.println("REGISTRO 10");
     return registro_dez;
     }
     
@@ -191,7 +192,7 @@ public class gerarSintegra {
     telefone = ajustarTamanhoNumerico(modelEmpresa.getTelefone(), 12);
     total_onze += 1;
     registro_onze = ("11"+logradouro+numero+complemento+bairro+modelEmpresa.getCep()+contato+telefone+"\r\n");
-        
+    System.out.println("REGISTRO 11");    
     return registro_onze;    
     }
     
@@ -262,6 +263,7 @@ public class gerarSintegra {
             }
     }
     }
+    System.out.println("REGISTRO 50 SAI");
     return registro_cinquenta_saida;    
     }
     
@@ -310,6 +312,7 @@ public class gerarSintegra {
 
     modelComprasProdutos = controllerComprasProdutos.getListacompras_produtosController(modelNFEntrada.get(i).getPedido());
         System.out.println("modelComprasProdutos");
+        System.out.println(modelComprasProdutos.size());
     for (int j=0 ; j<modelComprasProdutos.size() ; j++){
         cfop = modelComprasProdutos.get(j).getCfopEstoque();
         aliquota = modelComprasProdutos.get(j).getPercCreditoSn();   
@@ -343,6 +346,7 @@ public class gerarSintegra {
                 }           
             }
     }
+    System.out.println("REGISTRO 50 ENT");
     return registro_cinquenta_entrada;    
     }
     
@@ -399,6 +403,7 @@ public class gerarSintegra {
                 +baseSubstString+valorIcms+outros+situacao+branco+"\r\n");
     }
     }
+    System.out.println("REGISTRO 53");
     return registro_cinquenta_tres;    
     }
     
@@ -449,6 +454,7 @@ public class gerarSintegra {
         }
         
     }
+    System.out.println("REGISTRO 54 ENT");
     return registro_cinquenta_quatro_entrada;    
     }
     
@@ -477,7 +483,7 @@ public class gerarSintegra {
         serie = ajustarTamanhoNumerico(modelNF.get(i).getSerieNfe(), 3);
         numero = ajustarTamanhoNumerico(modelNF.get(i).getNumeroNfe(), 6);
         
-        modelVendasProdutos = controllerVendasProdutos.getListaVendasProdutosController(Integer.parseInt(modelNF.get(i).getNumeroNfe()));
+        modelVendasProdutos = controllerVendasProdutos.getListaVendasProdutosController(Integer.parseInt(modelNF.get(i).getPedidoCliente()));
         
         for(int j=0;j<modelVendasProdutos.size();j++){
         cfop = modelVendasProdutos.get(j).getCfop();
@@ -500,6 +506,7 @@ public class gerarSintegra {
         
         
     }
+    System.out.println("REGISTRO 54 SAI");
     return registro_cinquenta_quatro_saida;    
     }
     
@@ -547,6 +554,7 @@ public class gerarSintegra {
             valorTotal61 = 0;
             i = i-1;
     }
+    System.out.println("REGISTRO 61");
     return registro_sessenta_um;    
     }
     
@@ -568,16 +576,20 @@ public class gerarSintegra {
     produtoControle.clear();
         
     for (int i=0; i<modelNF.size(); i++){
+        System.out.println("FOR 61R 1");
         for (int j=0; j<modelVendasProdutos.size(); j++){
+            System.out.println("FOR 61R 12");
             if (modelNF.get(i).getPedido() == modelVendasProdutos.get(j).getCodigo_venda()) {
                 vendasProdutos.add(modelVendasProdutos.get(j));
             }
         }
     }
     for (int h=0; h<vendasProdutos.size();h++){
+        System.out.println("FOR 61R 2");
         ArrayList<ModelVendasProdutos> produto = new ArrayList<>();
          produto.addAll(controllerVendasProdutos.getListaVendasProdutosCodigoController(vendasProdutos.get(h).getCodigo_produto()));
              for (int l =0; l<produto.size(); l++){
+                 System.out.println("FOR 61R 22");
                         quantidadeFloat += bLmascaras.truncamentoComPontoTresCasasFloat(produto.get(l).getQuantidade());
                         quantidade = ajustarTamanhoNumerico(bLmascaras.removerPontos(String.valueOf(quantidadeFloat )), 13);
                         valorTotalDouble += produto.get(l).getValorTotal();
@@ -596,6 +608,7 @@ public class gerarSintegra {
      produtoControle.add(vendasProdutos.get(h).getCodigo_produto());
      }
      }
+    System.out.println("REGISTRO 61R");
      return registro_sessenta_um_erre;    
      }
     
@@ -737,6 +750,7 @@ public class gerarSintegra {
         
     
     modelNF = controllerNF.getListaDataNFController(dataInicial, dataFinal, modelo);
+    modelNF.addAll(controllerNF.getListaDataNFController(dataInicial, dataFinal, "55"));
     modelVendasProdutos = controllerVendasProdutos.getListaVendasProdutosController();
         System.out.println(modelNF.size() + "TAMANHO NOTA FISCAL SAIDA");
     for (int i=0; i<modelNF.size(); i++){
@@ -746,23 +760,31 @@ public class gerarSintegra {
             }
         }
     }
+    System.out.println(modelNF.size() + "PASSOU FOR 1");
     for (int h=0; h<vendasProdutos.size();h++){
      dataInicialString = dataInicial.toString();
+     System.out.println(dataInicialString + " DATA INICIAL");
      dataFinalString = dataFinal.toString();
+     System.out.println(dataFinalString + " DATA FINAL");
      codigoProduto = ajustarTamanho((String.valueOf(vendasProdutos.get(h).getCodigo_produto())),14);
+     System.out.println(codigoProduto + " CODIGO");
      ncm = String.valueOf(controllerProdutos.getProdutosController(vendasProdutos.get(h).getCodigo_produto()).getNcm());
+     System.out.println(ncm + " NCM");
      descricaoProduto = ajustarTamanho(controllerProdutos.getProdutosController(vendasProdutos.get(h).getCodigo_produto()).getDescricaoProduto(),53);
+     System.out.println(descricaoProduto + " DESCRICAO");
      unidadeMedida = ajustarTamanho(controllerUnidadeMedia.getUnidadeMediaController(controllerProdutos.getProdutosController(vendasProdutos.get(h).getCodigo_produto()).getUnidadeMedida()).getAbreviacao(), 6);
+     System.out.println(unidadeMedida + " UNIDADE");
      branco = ajustarTamanho(branco, 54);
      
      if (!(produtoControlesaida75.contains(vendasProdutos.get(h).getCodigo_produto()))){
         total_setenta_cinco += 1;
         registro_setenta_cinco_saida = registro_setenta_cinco_saida+("75"+dataInicialString.substring(0,4)+dataInicialString.substring(5,7)+dataInicialString.substring(8,10)+
-            dataInicialString.substring(0,4)+dataInicialString.substring(5,7)+dataInicialString.substring(8,10)+codigoProduto+ncm+descricaoProduto+unidadeMedida+
+            dataInicialString.substring(0,4)+dataInicialString.substring(5,7)+dataFinalString.substring(8,10)+codigoProduto+ncm+descricaoProduto+unidadeMedida+
             aliquotaIpi+aliquotaIcms+redBcIcms+bcIcmsSub+"\r\n");
         produtoControlesaida75.add(vendasProdutos.get(h).getCodigo_produto());
      }
      }    
+    System.out.println("REGISTRO 75 SAI");
      return registro_setenta_cinco_saida;    
      }
     
@@ -860,12 +882,13 @@ public class gerarSintegra {
          if(!(produtoControlesaida75.contains(comprasProdutos.get(h).getCodProduto()))){
         total_setenta_cinco += 1;
         registro_setenta_cinco_entrada = registro_setenta_cinco_entrada+("75"+dataInicialString.substring(0,4)+dataInicialString.substring(5,7)+dataInicialString.substring(8,10)+
-            dataInicialString.substring(0,4)+dataInicialString.substring(5,7)+dataInicialString.substring(8,10)+codigoProduto+ncm+descricaoProduto+unidadeMedida+
+            dataInicialString.substring(0,4)+dataInicialString.substring(5,7)+dataFinalString.substring(8,10)+codigoProduto+ncm+descricaoProduto+unidadeMedida+
             aliquotaIpi+aliquotaIcms+redBcIcms+bcIcmsSub+"\r\n");
         produtoControleentrada75.add(comprasProdutos.get(h).getCodProduto());
          }
          }
      }    
+    System.out.println("REGISTRO 75 ENT");
      return registro_setenta_cinco_entrada;    
      }
     
@@ -960,6 +983,7 @@ public class gerarSintegra {
         branco = ajustarTamanho(branco, 25);
         registro_noventa = "90"+cnpj+ie+totalCinquenta+totalCinquentaTres+totalCinquentaquatro+totalSessentaUm+
                 totalSetentaQuatro+totalSetentaCinco+totalNoventa+branco+"1";
+        System.out.println("REGISTRO 90 ");
         return registro_noventa;
     }
     

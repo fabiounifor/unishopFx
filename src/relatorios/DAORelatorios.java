@@ -5,6 +5,7 @@
  */
 package relatorios;
 
+import com.acbr.nfe.ACBrNFe;
 import conexoes.ConexaoMySql;
 import java.awt.Desktop;
 import java.io.File;
@@ -18,6 +19,7 @@ import model.ModelRelatorioProdutos;
 import util.BLMascaras;
 import controller.ControllerEmpresa;
 import java.io.IOException;
+import java.sql.Time;
 import model.ModelEmpresa;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -405,7 +407,13 @@ return true;
     }
     
      public boolean gerarRelatorioVendaCupomCaixa(int pCodigo) {
-
+        ControllerEmpresa ce = new ControllerEmpresa();
+        String Empresa = ce.getEmpresaController(1).getModelEmpresa().getNomeFantasia();
+        String cnpj = ce.getEmpresaController(1).getModelEmpresa().getCnpj();
+        String Endereco = ce.getEmpresaController(1).getModelEmpresa().getEndereco();
+        String Numero = ce.getEmpresaController(1).getModelEmpresa().getEnderecoNumero();
+        String Cidade = ce.getEmpresaController(1).getModelCidade().getNome();
+        String Telefone = ce.getEmpresaController(1).getModelEmpresa().getTelefone();
         try {
             this.conectar();
             this.executarSQL("SELECT "
@@ -433,10 +441,17 @@ return true;
             JRResultSetDataSource jrRS = new JRResultSetDataSource(getResultSet());
             // caminho do arquivo dentro dos pacotes
             InputStream caminhoRelatorio = this.getClass().getClassLoader().getResourceAsStream("ArquivosJasper/relatorioVendasCupomCaixa.jasper");
-            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, new HashMap(), jrRS);
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("Empresa", Empresa);
+            params.put("cnpj", cnpj);
+            params.put("Endereco", Endereco + " " +Numero);
+            params.put("Numero", Numero);
+            params.put("Cidade", Cidade);
+            params.put("Telefone", Telefone);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, params, jrRS);
             String nomeArquivo = "C:/UniShop/rel.pdf";
             JasperExportManager.exportReportToPdfFile(jasperPrint, nomeArquivo);
-
+            
             File file = new File(nomeArquivo);
 
             try {
@@ -446,7 +461,8 @@ return true;
                     //Sistema operacional não suportar proteção contra crash
                     System.out.println("não protegeu");
                 }
-                Desktop.getDesktop().print(file);
+               Desktop.getDesktop().print(file);
+               
             } catch (Error er1) {
                 //Falha ao imprimir, esperar 2 segundos e tentar novamente
                 logutil.error("falha ao imprimir - tentativa 1: " + er1.getMessage(), er1);
@@ -474,7 +490,8 @@ return true;
     }
 
     public boolean gerarRelatorioCaixa(int pCodigo) {
-        
+        ControllerEmpresa ce = new ControllerEmpresa();
+        String Empresa = ce.getEmpresaController(1).getModelEmpresa().getNomeFantasia();
         try {
             this.conectar();
             this.executarSQL("SELECT "
@@ -500,9 +517,14 @@ return true;
             JRResultSetDataSource jrRS = new JRResultSetDataSource(getResultSet());
             // caminho do arquivo dentro dos pacotes  
             InputStream caminhoRelatorio = this.getClass().getClassLoader().getResourceAsStream("ArquivosJasper/relatorioCaixa.jasper");
-            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, new HashMap(), jrRS); 
-           String nomeArquivo = "C:/UniShop/rel.pdf";
+            //parametro
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("Empresa", Empresa);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, params, jrRS); 
+            String nomeArquivo = "C:/UniShop/rel.pdf";
             JasperExportManager.exportReportToPdfFile(jasperPrint, nomeArquivo);
+            
+            
             
             File file = new File(nomeArquivo);
             try {
@@ -856,6 +878,146 @@ return true;
         return true;
     }
     
+    public boolean gerarRelatorioVendaPdvTodosCliente(Date pDataInicial, Date dataFinal) {
+        try {
+            this.conectar();
+            this.executarSQL("SELECT "
+                    + "     vendas.codigo AS vendas_codigo, "
+                    + "     vendas.hora_venda AS vendas_hora_venda, "
+                    + "     vendas.data_venda AS vendas_data_venda, "
+                    + "     vendas.valor_total AS vendas_valor_total, "
+                    + "     vendas.desconto AS vendas_desconto, "
+                    + "     vendas.observacao AS vendas_observacao, "
+                    + "     forma_pagamento.descricao AS forma_pagamento_descricao "
+                    + "FROM "
+                    + " vendas "
+                    + "     INNER JOIN forma_pagamento forma_pagamento ON vendas.tipo_pagamento = forma_pagamento.codigo "
+                    + "WHERE "
+                    + "(data_venda BETWEEN  '" + pDataInicial + "' AND '" + dataFinal + "' )"
+                    + "AND (vendas.tipo = 65)");
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(getResultSet());
+            // caminho do arquivo dentro dos pacotes  
+            InputStream caminhoRelatorio = this.getClass().getClassLoader().getResourceAsStream("ArquivosJasper/MyReports/relatorioVendasPeriodo80mm.jasper");
+            //paramentro
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("title1", "Periodo: " + bLMascaras.formatarData(pDataInicial) + " à " + bLMascaras.formatarData(dataFinal));
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, params, jrRS);
+
+            String nomeArquivo = "C:/UniShop/rel.pdf";
+            JasperExportManager.exportReportToPdfFile(jasperPrint, nomeArquivo);
+            File file = new File(nomeArquivo);
+            try {
+                Desktop.getDesktop().open(file);
+            } catch (Exception e) {
+                JOptionPane.showConfirmDialog(null, e);
+            }
+            file.deleteOnExit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro:", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean gerarRelatorioVendaProdutosPdvTodosCliente(Date pDataInicial, Date dataFinal, int grupo) {
+        try {
+            this.conectar();
+            this.executarSQL("SELECT "
+                    + "     vendas.codigo AS vendas_codigo, "
+                    + "     vendas.hora_venda AS vendas_hora_venda, "
+                    + "     vendas.data_venda AS vendas_data_venda, "
+                    + "     vendas_produto.codigo_venda AS codigoVendaProduto, "
+                    + "     vendas_produto.codigo_produto AS codigoProdutoVendido, "
+                    + "     vendas_produto.valor_unitario AS valor_unitario, "
+                    + "     SUM(vendas_produto.quantidade) AS quantidade, "
+                    + "     SUM(vendas_produto.total) AS valor_total, "
+                    + "     produtos.grupo AS grupo, "
+                    + "     produtos.codigo AS produto_codigo, "
+                    + "     produtos.nome AS nome_produto "
+                    + "FROM "
+                    + " vendas "
+                    + "     INNER JOIN vendas_produto vendas_produto ON vendas.codigo = vendas_produto.codigo_venda "
+                    + "     INNER JOIN produtos produtos ON produtos.codigo = vendas_produto.codigo_produto "
+                    + "WHERE "
+                    + "(data_venda BETWEEN  '" + pDataInicial + "' AND '" + dataFinal + "' )"
+                    + "AND (vendas.tipo = 65)"
+                    + " AND (produtos.grupo = '"+ grupo + "')"
+                    + " GROUP BY PRODUTOS.CODIGO, vendas_produto.total ;"   
+            );
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(getResultSet());
+            // caminho do arquivo dentro dos pacotes  
+            InputStream caminhoRelatorio = this.getClass().getClassLoader().getResourceAsStream("ArquivosJasper/MyReports/relatorioVendasProdutosGrupoPeriodo80mm.jasper");
+            //paramentro
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("title1", "Periodo: " + bLMascaras.formatarData(pDataInicial) + " à " + bLMascaras.formatarData(dataFinal));
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, params, jrRS);
+
+            String nomeArquivo = "C:/UniShop/rel.pdf";
+            JasperExportManager.exportReportToPdfFile(jasperPrint, nomeArquivo);
+            File file = new File(nomeArquivo);
+            try {
+                Desktop.getDesktop().open(file);
+            } catch (Exception e) {
+                JOptionPane.showConfirmDialog(null, e);
+            }
+            file.deleteOnExit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro:", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean imprimirRelatorioVendaPdvTodosCliente(Date pDataInicial, Date dataFinal) {
+        try {
+            this.conectar();
+            this.executarSQL("SELECT "
+                    + "     vendas.codigo AS vendas_codigo, "
+                    + "     vendas.hora_venda AS vendas_hora_venda, "
+                    + "     vendas.data_venda AS vendas_data_venda, "
+                    + "     vendas.valor_total AS vendas_valor_total, "
+                    + "     vendas.desconto AS vendas_desconto, "
+                    + "     vendas.observacao AS vendas_observacao, "
+                    + "     forma_pagamento.descricao AS forma_pagamento_descricao "
+                    + "FROM "
+                    + " vendas "
+                    + "     INNER JOIN forma_pagamento forma_pagamento ON vendas.tipo_pagamento = forma_pagamento.codigo "
+                    + "WHERE "
+                    + "(data_venda BETWEEN  '" + pDataInicial + "' AND '" + dataFinal + "' )"
+                    + "AND (vendas.tipo = 65)");
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(getResultSet());
+            // caminho do arquivo dentro dos pacotes  
+            InputStream caminhoRelatorio = this.getClass().getClassLoader().getResourceAsStream("ArquivosJasper/MyReports/relatorioVendasPeriodo80mm.jasper");
+            //paramentro
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("title1", "Periodo: " + bLMascaras.formatarData(pDataInicial) + " à " + bLMascaras.formatarData(dataFinal));
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, params, jrRS);
+
+            String nomeArquivo = "C:/UniShop/rel.pdf";
+            JasperExportManager.exportReportToPdfFile(jasperPrint, nomeArquivo);
+            File file = new File(nomeArquivo);
+            try {
+                Desktop.getDesktop().print(file);
+            } catch (Exception e) {
+                JOptionPane.showConfirmDialog(null, e);
+            }
+            file.deleteOnExit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro:", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
     
     public boolean gerarRelatorioNfeSaidaPorData(Date pDataInicial, Date dataFinal) {
         ModelEmpresa modelEmpresa = new ModelEmpresa();
@@ -905,6 +1067,64 @@ return true;
             JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, params, jrRS);
 
             String nomeArquivo = "C:/UniShop/dfe/"+modelEmpresa.getCnpj()+"/relatorios/"+(String.valueOf(pDataInicial).substring(0,4))+(String.valueOf(pDataInicial).substring(5,7))+"/Relatório de Saidas Mês "+ (String.valueOf(pDataInicial).substring(5,7))+".pdf";
+            JasperExportManager.exportReportToPdfFile(jasperPrint, nomeArquivo);
+                        
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro:", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean gerarRelatorioNfeCanceladaSaidaPorData(Date pDataInicial, Date dataFinal) {
+        ModelEmpresa modelEmpresa = new ModelEmpresa();
+        ControllerEmpresa controllerEmpresa = new ControllerEmpresa();
+        modelEmpresa = controllerEmpresa.getEmpresaController(1).getModelEmpresa();
+        try {
+            this.conectar();
+            this.executarSQL("SELECT "
+                    + "     empresa.cnpj AS cnpj, "
+                    + "     empresa.razao_social AS razao_social, "
+                    + "     nf.numero_nfe AS numero_nfe, "
+                    + "     nf.numero_nfe AS numero_nfe, "
+                    + "     nf.data_emissao AS data_emissao, "
+                    + "     nf.chave_nfe AS chave_nfe, "
+                    + "     nf.motivo_nfe AS motivo_nfe, "
+                    + "     nf.valor_total AS valor_total, "
+                    + "     nf.status_nfe AS status_nfe, "
+                    + "     nf.fin_nfe AS fin_nfe, "
+                    + "     nf.pedido AS pedido, "
+                    + "     clientes.nome_fantasia AS nome_fantasia, "
+                    + "     clientes.nome AS clientes_nome, "
+                    + "     clientes.codigo AS clientes_codigo, "
+                    + "     vendas_produto.codigo_produto AS codigo_produto, "
+                    + "     vendas_produto.nomeProduto AS produto_nome, "
+                    + "     vendas_produto.cfop AS cfop, "
+                    + "     vendas_produto.unidade AS unidade, "
+                    + "     vendas_produto.quantidade AS quantidade, "
+                    + "     vendas_produto.valor_unitario AS valorcusto, "
+                    + "     vendas_produto.percIcms AS percIcms, "
+                    + "     vendas_produto.desconto AS desconto, "
+                    + "     vendas_produto.total AS total "
+                    + "FROM "
+                    + "     clientes clientes INNER JOIN nf nf ON clientes.codigo = nf.cod_cliente"
+                    + "     INNER JOIN vendas_produto vendas_produto ON vendas_produto.codigo_venda = nf.pedido"
+                    + "     INNER JOIN empresa empresa ON nf.empresa = empresa.codigo "
+                    + "WHERE "
+                    + " status_nfe = '" + "101"
+                    + " ' AND "
+                    + "(data_emissao BETWEEN  '" + pDataInicial + "' AND '" + dataFinal + "' )");
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(getResultSet());
+            // caminho do arquivo dentro dos pacotes  
+            InputStream caminhoRelatorio = this.getClass().getClassLoader().getResourceAsStream("ArquivosJasper/MyReports/relatorioNfCanceladasPeriodo.jasper");
+            //paramentro
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("title1", "Periodo: " + bLMascaras.formatarData(pDataInicial) + " à " + bLMascaras.formatarData(dataFinal));
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(caminhoRelatorio, params, jrRS);
+
+            String nomeArquivo = "C:/UniShop/dfe/"+modelEmpresa.getCnpj()+"/relatorios/"+(String.valueOf(pDataInicial).substring(0,4))+(String.valueOf(pDataInicial).substring(5,7))+"/Relatório de Saidas Canceladas Mês "+ (String.valueOf(pDataInicial).substring(5,7))+".pdf";
             JasperExportManager.exportReportToPdfFile(jasperPrint, nomeArquivo);
                         
         } catch (Exception e) {

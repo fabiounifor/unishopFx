@@ -1,23 +1,27 @@
 package util;
 
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 public class logutil {
 
+    private static final String PATH_FILE = "C:\\UniShop\\dist\\Log\\";
     static Logger logger = Logger.getLogger("logutil");
-//    static final String logFilePath = "C:/temp/logutil.log";
-    static final String logFilePath = "C:\\UniShop\\dist\\Log\\logutil.log";
 
     static FileHandler fh;
+    static LoggerFormatter formatter = new LoggerFormatter();
 
     static {
         try {
-            fh = new FileHandler(logFilePath);
-            fh.setFormatter(new SimpleFormatter());
+            SimpleDateFormat df = new SimpleDateFormat("yyy_MM_dd_HH_mm");
+            final String filename = String.format("%s%s%s", PATH_FILE, df.format(new Date()), ".log");
+            System.out.println("Arquivo de log: " + filename);
+
+            fh = new FileHandler(filename);
+            fh.setFormatter(formatter);
             logger.addHandler(fh);
 
             com.sun.jna.Native.setProtected(true);
@@ -25,7 +29,7 @@ public class logutil {
                 //Sistema operacional não suportar proteção contra crash
                 logger.warning("SISTEMA OPERACIONAL NÃO SUPORTA PROTEÇÃO A CRASH DE ERRO EM SISTEMA NATIVO");
             } else {
-                logger.info("Sistem operacional suporta proteção a erro em codigo nativo");
+                logger.info("Sistema operacional suporta proteção a erro em codigo nativo");
             }
         } catch (Exception e) {
             e.printStackTrace();
