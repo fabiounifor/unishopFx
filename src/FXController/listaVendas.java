@@ -54,6 +54,7 @@ import controller.ControllerEmpresa;
 import controller.ControllerCliente;
 import java.util.Collections;
 import java.util.stream.Collectors;
+import java.util.List;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import model.ModelCliente;
@@ -91,7 +92,7 @@ public class listaVendas extends Application implements Initializable{
     double valorAtualizar = 0;
     int codigoExcluir;
     int origemOp = 0;
-    
+    List retorno;
    
     
     ControllerVendas controllerVendas = new ControllerVendas();
@@ -270,24 +271,13 @@ public class listaVendas extends Application implements Initializable{
                     listaModelVendas.stream()
                         .filter(e->((e.getCodigo() == Integer.parseInt(pesquisaVendas.getText()))))
                         .forEach(e -> listaResultado.add(e));
+                    listadeVendas = FXCollections.observableArrayList(listaResultado);
                 }else{
-                    listaClientes.stream()
-                         .filter(e1->(e1.getNome().contains(pesquisaVendas.getText())))
-                         .forEach(e1->clienteCodigo.add((e1)));
-                    listaModelVendas.stream()
-                        .filter(e->((e.getClientesCodigo() == clienteCodigo.get(0).getCodigo())))
-                        .forEach(e -> listaResultado.add(e));
+                retorno = listaModelVendas.stream().filter(item1 -> {
+                    return listaClientes.stream().filter(item2 -> new Integer(item2.getCodigo()).equals(item1.getClientesCodigo())).findAny().isPresent();
+                }).collect(Collectors.toList());
+                listadeVendas = FXCollections.observableArrayList(retorno);
                 }
-                listaResultado = listaModelVendas.stream().filter(item1 -> {
-            return listaClientes.stream().filter(item2 -> new Integer(item2.getCodigo()).equals(item1.getClientesCodigo())).findAny().isPresent();
-        }).collect(Collectors.toList());
-                
-        /*for (int i = 1; i < listaModelVendas.size(); i++) {
-            if (listaModelVendas.get(i).getPesquisa().contains(pesquisaVendas.getText().toUpperCase())){
-             listaResultado.add(listaModelVendas.get(i)); 
-            }
-        } */
-       listadeVendas = FXCollections.observableArrayList(listaResultado);
        Collections.reverse(listadeVendas);
        tabelaListaVendas.getItems().addAll(listadeVendas);
        classeInterfaces.avisaOuvintesProgresso("principal",Boolean.FALSE);       
