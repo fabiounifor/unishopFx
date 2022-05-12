@@ -886,7 +886,7 @@ public class DAONF extends ConexaoMySql {
                     + "valor_produtos,"
                     + "valor_descontos,"
                     + "valor_total,"
-                    + "cod_transportadora,"
+                    + "cod_transportador,"
                     + "dados_adicionais,"
                     + "qtde_volume,"
                     + "peso_volume,"

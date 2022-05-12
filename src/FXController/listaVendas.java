@@ -45,8 +45,6 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.StageStyle;
-import util.ManipularXML;
-import relatorios.DAORelatorios;
 import util.BLMascaras;
 import com.acbr.nfe.ACBrNFe;
 import controller.ControllerConfiguracao;
@@ -55,10 +53,8 @@ import controller.ControllerCliente;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.List;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import model.ModelCliente;
-import model.ModelConfig;
 import model.ModelVendasProdutosTabela;
 import nfe.model.ModelNF;
 import relatorios.DAORelatorios;
@@ -84,6 +80,9 @@ public class listaVendas extends Application implements Initializable{
     public ArrayList<ModelVendasProdutos> listaProdutoRetornar ;
     ControllerCliente controllerCliente = new ControllerCliente();
     ArrayList<ModelCliente> listaClientes = new ArrayList<>();
+    ArrayList<ModelCliente> listaClientesRetorno = new ArrayList<>();
+    ArrayList<ModelNF> listaNF = new ArrayList<>();
+    ArrayList<ModelNF> listaNFRetorno = new ArrayList<>();
     ArrayList<ModelVendas> listaModelVendas = new ArrayList<>();
     ObservableList<ModelVendas> listadeVendas;
     private ControllerNF controllerNF = new ControllerNF();
@@ -233,9 +232,9 @@ public class listaVendas extends Application implements Initializable{
             }
     }
     public void listaTodos(){
-      listaResultado.clear();
       tabelaListaVendas.getItems().clear();
       listaResultado  = new ArrayList<>();
+      listaModelVendas  = new ArrayList<>();
       listaModelVendas = controllerVendas.getListaPedidosController();
         final novoPrincipal principal = new novoPrincipal();
     classeInterfaces.avisaOuvintesProgresso("principal", Boolean.TRUE);         
@@ -255,26 +254,41 @@ public class listaVendas extends Application implements Initializable{
         t.start();
         }
     private void listaFiltro(){
-      
-      listaClientes = controllerCliente.getListaClienteController();
-      listaResultado.clear();
-      tabelaListaVendas.getItems().clear();
-      listaResultado  = new ArrayList<>();
-      listaModelVendas = controllerVendas.getListaPedidosController();
-      ArrayList<ModelCliente> clienteCodigo = new ArrayList<>();
-        final novoPrincipal principal = new novoPrincipal();
+        listaClientes = new ArrayList<>(controllerCliente.getListaClienteController());
+        listaModelVendas = new ArrayList<>(controllerVendas.getListaPedidosController());
+        listaNF = new ArrayList<>(controllerNF.getListaNFController());
+        listaClientesRetorno = new ArrayList<>();
+        listaNFRetorno = new ArrayList<>();
+        listaResultado = new ArrayList<>();
+        
+        tabelaListaVendas.getItems().clear();
         classeInterfaces.avisaOuvintesProgresso("principal",Boolean.TRUE);
         Thread t = new Thread() {
             @Override
             public void run() {
                 if (pesquisaVendas.getText().matches("-?\\d+")){
+                    listaNF.stream()
+                        .filter(e-> (e.getNumeroNfe().equals(pesquisaVendas.getText())))
+                        .forEach(e->listaNFRetorno.add(e));
+                    retorno = (listaModelVendas.stream().filter(item1 -> {
+                return listaNFRetorno.stream().filter(item2 -> (new Integer(item2.getPedidoCliente()))
+                        .equals(item1.getCodigo())).findAny().isPresent();
+                }).collect(Collectors.toList()));
+                    
+                    //adciona pedidos sem nota fiscal na lista
+
                     listaModelVendas.stream()
-                        .filter(e->((e.getCodigo() == Integer.parseInt(pesquisaVendas.getText()))))
-                        .forEach(e -> listaResultado.add(e));
-                    listadeVendas = FXCollections.observableArrayList(listaResultado);
+                    .filter(e->(e.getCodigo() == Integer.parseInt(pesquisaVendas.getText())))
+                    .forEach(e -> retorno.add(e));
+                    
+                    listadeVendas = FXCollections.observableArrayList(retorno);
                 }else{
+                listaClientes.stream()
+                        .filter(e-> (e.getNome().contains(pesquisaVendas.getText().toUpperCase())))
+                        .forEach(e->listaClientesRetorno.add(e));
                 retorno = listaModelVendas.stream().filter(item1 -> {
-                    return listaClientes.stream().filter(item2 -> new Integer(item2.getCodigo()).equals(item1.getClientesCodigo())).findAny().isPresent();
+                return listaClientesRetorno.stream().filter(item2 -> (new Integer(item2.getCodigo()))
+                        .equals(item1.getClientesCodigo())).findAny().isPresent();
                 }).collect(Collectors.toList());
                 listadeVendas = FXCollections.observableArrayList(retorno);
                 }
@@ -285,6 +299,17 @@ public class listaVendas extends Application implements Initializable{
        };
         t.start();
         
+    }
+    
+    private void limparListas(){
+        listaClientes.clear();
+        listaClientesRetorno.clear();
+        listaModelVendas.clear();
+        listaNF.clear();
+        listaNFRetorno.clear();
+        retorno.clear();
+        listaResultado.clear();
+        listadeVendas.clear();
     }
     
     public void listaFiltroPreVendas(){
